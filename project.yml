@@ -1,0 +1,68 @@
+name: Carfie
+options:
+  bundleIdPrefix: com.espy
+  deploymentTarget:
+    iOS: "11.0"
+  groupSortPosition: top
+  minimumXcodeGenVersion: 2.7.0
+
+targets:
+  Rider:
+    platform: iOS
+    type: application
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.espy.user
+        TARGETED_DEVICE_FAMILY: "1" #iPhone
+        CODE_SIGN_ENTITLEMENTS: Rider/Rider.entitlements
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: V46XQZ3Q67
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY: "iPhone Developer"
+          PROVISIONING_PROFILE_SPECIFIER: "Espy User Dev"
+        Release:
+          CODE_SIGN_IDENTITY: "iPhone Distribution"
+          PROVISIONING_PROFILE_SPECIFIER: "Espy User Dist"
+    sources:
+      - path: Core
+      - path: CreditCardForm
+      - path: Rider
+
+  Driver:
+    platform: iOS
+    type: application
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.espy.provider
+        TARGETED_DEVICE_FAMILY: "1" #iPhone
+        CODE_SIGN_ENTITLEMENTS: Driver/Driver.entitlements
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: V46XQZ3Q67
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY: "iPhone Developer"
+          PROVISIONING_PROFILE_SPECIFIER: "Espy Provider Dev"
+        Release:
+          CODE_SIGN_IDENTITY: "iPhone Distribution"
+          PROVISIONING_PROFILE_SPECIFIER: "Espy Provider Dist"
+    sources:
+      - path: Core
+      - path: CreditCardForm
+      - path: Driver
+
+  RiderTests:
+    platform: iOS
+    type: bundle.unit-test
+    sources:
+      - path: RiderTests
+    dependencies:
+      - target: Rider
+
+  DriverTests:
+    platform: iOS
+    type: bundle.unit-test
+    sources:
+      - path: DriverTests
+    dependencies:
+      - target: Driver
