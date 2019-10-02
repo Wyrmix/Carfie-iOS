@@ -6,7 +6,6 @@
     //  Copyright © 2018 Appoets. All rights reserved.
     //
 
-    import Crashlytics
     import UIKit
     import KWDrawerController
     import GoogleMaps
@@ -535,8 +534,6 @@ extension HomeViewController {
         // MARK:- SideMenu Button Action
         
         @IBAction private func sideMenuAction(){
-            
-            Crashlytics.sharedInstance().crash()
             if self.isOnBooking { // If User is on Ride Selection remove all view and make it to default
                self.clearAllView()
                 print("ViewAddressOuter ", #function)
