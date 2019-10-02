@@ -33,3 +33,12 @@ target 'Driver' do
     pod 'EFAutoScrollLabel'
     pod 'HCSStarRatingView', '~> 1.5'
 end
+
+abstract_target 'CarfieTests' do
+    pod 'Nimble'
+    pod 'Quick'
+
+    target 'CoreTests'
+    target 'DriverTests'
+    target 'RiderTests'
+end

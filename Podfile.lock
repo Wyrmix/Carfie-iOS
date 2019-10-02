@@ -120,9 +120,11 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - Nimble (8.0.4)
   - PopupDialog (1.1.0):
     - DynamicBlurView (~> 3.0.1)
   - Protobuf (3.9.2)
+  - Quick (2.2.0)
   - Stripe (13.2.0)
 
 DEPENDENCIES:
@@ -149,7 +151,9 @@ DEPENDENCIES:
   - KWDrawerController
   - Lightbox
   - lottie-ios
+  - Nimble
   - PopupDialog
+  - Quick
   - Stripe (~> 13.2)
 
 SPEC REPOS:
@@ -191,8 +195,10 @@ SPEC REPOS:
     - Lightbox
     - lottie-ios
     - nanopb
+    - Nimble
     - PopupDialog
     - Protobuf
+    - Quick
     - Stripe
 
 SPEC CHECKSUMS:
@@ -233,10 +239,12 @@ SPEC CHECKSUMS:
   Lightbox: d317750e4132bfb871a5307cfe0a2c7d6a583c65
   lottie-ios: 496ac5cea1bbf1a7bd1f1f472f3232eb1b8d744b
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   PopupDialog: 42fb7a0bc4fafdf89fef8b5b2b127a6023f3e1cc
   Protobuf: 67fb42ba613def994e61854de2b3164f13790cc4
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   Stripe: 2c69e216061d54d9c538204bb4f58bd597ddfc5b
 
-PODFILE CHECKSUM: 09b997f63848bd9523ad5d34c30410d34ddaffd2
+PODFILE CHECKSUM: b1806b1d41c1a5cf73f828210e11d97729d2831b
 
 COCOAPODS: 1.7.5
