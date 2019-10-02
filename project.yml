@@ -24,6 +24,9 @@ targets:
         Release:
           CODE_SIGN_IDENTITY: "iPhone Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Espy User Dist"
+    postBuildScripts:
+      - path: fabric-run.sh
+        name: Fabric Run
     sources:
       - path: Core
       - path: CreditCardForm
@@ -46,6 +49,9 @@ targets:
         Release:
           CODE_SIGN_IDENTITY: "iPhone Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Espy Provider Dist"
+    postBuildScripts:
+      - path: fabric-run.sh
+        name: Fabric Run
     sources:
       - path: Core
       - path: CreditCardForm
