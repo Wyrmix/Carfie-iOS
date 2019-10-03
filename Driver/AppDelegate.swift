@@ -75,7 +75,7 @@ extension AppDelegate {
     }
     
     private func setgoogleMap(){
-         GMSServices.provideAPIKey(googleMapKey)
+         GMSServices.provideAPIKey(CarfieKey.googleMaps)
     }
     
     private func setGoogleSignIn() {

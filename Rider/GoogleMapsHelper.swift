@@ -119,7 +119,7 @@ class GoogleMapsHelper : NSObject {
         } */
         
         
-        let urlString = "https://maps.googleapis.com/maps/api/geocode/json?latlng=\(location.latitude),\(location.longitude)&key=\(googleMapKey)"
+        let urlString = "https://maps.googleapis.com/maps/api/geocode/json?latlng=\(location.latitude),\(location.longitude)&key=\(CarfieKey.googleMaps)"
         
         guard let url = URL(string: urlString) else {
             print("Error in creating URL Geocoding")
