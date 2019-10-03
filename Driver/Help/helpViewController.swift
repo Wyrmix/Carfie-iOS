@@ -6,10 +6,13 @@
 //  Copyright © 2018 Appoets. All rights reserved.
 //
 
-import UIKit
+
 import MessageUI
+import UIKit
 import SafariServices
+
 class helpViewController: UIViewController {
+
     @IBOutlet var supportLabel: UILabel!
     
     @IBOutlet var helpImage: UIImageView!

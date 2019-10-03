@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rY8-Cf-rB5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rY8-Cf-rB5">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +21,7 @@
         <!--Side Bar Table View Controller-->
         <scene sceneID="SpW-pf-9xD">
             <objects>
-                <tableViewController storyboardIdentifier="SideBarTableViewController" automaticallyAdjustsScrollViewInsets="NO" id="Wbk-79-pG1" customClass="SideBarTableViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SideBarTableViewController" automaticallyAdjustsScrollViewInsets="NO" id="Wbk-79-pG1" customClass="SideBarTableViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" id="7LR-j1-BfG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -118,7 +118,7 @@
         <!--Home View Controller-->
         <scene sceneID="OBM-1g-453">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" id="XRm-gD-70A" customClass="HomeViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="XRm-gD-70A" customClass="HomeViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J8q-FU-qaJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -170,7 +170,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atX-X9-rIG">
                                                         <rect key="frame" x="227" y="3.5" width="28" height="27"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlike" translatesAutoresizingMaskIntoConstraints="NO" id="Uzq-BP-cnD" customClass="ImageView" customModule="LuLu" customModuleProvider="target">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlike" translatesAutoresizingMaskIntoConstraints="NO" id="Uzq-BP-cnD" customClass="ImageView" customModule="Rider" customModuleProvider="target">
                                                                 <rect key="frame" x="7" y="7" width="14" height="13.5"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="tintColorId">
@@ -230,7 +230,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="So4-kH-PyU">
                                                         <rect key="frame" x="227" y="3.5" width="28" height="27.5"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlike" translatesAutoresizingMaskIntoConstraints="NO" id="UYh-Mn-F8z" customClass="ImageView" customModule="LuLu" customModuleProvider="target">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlike" translatesAutoresizingMaskIntoConstraints="NO" id="UYh-Mn-F8z" customClass="ImageView" customModule="Rider" customModuleProvider="target">
                                                                 <rect key="frame" x="7" y="7" width="14" height="13.5"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="tintColorId">
@@ -477,7 +477,7 @@
         <!--Location Selection View Controller-->
         <scene sceneID="tnF-gX-2S5">
             <objects>
-                <viewController storyboardIdentifier="LocationSelectionViewController" id="H3X-bv-7js" customClass="LocationSelectionViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationSelectionViewController" id="H3X-bv-7js" customClass="LocationSelectionViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RI4-Z6-Ni5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -518,7 +518,7 @@
         <!--Offline Booking View Controller-->
         <scene sceneID="Iir-Y1-yPM">
             <objects>
-                <viewController storyboardIdentifier="OfflineBookingViewController" id="V6c-Ae-Pzf" customClass="OfflineBookingViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OfflineBookingViewController" id="V6c-Ae-Pzf" customClass="OfflineBookingViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="08M-69-9fa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -538,7 +538,7 @@
                                     <constraint firstItem="7J0-HC-NWg" firstAttribute="centerY" secondItem="IgE-Fc-Zmn" secondAttribute="centerY" id="pdL-FE-QSV"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noInternet" translatesAutoresizingMaskIntoConstraints="NO" id="7pI-70-kSd" customClass="ImageView" customModule="LuLu" customModuleProvider="target">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noInternet" translatesAutoresizingMaskIntoConstraints="NO" id="7pI-70-kSd" customClass="ImageView" customModule="Rider" customModuleProvider="target">
                                 <rect key="frame" x="112" y="99" width="96" height="96"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isImageTintColor" value="YES"/>
@@ -574,7 +574,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="kvU-gh-OYf">
                                 <rect key="frame" x="16" y="452" width="288" height="100"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjg-fn-Qvq" customClass="Button" customModule="LuLu" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjg-fn-Qvq" customClass="Button" customModule="Rider" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                         <state key="normal" title="Button">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -664,7 +664,7 @@
         <!--Wallet View Controller-->
         <scene sceneID="PLp-Mm-JnN">
             <objects>
-                <viewController storyboardIdentifier="WalletViewController" id="rY8-Cf-rB5" customClass="WalletViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WalletViewController" id="rY8-Cf-rB5" customClass="WalletViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4x2-dq-Wus">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -673,12 +673,12 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your wallet amount is" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5hN-iD-CKU">
-                                        <rect key="frame" x="8" y="191.5" width="304" height="19.5"/>
+                                        <rect key="frame" x="8" y="191.5" width="304" height="17.5"/>
                                         <fontDescription key="fontDescription" name="ClanPro-Medium" family="Clan Pro" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ttf-Fv-7of" customClass="Label" customModule="LuLu" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="216" width="304" height="30.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ttf-Fv-7of" customClass="Label" customModule="Rider" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="214" width="304" height="28"/>
                                         <fontDescription key="fontDescription" name="ClanPro-Medium" family="Clan Pro" pointSize="24"/>
                                         <color key="textColor" red="0.87843137250000003" green="0.42352941179999998" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -705,16 +705,16 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="eLG-CS-Cmz">
-                                                <rect key="frame" x="16" y="64.5" width="256" height="33"/>
+                                                <rect key="frame" x="16" y="66.5" width="256" height="31"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="$ 0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Olf-rv-tgI">
-                                                        <rect key="frame" x="0.0" y="0.0" width="60.5" height="33"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="60.5" height="31"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                     </textField>
-                                                    <button opaque="NO" tag="99" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofj-cn-8Pa" customClass="Button" customModule="LuLu" customModuleProvider="target">
-                                                        <rect key="frame" x="65.5" y="0.0" width="60" height="33"/>
+                                                    <button opaque="NO" tag="99" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofj-cn-8Pa" customClass="Button" customModule="Rider" customModuleProvider="target">
+                                                        <rect key="frame" x="65.5" y="0.0" width="60" height="31"/>
                                                         <color key="backgroundColor" red="0.96460121870000004" green="0.96476620440000005" blue="0.96459084750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="ClanPro-Medium" family="Clan Pro" pointSize="16"/>
                                                         <state key="normal" title="$99">
@@ -738,8 +738,8 @@
                                                             <action selector="buttonAmountActionWithSender:" destination="rY8-Cf-rB5" eventType="touchUpInside" id="Vni-0a-Z6b"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="199" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCS-va-z0Z" customClass="Button" customModule="LuLu" customModuleProvider="target">
-                                                        <rect key="frame" x="130.5" y="0.0" width="60.5" height="33"/>
+                                                    <button opaque="NO" tag="199" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCS-va-z0Z" customClass="Button" customModule="Rider" customModuleProvider="target">
+                                                        <rect key="frame" x="130.5" y="0.0" width="60.5" height="31"/>
                                                         <color key="backgroundColor" red="0.96460121870000004" green="0.96476620440000005" blue="0.96459084750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="ClanPro-Medium" family="Clan Pro" pointSize="16"/>
                                                         <state key="normal" title="$199">
@@ -763,8 +763,8 @@
                                                             <action selector="buttonAmountActionWithSender:" destination="rY8-Cf-rB5" eventType="touchUpInside" id="N61-mb-oRO"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="299" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gH3-oF-qdw" customClass="Button" customModule="LuLu" customModuleProvider="target">
-                                                        <rect key="frame" x="196" y="0.0" width="60" height="33"/>
+                                                    <button opaque="NO" tag="299" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gH3-oF-qdw" customClass="Button" customModule="Rider" customModuleProvider="target">
+                                                        <rect key="frame" x="196" y="0.0" width="60" height="31"/>
                                                         <color key="backgroundColor" red="0.96460121870000004" green="0.96476620440000005" blue="0.96459084750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="ClanPro-Medium" family="Clan Pro" pointSize="16"/>
                                                         <state key="normal" title="$299">
@@ -850,7 +850,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRa-2v-PqF" customClass="Button" customModule="LuLu" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRa-2v-PqF" customClass="Button" customModule="Rider" customModuleProvider="target">
                                                 <rect key="frame" x="228" y="6" width="60" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="ejj-Jk-peG"/>
@@ -968,7 +968,7 @@
         <!--Coupon View Controller-->
         <scene sceneID="ZKr-TU-I4K">
             <objects>
-                <viewController storyboardIdentifier="CouponViewController" id="2UB-CN-dEJ" customClass="CouponViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CouponViewController" id="2UB-CN-dEJ" customClass="CouponViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l6Q-cp-XoG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -976,7 +976,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vcw-xf-p9i">
                                 <rect key="frame" x="16" y="246.5" width="288" height="95"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Coupon code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vYd-TQ-18s" customClass="TextField" customModule="LuLu" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Coupon code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vYd-TQ-18s" customClass="TextField" customModule="Rider" customModuleProvider="target">
                                         <rect key="frame" x="14.5" y="41" width="259" height="31.5"/>
                                         <color key="backgroundColor" white="0.81396484375" alpha="0.29323630136986301" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="textColor"/>
@@ -1093,13 +1093,13 @@
         <!--Setting Table View Controller-->
         <scene sceneID="wvg-xP-o41">
             <objects>
-                <tableViewController storyboardIdentifier="SettingTableViewController" id="la2-ba-Lq1" customClass="SettingTableViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingTableViewController" id="la2-ba-Lq1" customClass="SettingTableViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="fpo-Es-vcy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCellid" rowHeight="99" id="9mm-SN-FaW" customClass="SettingTableCell" customModule="LuLu" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCellid" rowHeight="99" id="9mm-SN-FaW" customClass="SettingTableCell" customModule="Rider" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="320" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9mm-SN-FaW" id="Uvp-tH-Oep">
@@ -1153,7 +1153,7 @@
                                     <outlet property="labelTitle" destination="Egr-fj-vxd" id="NnH-ym-oKC"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LanguageSelection" rowHeight="40" id="aTp-Qk-Pew" customClass="LanguageSelection" customModule="LuLu" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LanguageSelection" rowHeight="40" id="aTp-Qk-Pew" customClass="LanguageSelection" customModule="Rider" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="154.5" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aTp-Qk-Pew" id="dP1-3m-uhs">
@@ -1203,7 +1203,7 @@
         <!--Your Trips Passbook View Controller-->
         <scene sceneID="iOV-DU-1Pf">
             <objects>
-                <viewController storyboardIdentifier="YourTripsPassbookViewController" id="BMl-Hm-2M3" customClass="YourTripsPassbookViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="YourTripsPassbookViewController" id="BMl-Hm-2M3" customClass="YourTripsPassbookViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eEy-NT-wpf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1402,7 +1402,7 @@
         <!--Invite Referral View Controller-->
         <scene sceneID="Lki-0H-f6A">
             <objects>
-                <viewController id="RB9-PF-VwA" customClass="inviteReferralViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RB9-PF-VwA" customClass="inviteReferralViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bX7-h4-XJE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1617,7 +1617,7 @@
         <!--Help View Controller-->
         <scene sceneID="Nc5-Lf-rcA">
             <objects>
-                <viewController storyboardIdentifier="HelpViewController" id="z7g-cE-B62" customClass="HelpViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HelpViewController" id="z7g-cE-B62" customClass="HelpViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DXp-sn-Scs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1637,7 +1637,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4vY-5w-paE">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call" translatesAutoresizingMaskIntoConstraints="NO" id="DJ9-cG-hAe" customClass="ImageView" customModule="LuLu" customModuleProvider="target">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call" translatesAutoresizingMaskIntoConstraints="NO" id="DJ9-cG-hAe" customClass="ImageView" customModule="Rider" customModuleProvider="target">
                                                         <rect key="frame" x="15" y="12.5" width="20" height="25"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <userDefinedRuntimeAttributes>
@@ -1793,7 +1793,7 @@
         <!--Payment View Controller-->
         <scene sceneID="vDX-PG-3Tq">
             <objects>
-                <tableViewController storyboardIdentifier="PaymentViewController" id="Tt6-zn-Rcz" customClass="PaymentViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PaymentViewController" id="Tt6-zn-Rcz" customClass="PaymentViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="prw-wK-BRe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1818,7 +1818,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCellId" id="RcI-Ml-wqF" customClass="PaymentCell" customModule="LuLu" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCellId" id="RcI-Ml-wqF" customClass="PaymentCell" customModule="Rider" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RcI-Ml-wqF" id="pvc-UT-8FE">
@@ -1867,7 +1867,7 @@
         <!--Your Trips Detail View Controller-->
         <scene sceneID="cjV-vE-HWN">
             <objects>
-                <tableViewController storyboardIdentifier="YourTripsDetailViewController" id="Bkb-JS-Xjh" customClass="YourTripsDetailViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="YourTripsDetailViewController" id="Bkb-JS-Xjh" customClass="YourTripsDetailViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="c8P-cT-hL1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1908,7 +1908,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zsW-J4-KCK" customClass="FloatRatingView" customModule="LuLu" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zsW-J4-KCK" customClass="FloatRatingView" customModule="Rider" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="27" width="85" height="26.5"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
@@ -2219,7 +2219,7 @@
         <!--Single Chat Controller-->
         <scene sceneID="4c5-kT-h4m">
             <objects>
-                <viewController storyboardIdentifier="SingleChatController" id="YCg-8A-cpA" customClass="SingleChatController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SingleChatController" id="YCg-8A-cpA" customClass="SingleChatController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IMj-zz-uUn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2268,7 +2268,7 @@
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8a-lT-ntb">
                                                 <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="send" translatesAutoresizingMaskIntoConstraints="NO" id="Z6z-Rq-jCm" customClass="ImageView" customModule="LuLu" customModuleProvider="target">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="send" translatesAutoresizingMaskIntoConstraints="NO" id="Z6z-Rq-jCm" customClass="ImageView" customModule="Rider" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="10" width="0.0" height="30"/>
                                                         <color key="tintColor" red="0.1726255417" green="0.40715068580000002" blue="0.82357567549999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <userDefinedRuntimeAttributes>
@@ -2379,7 +2379,7 @@
         <!--Add Card View Controller-->
         <scene sceneID="H3a-eo-Eed">
             <objects>
-                <viewController storyboardIdentifier="AddCardViewController" id="uhV-gi-yjo" customClass="AddCardViewController" customModule="LuLu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddCardViewController" id="uhV-gi-yjo" customClass="AddCardViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LS8-ph-FhK"/>
                         <viewControllerLayoutGuide type="bottom" id="G55-we-69R"/>
@@ -2421,18 +2421,18 @@
         <image name="help" width="334" height="334"/>
         <image name="home" width="128" height="128"/>
         <image name="menu_icon" width="64" height="50"/>
-        <image name="message" width="512" height="512"/>
+        <image name="message" width="64" height="64"/>
         <image name="noInternet" width="128" height="128"/>
         <image name="send" width="32" height="32"/>
-        <image name="sos" width="268" height="268"/>
+        <image name="sos" width="268.5" height="268.5"/>
         <image name="tracker" width="300" height="300"/>
         <image name="unlike" width="128" height="128"/>
         <image name="userPlaceholder" width="128" height="128"/>
         <image name="visa" width="64" height="64"/>
         <image name="voice" width="128" height="128"/>
-        <image name="walkthrough0" width="1162" height="1162"/>
+        <image name="walkthrough0" width="217" height="116"/>
         <image name="walletImage" width="256" height="256"/>
-        <image name="web" width="128" height="128"/>
+        <image name="web" width="25" height="25"/>
         <image name="work" width="128" height="128"/>
     </resources>
 </document>
