@@ -12,7 +12,6 @@ let AppName = "Espy Provider"
 var deviceTokenString = Constants.string.noDevice
 var deviceId = Constants.string.noDevice
 
-let googleMapKey = "AIzaSyCekBG04uwl4Gj8jKV64TWwg15Bk0mZXl0"//"AIzaSyAlpDGEYqZS44sI_ffynh5sjm5JsNPPFLg"
 let appSecretKey = "XlDsMnfy7mELIcwRpv7oSQx3muQubFxBhGwdiWsU"
 let appClientId = 2
 

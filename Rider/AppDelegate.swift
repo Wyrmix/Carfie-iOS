@@ -159,8 +159,8 @@ extension AppDelegate {
     
     private func google(){
         
-        GMSServices.provideAPIKey(googleMapKey)
-        GMSPlacesClient.provideAPIKey(googleMapKey)
+        GMSServices.provideAPIKey(CarfieKey.googleMaps)
+        GMSPlacesClient.provideAPIKey(CarfieKey.googleMaps)
 
         guard let clientId = FirebaseApp.app()?.options.clientID else {
             fatalError("Firebase client id not found")

@@ -36,7 +36,7 @@ extension GMSMapView {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         
-        guard let url = URL(string: "https://maps.googleapis.com/maps/api/directions/json?origin=\(source.latitude),\(source.longitude)&destination=\(destination.latitude),\(destination.longitude)&sensor=false&mode=driving&key=\(googleMapKey)") else {
+        guard let url = URL(string: "https://maps.googleapis.com/maps/api/directions/json?origin=\(source.latitude),\(source.longitude)&destination=\(destination.latitude),\(destination.longitude)&sensor=false&mode=driving&key=\(CarfieKey.googleMaps)") else {
             return
         }
         
