@@ -11,16 +11,9 @@ import UIKit
 let AppName = "Espy Provider"
 var deviceTokenString = Constants.string.noDevice
 var deviceId = Constants.string.noDevice
-
 let appSecretKey = "XlDsMnfy7mELIcwRpv7oSQx3muQubFxBhGwdiWsU"
 let appClientId = 2
-
-let helpMail = "hello@espy.com"
-let helpEmailContant = "\(AppName)"
-let helpWeblink = baseUrl
 let helpPhoneNumber = "1098"
 let defaultMapLocation = LocationCoordinate(latitude: 13.009245, longitude: 80.212929)
 let baseUrl = "https://espyinnovation.com/" //"http://schedule.deliveryventure.com/" //
 let stripePublishableKey = "pk_test_6aGGVeGZSDspCq2kZwuObPAR"
-
-

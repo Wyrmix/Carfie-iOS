@@ -221,7 +221,7 @@ extension YourTripsDetailViewController {
         
         if isUpcomingTrips {
             if let number = self.dataSource?.provider?.mobile {
-                Common.call(to: number)
+                PhoneCallIntent(phoneNumber: number)?.execute()
             }
         } else {
             self.showRecipt()

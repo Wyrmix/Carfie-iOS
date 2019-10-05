@@ -163,7 +163,7 @@ extension SideBarTableViewController {
         case (0,5):
             self.push(to: Storyboard.Ids.SettingTableViewController)
         case (0,6):
-            self.push(to: Storyboard.Ids.HelpViewController)
+            push(to: HelpViewController.viewController())
         case (0,7):
             (self.drawerController?.getViewController(for: .none)?.children.first as? HomeViewController)?.share(items: [baseUrl])
         case (0,8):
@@ -183,9 +183,12 @@ extension SideBarTableViewController {
         
     }
     
-    private func push(to vc : UIViewController) {
-        (self.drawerController?.getViewController(for: .none) as? UINavigationController)?.pushViewController(vc, animated: true)
-        
+    private func push(to viewController: UIViewController) {
+        guard let navigationController = drawerController?.getViewController(for: .none) as? UINavigationController else {
+            fatalError("KWDrawerController has no UINavigationController")
+        }
+
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     // MARK:- Logout

@@ -23,7 +23,7 @@ targets:
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"
-          PROVISIONING_PROFILE_SPECIFIER: "Espy User Dev"
+          PROVISIONING_PROFILE_SPECIFIER: "Carfie Dev"
         Release:
           CODE_SIGN_IDENTITY: "iPhone Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Espy User Dist"
@@ -51,7 +51,7 @@ targets:
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"
-          PROVISIONING_PROFILE_SPECIFIER: "Espy Provider Dev"
+          PROVISIONING_PROFILE_SPECIFIER: "Carfie Driver Dev"
         Release:
           CODE_SIGN_IDENTITY: "iPhone Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Espy Provider Dist"

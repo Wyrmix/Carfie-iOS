@@ -30,7 +30,6 @@ struct Storyboard {
     let yourTripViewController = "yourTripViewController"
     let EarningsViewController = "EarningsViewController"
     let summarytTableViewController = "summarytTableViewController"
-    let helpViewController = "helpViewController"
     let userinvoiceViewController = "userinvoiceViewController"
     let inviteReferralViewController = "inviteReferralViewController"
     let ChangeResetPasswordController = "ChangeResetPasswordController"
