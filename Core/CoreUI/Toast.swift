@@ -1,15 +1,5 @@
 //
 //  Toast.swift
-//  User
-//
-//  Created by imac on 1/1/18.
-//  Copyright © 2018 Appoets. All rights reserved.
-//
-
-import Foundation
-
-//
-//  Toast.swift
 //  Toast-Swift
 //
 //  Copyright (c) 2015-2017 Charles Scalesse.

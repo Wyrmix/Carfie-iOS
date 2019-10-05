@@ -742,13 +742,11 @@ extension HomeViewController {
     // MARK:- SOS Action
     
     @IBAction func buttonSOSAction() {
-        
         showAlert(message: Constants.string.wouldyouLiketoMakeaSOSCall.localize(), okHandler: {
-            Common.call(to: "\(User.main.sos ?? "911")")
+            PhoneCallIntent(phoneNumber: User.main.sos ?? "911")?.execute()
         }, cancelHandler: {
             
         }, fromView: self)
-        
     }
     
     // MARK:- Provider Location Marker
@@ -782,7 +780,9 @@ extension HomeViewController {
             floaty.paddingY = padding
             floaty.itemImageColor = .secondary
             floaty.addItem(icon: #imageLiteral(resourceName: "call").resizeImage(newWidth: 25)) { (_) in
-                Common.call(to: provider!.mobile)
+                if let phoneNumber = provider?.mobile {
+                    PhoneCallIntent(phoneNumber: phoneNumber)?.execute()
+                }
             }
             floaty.addItem(icon: #imageLiteral(resourceName: "chatIcon").resizeImage(newWidth: 25)) { (_) in
                 if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.SingleChatController) as? SingleChatController {

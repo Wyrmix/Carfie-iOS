@@ -3,7 +3,7 @@
 //  CarfieCore
 //
 //  Created by Christopher Olsen on 9/22/19.
-//  Copyright © 2019 espy. All rights reserved.
+//  Copyright © 2019 Carfie. All rights reserved.
 //
 
 import Foundation

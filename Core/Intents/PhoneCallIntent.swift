@@ -3,10 +3,12 @@
 //  Carfie
 //
 //  Created by Christopher Olsen on 10/2/19.
+//  Copyright © 2019 Carfie. All rights reserved.
 //
 
 import UIKit
 
+/// Intent to trigger calling a phone call URL scheme.
 final class PhoneCallIntent {
 
     private let url: URL
@@ -19,6 +21,7 @@ final class PhoneCallIntent {
 
         guard let url = URL(string: "tel://\(sanitizedPhoneNumber)") else {
             assertionFailure("Invalid phone number url.")
+            UIApplication.shared.keyWindow?.make(toast: CarfieContact.Error.invalidPhoneNumber)
             return nil
         }
 

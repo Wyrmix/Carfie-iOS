@@ -27,7 +27,6 @@ struct Storyboard {
     let YourTripsPassbookViewController = "YourTripsPassbookViewController"
     let CouponViewController = "CouponViewController"
     let WalletViewController = "WalletViewController"
-    let HelpViewController = "HelpViewController"
     let SettingTableViewController = "SettingTableViewController"
     let ChangeResetPasswordController = "ChangeResetPasswordController"
     let YourTripsDetailViewController = "YourTripsDetailViewController"

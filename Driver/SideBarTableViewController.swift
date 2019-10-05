@@ -204,11 +204,8 @@ extension SideBarTableViewController {
             let paymentVC = Router.main.instantiateViewController(withIdentifier: Storyboard.Ids.PaymentViewController)
             baseVC?.pushViewController(paymentVC, animated: true)
             
-        }else if indexPath.row == 5 {//help
-            
-            let helpVC = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.helpViewController)
-            baseVC?.pushViewController(helpVC, animated: true)
-            
+        } else if indexPath.row == 5 {
+            baseVC?.pushViewController(HelpViewController.viewController(), animated: true)   
         }else if  indexPath.row == 6 {//share
             
             ((self.drawerController?.getViewController(for: .none) as? UINavigationController)?.viewControllers.last as? HomepageViewController)?.share(items: [baseUrl])

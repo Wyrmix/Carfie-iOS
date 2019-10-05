@@ -3,10 +3,12 @@
 //  Carfie
 //
 //  Created by Christopher Olsen on 10/2/19.
+//  Copyright © 2019 Carfie. All rights reserved.
 //
 
 import SafariServices
 
+/// Intent to open a URL in a SafariViewController.
 final class SafariIntent {
 
     private let url: URL
@@ -23,5 +25,11 @@ final class SafariIntent {
     func execute(via presenter: UIViewController) {
         let vc = SFSafariViewController(url: url)
         presenter.present(vc, animated: true)
+    }
+}
+
+extension SafariIntent {
+    static func openCarfieWebsite() -> SafariIntent? {
+        return SafariIntent(url: WebPage.carfieHomePage)
     }
 }

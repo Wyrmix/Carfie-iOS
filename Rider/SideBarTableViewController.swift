@@ -163,8 +163,7 @@ extension SideBarTableViewController {
         case (0,5):
             self.push(to: Storyboard.Ids.SettingTableViewController)
         case (0,6):
-            push(to: NewHelpViewController.viewController())
-//            self.push(to: Storyboard.Ids.HelpViewController)
+            push(to: HelpViewController.viewController())
         case (0,7):
             (self.drawerController?.getViewController(for: .none)?.children.first as? HomeViewController)?.share(items: [baseUrl])
         case (0,8):

@@ -164,17 +164,10 @@ extension RideStatusView {
     // MARK:- Call Provider
     
     @IBAction private func callAction() {
-        
-        Common.call(to: request?.provider?.mobile)
-        
+        if let phoneNumber = request?.provider?.mobile {
+            PhoneCallIntent(phoneNumber: phoneNumber)?.execute()
+        }
     }
-    
-//    // MARK:- Chat Provider
-//    
-//    @IBAction private func chatWithProvider() {
-//        
-//        print("Chat")
-//    }
     
     // MARK:- Cancel Share Action
     

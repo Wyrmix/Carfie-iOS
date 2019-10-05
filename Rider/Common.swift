@@ -96,39 +96,13 @@ class Common {
             STPPaymentConfiguration.shared().publishableKey = User.main.stripeKey ?? stripePublishableKey
         }
     }
-    
-    // MARK:- Make Call
-    class func call(to number : String?) {
-        
-        if let providerNumber = number, let url = URL(string: "tel://\(providerNumber)"), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-        } else {
-            UIApplication.shared.keyWindow?.make(toast: Constants.string.cannotMakeCallAtThisMoment.localize())
-        }
-        
-    }
-    
+
     class func open(url urlString: String) {
         if let  url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         }
     }
-    
-    // MARK:- Send Email
-    class func sendEmail(to mailId : [String], from view : UIViewController & MFMailComposeViewControllerDelegate) {
-        
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = view
-            mail.setToRecipients(mailId)
-            mail.setSubject(helpSubject.localize())
-            view.present(mail, animated: true)
-        } else {
-            UIScreen.main.focusedView?.make(toast: Constants.string.couldnotOpenEmailAttheMoment.localize())
-        }
-        
-    }
-    
+
     // MARK:- Send Message
     
     class func sendMessage(to numbers : [String], text : String, from view : UIViewController & MFMessageComposeViewControllerDelegate) {
