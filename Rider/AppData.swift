@@ -10,7 +10,6 @@ import UIKit
 
 let AppName = "Espy"
 var deviceTokenString = Constants.string.noDevice
-let googleMapKey = "AIzaSyCekBG04uwl4Gj8jKV64TWwg15Bk0mZXl0"
 let appSecretKey = "XlDsMnfy7mELIcwRpv7oSQx3muQubFxBhGwdiWsU"
 let appClientId = 2
 let defaultMapLocation = LocationCoordinate(latitude: 13.009245, longitude: 80.212929)
