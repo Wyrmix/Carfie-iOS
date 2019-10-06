@@ -9,7 +9,7 @@
 import Foundation
 
 struct CarfieContact {
-    static let supportPhoneNumber = "919585290750"
+    static let supportPhoneNumber = "18003112794"
 
     static let supportEmail = "support@carfie.com"
     static let supportEmailSubject = "Carfie support"
