@@ -20,13 +20,6 @@ class HelpViewController: UIViewController {
         return viewController
     }
 
-    var titleLabel: UILabel = {
-        var label = UILabel()
-        label.text = "Support"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        return label
-    }()
-
     let supportImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "help")
@@ -36,21 +29,18 @@ class HelpViewController: UIViewController {
 
     var callButton: UIButton = {
         var button = UIButton()
-        button.titleLabel?.text = nil
         button.setImage(UIImage(named: "phone"), for: .normal)
         return button
     }()
 
     var messageButton: UIButton = {
         var button = UIButton()
-        button.titleLabel?.text = nil
         button.setImage(UIImage(named: "envelope"), for: .normal)
         return button
     }()
 
     var homePageButton: UIButton = {
         var button = UIButton()
-        button.titleLabel?.text = nil
         button.setImage(UIImage(named: "web"), for: .normal)
         return button
     }()
@@ -60,6 +50,14 @@ class HelpViewController: UIViewController {
         label.text = "Our team will contact you soon!"
         label.font = UIFont.systemFont(ofSize: 16)
         return label
+    }()
+
+    var privacyPolicyButton: UIButton = {
+        var button = UIButton()
+        button.setTitle("Privacy Policy", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.setTitleColor(.carfieBlue, for: .normal)
+        return button
     }()
 
     private let interactor: HelpInteractor
@@ -73,11 +71,11 @@ class HelpViewController: UIViewController {
         buttonStackView.spacing = 20
         buttonStackView.distribution = .fillEqually
 
-        let containerStackView = UIStackView(arrangedSubviews: [titleLabel, supportImageView, buttonStackView, helpDescriptionLabel])
+        let containerStackView = UIStackView(arrangedSubviews: [supportImageView, buttonStackView, helpDescriptionLabel, privacyPolicyButton])
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         containerStackView.axis = .vertical
         containerStackView.alignment = .center
-        containerStackView.spacing = 44
+        containerStackView.spacing = 36
 
         view.addSubview(containerStackView)
 
@@ -93,6 +91,7 @@ class HelpViewController: UIViewController {
             messageButton.widthAnchor.constraint(equalToConstant: 50),
             homePageButton.heightAnchor.constraint(equalToConstant: 50),
             homePageButton.widthAnchor.constraint(equalToConstant: 50),
+            privacyPolicyButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 
@@ -130,5 +129,6 @@ class HelpViewController: UIViewController {
         callButton.addTarget(interactor, action: #selector(interactor.callSupportButtonPressed), for: .touchUpInside)
         messageButton.addTarget(interactor, action: #selector(interactor.sendEmailButtonPressed), for: .touchUpInside)
         homePageButton.addTarget(interactor, action: #selector(interactor.viewHomePageButtonPressed), for: .touchUpInside)
+        privacyPolicyButton.addTarget(interactor, action: #selector(interactor.viewPrivacyPolicyButtonPressed), for: .touchUpInside)
     }
 }
