@@ -44,7 +44,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>424475308089488</string>
 	<key>FacebookDisplayName</key>
@@ -66,6 +66,8 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Allow us to read contacts to find your friends</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_DISPLAY_NAME) uses location data to get your current location and connect with nearby provider, so they can pickup from your place.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>$(PRODUCT_DISPLAY_NAME) uses location data to get your current location and connect with nearby provider, so they can pickup from your place.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_DISPLAY_NAME) uses location data to get your current location and connect with nearby provider, so they can pickup from your place.</string>
