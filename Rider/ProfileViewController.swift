@@ -27,50 +27,29 @@ class ProfileViewController: UITableViewController {
     @IBOutlet private weak var viewBusiness : UIView!
     @IBOutlet private weak var viewPersonal : UIView!
     
-    
     private var tripType :TripType = .Business { // Store Radio option TripType
-        
         didSet {
-            
-            self.imageViewBusiness.image = tripType == .Business ? #imageLiteral(resourceName: "radio-on-button") : #imageLiteral(resourceName: "circle-shape-outline")
-            self.imageViewPersonal.image = tripType == .Personal ? #imageLiteral(resourceName: "radio-on-button") : #imageLiteral(resourceName: "circle-shape-outline")
-            
+            imageViewBusiness.image = tripType == .Business ? #imageLiteral(resourceName: "radio-on-button") : #imageLiteral(resourceName: "circle-shape-outline")
+            imageViewPersonal.image = tripType == .Personal ? #imageLiteral(resourceName: "radio-on-button") : #imageLiteral(resourceName: "circle-shape-outline")
         }
-        
     }
     
     private var changedImage : UIImage?
     
     private lazy var loader : UIView = {
-       
-        return createActivityIndicator(UIScreen.main.focusedView ?? self.view)
-        
+        return createActivityIndicator(UIScreen.main.focusedView ?? view)
     }()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initialLoads()
-        self.navigationController?.isNavigationBarHidden = false
+        initialLoads()
+        navigationController?.isNavigationBarHidden = false
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        self.setLayout()
+        setLayout()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-        //self.isEnabled = IQKeyboardManager.shared.enable
-        //IQKeyboardManager.shared.enable = false
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    
 }
 
 // MARK:- Methods
@@ -84,7 +63,6 @@ extension ProfileViewController {
         self.imageViewProfile.isUserInteractionEnabled = true
         [self.imageViewEdit, self.viewImageChange].forEach({$0?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.changeImage)))}) 
         self.buttonSave.addTarget(self, action: #selector(self.buttonSaveAction), for: .touchUpInside)
-        self.buttonChangePassword.addTarget(self, action: #selector(self.changePasswordAction), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
         self.navigationItem.title = Constants.string.profile.localize()
         self.localize()
@@ -93,9 +71,27 @@ extension ProfileViewController {
         self.view.dismissKeyBoardonTap()
         self.presenter?.get(api: .getProfile, parameters: nil)
         self.tableView.tableHeaderView?.bounds.size = CGSize(width: self.tableView.bounds.width, height: 200)
-        self.buttonChangePassword.isHidden = (User.main.loginType != LoginType.manual.rawValue)
         self.navigationController?.isNavigationBarHidden = false
         self.textFieldPhone.isEnabled = false
+        
+        setupChangePasswordButton()
+    }
+    
+    private func setupChangePasswordButton() {
+        guard let loginString = User.main.loginType, let loginType = LoginType(rawValue: loginString) else { return }
+        
+        switch loginType {
+        case .manual:
+            buttonChangePassword.setTitle(Constants.string.lookingToChangePassword.localize(), for: .normal)
+            buttonChangePassword.addTarget(self, action: #selector(changePasswordAction), for: .touchUpInside)
+            buttonChangePassword.isHidden = false
+        case .facebook:
+            buttonChangePassword.setTitle("Revoke Facebook permissions", for: .normal)
+            buttonChangePassword.addTarget(self, action: #selector(showRevokePermissionsDialog), for: .touchUpInside)
+            buttonChangePassword.isHidden = false
+        case .google:
+            buttonChangePassword.isHidden = true
+        }
     }
     
     // MARK:- Set Profile Details
@@ -109,12 +105,7 @@ extension ProfileViewController {
                 self.imageViewProfile.image = image == nil ? #imageLiteral(resourceName: "userPlaceholder") : image
             }
         }
-        
-//        Cache.image(forUrl: Common.getImageUrl(for: User.main.picture)) { (image) in
-//            DispatchQueue.main.async {
-//                self.imageViewProfile.image = image == nil ? #imageLiteral(resourceName: "userPlaceholder") : image
-//            }
-//        }
+
         self.textFieldFirst.text = User.main.firstName
         self.textFieldLast.text = User.main.lastName
         self.textFieldEmail.text = User.main.email
@@ -161,11 +152,8 @@ extension ProfileViewController {
     // MARK:- Trip Type Action
     
    @IBAction private func setTripTypeAction(sender : UITapGestureRecognizer) {
-        
         guard let senderView = sender.view else { return }
-        
         self.tripType = senderView == viewPersonal ? .Personal : .Business
-        
     }
     
     // MARK:- Update Profile Details
@@ -188,16 +176,6 @@ extension ProfileViewController {
             UIScreen.main.focusedView?.make(toast: ErrorMessage.list.enterMobileNumber.localize())
             return
         }
-        
-//        guard let email = self.textFieldEmail.text, email.count>0 else {
-//            UIScreen.main.focusedView?.make(toast: ErrorMessage.list.enterEmail.localize())
-//            return
-//        }
-        
-//        guard Common.isValid(email: email) else {
-//            UIScreen.main.focusedView?.make(toast: ErrorMessage.list.enterValidEmail.localize())
-//            return
-//        }
         
         self.loader.isHidden = false
         
@@ -241,34 +219,46 @@ extension ProfileViewController {
         self.labelTripType.text = Constants.string.tripType.localize()
         self.labelBusiness.text = Constants.string.business.localize()
         self.labelPersonal.text = Constants.string.personal.localize()
-        self.buttonChangePassword.setTitle(Constants.string.lookingToChangePassword.localize(), for: .normal)
-        
     }
     
     //MARK:- Button Change Password Action
     
     @IBAction private func changePasswordAction() {
-        
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.ChangeResetPasswordController) as? ChangeResetPasswordController {
             vc.isChangePassword = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
     }
     
+    @objc func showRevokePermissionsDialog() {
+        UserFacingDestructiveErrorIntent(
+            title: "Revoke Credentials",
+            message: "Are you sure you want to revoke Facebook? This will permanently remove Facebook authorization and log you out of the app.",
+            destructiveTitle: "Yes, I'm sure",
+            destructiveAction: { _ in
+                self.revokeCredentials()
+            }).execute(via: self)
+    }
     
+    private func revokeCredentials() {
+        DefaultAuthController.shared.revokeCredentials { error in
+            guard error == nil else {
+                UserFacingErrorIntent(title: "Something went wrong", message: "Please try again.").execute(via: self)
+                return
+            }
+            
+            forceLogout()
+        }
+    }
 }
 
 
 // MARK:- TextField Delegate
 
 extension ProfileViewController : UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
        return textField.resignFirstResponder()
     }
-    
 }
 
 
@@ -277,10 +267,7 @@ extension ProfileViewController : UITextFieldDelegate {
 extension ProfileViewController {
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
         guard scrollView.contentOffset.y<0 else { return }
-
-        print(scrollView.contentOffset)
 
         let inset = abs(scrollView.contentOffset.y/imageViewProfile.frame.height)
 
@@ -288,7 +275,6 @@ extension ProfileViewController {
         self.viewImageChange.transform = CGAffineTransform(scaleX: 1+inset, y: 1+inset)
         self.imageViewEdit.transform = CGAffineTransform(scaleX: 1+inset, y: 1+inset)
     }
-    
 }
 
 
@@ -297,12 +283,10 @@ extension ProfileViewController {
 extension ProfileViewController : RiderPostViewProtocol {
     
     func onError(api: Base, message: String, statusCode code: Int) {
-        
         DispatchQueue.main.async {
-           UIApplication.shared.keyWindow?.make(toast: message)
+            UIApplication.shared.keyWindow?.make(toast: message)
             self.loader.isHidden = true
         }
-        
     }
     
     func getProfile(api: Base, data: Profile?) {
@@ -315,8 +299,5 @@ extension ProfileViewController : RiderPostViewProtocol {
                 UIApplication.shared.keyWindow?.make(toast: Constants.string.profileUpdated.localize())
             }
         }
-        
     }
-    
-    
 }

@@ -39,6 +39,10 @@ protocol AuthProvider {
 
     /// Auth provider's type (e.g. facebook)
     var type: AuthProviderType { get }
+    
+    /// Revoker that provides functionality for revoking all app permissions for the provider type
+    /// Note: only Facebook currently requires this property
+    var revoker: CredentialRevoker? { get }
 
     /// Delegate for auth completions
     var delegate: AuthProviderDelegate? { get set }

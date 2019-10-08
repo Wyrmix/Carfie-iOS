@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hvz-6M-fs6">
-    <device id="retina5_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hvz-6M-fs6">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,12 +19,12 @@
         <!--Launch View Controller-->
         <scene sceneID="QuK-mo-kEz">
             <objects>
-                <viewController storyboardIdentifier="LaunchViewController" id="eDi-rk-gi3" customClass="LaunchViewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LaunchViewController" id="eDi-rk-gi3" customClass="LaunchViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="I65-LF-QxO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ibb-hF-1i1" customClass="Button" customModule="Espy" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ibb-hF-1i1" customClass="Button" customModule="Rider" customModuleProvider="target">
                                 <rect key="frame" x="41.333333333333343" y="686" width="331.33333333333326" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                 <state key="normal" title="Or connect with social"/>
@@ -70,7 +68,7 @@
                                 </subviews>
                             </stackView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZOY-nP-k9N">
-                                <rect key="frame" x="0.0" y="20" width="414" height="586.66666666666663"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="606.66666666666663"/>
                                 <connections>
                                     <segue destination="Cxg-j5-Bkk" kind="embed" id="o8O-b8-qmD"/>
                                 </connections>
@@ -105,15 +103,15 @@
         <!--Email View Controller-->
         <scene sceneID="g0p-K5-Qg7">
             <objects>
-                <viewController storyboardIdentifier="EmailViewController" id="XvU-7c-MGm" customClass="EmailViewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EmailViewController" id="XvU-7c-MGm" customClass="EmailViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bV2-Ip-rpH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cMn-Od-hbm">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AtC-Ps-tAd" customClass="Button" customModule="Espy" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AtC-Ps-tAd" customClass="Button" customModule="Rider" customModuleProvider="target">
                                 <rect key="frame" x="16" y="663.33333333333337" width="296.66666666666669" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="pRa-nN-3g2"/>
@@ -176,9 +174,8 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="kx1-38-SvC" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="kx1-38-SvC" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                             <rect key="frame" x="16" y="30" width="343" height="60"/>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
                         </textField>
@@ -198,7 +195,7 @@
         <!--Walk Through View Controller-->
         <scene sceneID="HL5-at-vAC">
             <objects>
-                <pageViewController storyboardIdentifier="WalkThroughViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Cxg-j5-Bkk" customClass="WalkThroughViewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="WalkThroughViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Cxg-j5-Bkk" customClass="WalkThroughViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xy8-LT-V3P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="796" y="-457"/>
@@ -206,22 +203,22 @@
         <!--Walk Through Preview Controller-->
         <scene sceneID="SMS-4h-Rvm">
             <objects>
-                <viewController storyboardIdentifier="WalkThroughPreviewController" id="XUp-pO-KAd" customClass="WalkThroughPreviewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WalkThroughPreviewController" id="XUp-pO-KAd" customClass="WalkThroughPreviewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fen-SH-1hk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOl-Zw-BWs">
-                                <rect key="frame" x="0.0" y="367.33333333333331" width="414" height="21.666666666666686"/>
+                                <rect key="frame" x="0.0" y="357.33333333333331" width="414" height="21.666666666666686"/>
                                 <fontDescription key="fontDescription" name="ClanPro-Medium" family="Clan Pro" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9bf-fR-R9y">
-                                <rect key="frame" x="62" y="80" width="290" height="271.33333333333331"/>
+                                <rect key="frame" x="62" y="60" width="290" height="281.33333333333331"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LMa-9h-IWr">
-                                <rect key="frame" x="20" y="405" width="374" height="20.333333333333314"/>
+                                <rect key="frame" x="20" y="395" width="374" height="20.333333333333314"/>
                                 <attributedString key="attributedText">
                                     <fragment content="label">
                                         <attributes>
@@ -265,7 +262,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2R9-4a-Txq" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IJV-d4-ZJJ">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -280,18 +277,18 @@
         <!--Password View Controller-->
         <scene sceneID="Wre-eK-mzC">
             <objects>
-                <viewController storyboardIdentifier="PasswordViewController" id="cZp-c7-w1B" customClass="PasswordViewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PasswordViewController" id="cZp-c7-w1B" customClass="PasswordViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OcV-55-3cq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x42-s7-ndQ">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </scrollView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ONV-dx-s93">
                                 <rect key="frame" x="16" y="650.66666666666663" width="296.66666666666669" height="55.333333333333371"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEH-FV-JU4" customClass="Button" customModule="Espy" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEH-FV-JU4" customClass="Button" customModule="Rider" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="296.66666666666669" height="27.666666666666668"/>
                                         <state key="normal" title="Button"/>
                                         <userDefinedRuntimeAttributes>
@@ -300,7 +297,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RPM-aP-WL6" customClass="Button" customModule="Espy" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RPM-aP-WL6" customClass="Button" customModule="Rider" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="27.666666666666742" width="296.66666666666669" height="27.666666666666671"/>
                                         <state key="normal" title="Button"/>
                                         <userDefinedRuntimeAttributes>
@@ -364,9 +361,8 @@
                     <rect key="frame" x="0.0" y="0.0" width="321" height="667"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="Jjr-uf-y2q" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="Jjr-uf-y2q" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                             <rect key="frame" x="16" y="30" width="289" height="60"/>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             <userDefinedRuntimeAttributes>
@@ -391,13 +387,13 @@
         <!--Forgot Password View Controller-->
         <scene sceneID="QmJ-W7-ZN3">
             <objects>
-                <viewController storyboardIdentifier="ForgotPasswordViewController" id="3ZR-BI-wQP" customClass="ForgotPasswordViewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ForgotPasswordViewController" id="3ZR-BI-wQP" customClass="ForgotPasswordViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dON-Ms-00g">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZKs-CN-kmt">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yLG-XR-yuG">
                                 <rect key="frame" x="328.66666666666669" y="650.66666666666663" width="55.333333333333314" height="55.333333333333371"/>
@@ -446,9 +442,8 @@
                     <rect key="frame" x="0.0" y="0.0" width="307" height="667"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="vwb-CF-hIH" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="vwb-CF-hIH" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                             <rect key="frame" x="16" y="55" width="275" height="60"/>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             <userDefinedRuntimeAttributes>
@@ -473,29 +468,29 @@
         <!--Social Login View Controller-->
         <scene sceneID="0fS-J2-NGR">
             <objects>
-                <tableViewController storyboardIdentifier="SocialLoginViewController" id="Zo8-Ug-usp" customClass="SocialLoginViewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SocialLoginViewController" id="Zo8-Ug-usp" customClass="SocialLoginViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZNW-Ix-8nx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableFooterView" alpha="0.0" contentMode="scaleToFill" id="vAe-ou-Ukn">
-                            <rect key="frame" x="0.0" y="98" width="414" height="1"/>
+                            <rect key="frame" x="0.0" y="126" width="414" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SocialLoginCell" rowHeight="70" id="3QX-O9-QwV" customClass="SocialLoginCell" customModule="Espy" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SocialLoginCell" rowHeight="70" id="3QX-O9-QwV" customClass="SocialLoginCell" customModule="Rider" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3QX-O9-QwV" id="9Qf-Yn-nQZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="376" height="69.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nrU-hT-ga6">
-                                            <rect key="frame" x="28" y="21" width="28" height="27.666666666666671"/>
+                                            <rect key="frame" x="28" y="21" width="28" height="28"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4c0-Fz-ESP">
-                                            <rect key="frame" x="72" y="21" width="288" height="27.666666666666671"/>
+                                            <rect key="frame" x="72" y="21" width="295" height="28"/>
                                             <fontDescription key="fontDescription" name="ClanPro-NarrNews" family="Clan Pro" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -532,7 +527,7 @@
         <!--Profile View Controller-->
         <scene sceneID="ovm-IT-KTR">
             <objects>
-                <tableViewController storyboardIdentifier="ProfileViewController" id="QQh-i2-HJA" customClass="ProfileViewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProfileViewController" id="QQh-i2-HJA" customClass="ProfileViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Mg8-2E-5J6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -585,7 +580,7 @@
                             </variation>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="hwg-Oh-QPw">
-                            <rect key="frame" x="0.0" y="441" width="414" height="131"/>
+                            <rect key="frame" x="0.0" y="497" width="414" height="131"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HLi-bv-tQq">
@@ -627,7 +622,7 @@
                             <tableViewSection id="6Pd-gG-S1n">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="80" id="jpR-EX-cSf">
-                                        <rect key="frame" x="0.0" y="200" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="228" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jpR-EX-cSf" id="t5B-c8-0mh">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -639,9 +634,8 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AKt-nY-0xu">
                                                             <rect key="frame" x="0.0" y="0.0" width="206.66666666666666" height="79"/>
                                                             <subviews>
-                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sdfvsdf" placeholder="sdfdsf" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eto-hO-k6i" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sdfvsdf" placeholder="sdfdsf" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eto-hO-k6i" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                                     <rect key="frame" x="16" y="0.0" width="174.66666666666666" height="75"/>
-                                                                    <nil key="textColor"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits"/>
                                                                     <userDefinedRuntimeAttributes>
@@ -665,9 +659,8 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gfi-nJ-E13">
                                                             <rect key="frame" x="207.33333333333337" y="0.0" width="206.66666666666663" height="79"/>
                                                             <subviews>
-                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sdfvsdf" placeholder="sdfdsf" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ftQ-hE-Z1g" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sdfvsdf" placeholder="sdfdsf" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ftQ-hE-Z1g" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                                     <rect key="frame" x="16" y="0.0" width="174.66666666666666" height="75"/>
-                                                                    <nil key="textColor"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits"/>
                                                                     <userDefinedRuntimeAttributes>
@@ -702,7 +695,7 @@
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="80" id="WWy-de-hKa">
-                                        <rect key="frame" x="0.0" y="280" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="308" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WWy-de-hKa" id="qHt-LJ-EoE">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -711,10 +704,9 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PDv-CC-vs1">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="79.666666666666671"/>
                                                     <subviews>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sdfvsdf" placeholder="sdfdsf" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B2S-4Z-xsA" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sdfvsdf" placeholder="sdfdsf" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B2S-4Z-xsA" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                             <rect key="frame" x="8" y="0.0" width="398" height="79.666666666666671"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                             <userDefinedRuntimeAttributes>
@@ -747,7 +739,7 @@
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="80" id="8CQ-Vq-4tr">
-                                        <rect key="frame" x="0.0" y="360" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="388" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8CQ-Vq-4tr" id="pfK-1c-Why">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -756,10 +748,9 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kkD-xN-toT">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="79.666666666666671"/>
                                                     <subviews>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sdfvsdf" placeholder="sdfdsf" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3pI-wo-W3o" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sdfvsdf" placeholder="sdfdsf" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3pI-wo-W3o" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                             <rect key="frame" x="8" y="0.0" width="398" height="79.666666666666671"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                             <userDefinedRuntimeAttributes>
@@ -792,7 +783,7 @@
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="1" id="lu3-07-R9e">
-                                        <rect key="frame" x="0.0" y="440" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="468" width="414" height="1"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lu3-07-R9e" id="pIj-7l-DNv">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
@@ -939,7 +930,7 @@
         <!--Sign Up User Table View Controller-->
         <scene sceneID="cLR-LC-nSp">
             <objects>
-                <tableViewController storyboardIdentifier="SignUpUserTableViewController" id="dhp-WM-DS3" customClass="SignUpUserTableViewController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SignUpUserTableViewController" id="dhp-WM-DS3" customClass="SignUpUserTableViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8WG-gj-blC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -948,13 +939,13 @@
                             <tableViewSection id="TpK-0C-xmM">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="xDh-vr-RtS">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xDh-vr-RtS" id="F4Q-DJ-Tgj">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="70e-aX-lcA" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="70e-aX-lcA" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="15" width="390" height="50"/>
                                                     <color key="textColor" red="0.039215686270000001" green="0.058823529409999999" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
@@ -975,7 +966,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="Wrm-Td-vMB">
-                                        <rect key="frame" x="0.0" y="80" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="108" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wrm-Td-vMB" id="S5q-dp-R5H">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -984,7 +975,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="PxP-F1-3wc">
                                                     <rect key="frame" x="16" y="4" width="390" height="72"/>
                                                     <subviews>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Ga-bF-mAj" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Ga-bF-mAj" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="193" height="72"/>
                                                             <color key="textColor" red="0.039215686270000001" green="0.058823529409999999" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
@@ -995,7 +986,7 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </textField>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last name" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KSe-6p-Z6Q" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last name" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KSe-6p-Z6Q" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                             <rect key="frame" x="197" y="0.0" width="193" height="72"/>
                                                             <color key="textColor" red="0.039215686270000001" green="0.058823529409999999" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
@@ -1018,13 +1009,13 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="DOv-9s-4tQ">
-                                        <rect key="frame" x="0.0" y="160" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="188" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DOv-9s-4tQ" id="lPV-Hg-HSo">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PhoneNumber" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="34b-tR-YYR" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PhoneNumber" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="34b-tR-YYR" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="4" width="390" height="72"/>
                                                     <color key="textColor" red="0.039215686270000001" green="0.058823529409999999" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
@@ -1045,13 +1036,13 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="81" id="Tec-e7-q4f">
-                                        <rect key="frame" x="0.0" y="240" width="414" height="81"/>
+                                        <rect key="frame" x="0.0" y="268" width="414" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tec-e7-q4f" id="THo-ZL-aJr">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="81"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wBh-4I-CWM" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wBh-4I-CWM" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="4" width="390" height="73"/>
                                                     <color key="textColor" red="0.039215686270000001" green="0.058823529409999999" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
@@ -1072,13 +1063,13 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="81" id="Srv-7q-cH2">
-                                        <rect key="frame" x="0.0" y="321" width="414" height="81"/>
+                                        <rect key="frame" x="0.0" y="349" width="414" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Srv-7q-cH2" id="S8F-vD-ewa">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="81"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f1u-8C-H9m" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f1u-8C-H9m" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="4" width="390" height="73"/>
                                                     <color key="textColor" red="0.039215686270000001" green="0.058823529409999999" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
@@ -1099,13 +1090,13 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="1" id="rAr-1a-ohh">
-                                        <rect key="frame" x="0.0" y="402" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="430" width="414" height="1"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rAr-1a-ohh" id="JFY-Z2-Jd1">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Country" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HS6-02-D9i" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Country" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HS6-02-D9i" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                     <rect key="frame" x="35" y="13" width="344" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="auc-MY-wKK"/>
@@ -1128,13 +1119,13 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="1" id="dCL-Fw-cOU">
-                                        <rect key="frame" x="0.0" y="403" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="431" width="414" height="1"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dCL-Fw-cOU" id="xGR-pu-v6e">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TIme Zone" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tg0-fz-HVL" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TIme Zone" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tg0-fz-HVL" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                     <rect key="frame" x="35" y="13" width="344" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="SoP-MP-4vq"/>
@@ -1157,13 +1148,13 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="1" id="5Xp-Gf-kjv">
-                                        <rect key="frame" x="0.0" y="404" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="432" width="414" height="1"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Xp-Gf-kjv" id="ID9-81-6od">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Referral Code (Optional)" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2YQ-iu-We6" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Referral Code (Optional)" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2YQ-iu-We6" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                                     <rect key="frame" x="35" y="13" width="344" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="3nm-hm-jZw"/>
@@ -1186,7 +1177,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="1" id="hbd-nE-nVN">
-                                        <rect key="frame" x="0.0" y="405" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="433" width="414" height="1"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hbd-nE-nVN" id="ZTs-d5-NaP">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
@@ -1278,7 +1269,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="139" id="htv-9B-z3w">
-                                        <rect key="frame" x="0.0" y="406" width="414" height="139"/>
+                                        <rect key="frame" x="0.0" y="434" width="414" height="139"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="htv-9B-z3w" id="BnS-uC-IpT">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="139"/>
@@ -1340,13 +1331,13 @@
         <!--Change Reset Password Controller-->
         <scene sceneID="w4S-jV-e5c">
             <objects>
-                <viewController storyboardIdentifier="ChangeResetPasswordController" id="hvz-6M-fs6" customClass="ChangeResetPasswordController" customModule="Espy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChangeResetPasswordController" id="hvz-6M-fs6" customClass="ChangeResetPasswordController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gdb-eo-MsH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NV8-EF-spC">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPC-9f-9GZ">
                                 <rect key="frame" x="328.66666666666669" y="650.66666666666663" width="55.333333333333314" height="55.333333333333371"/>
@@ -1369,7 +1360,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="olx-QC-11F">
-                                <rect key="frame" x="31" y="617.66666666666663" width="352" height="50"/>
+                                <rect key="frame" x="31" y="600.66666666666663" width="352" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="RoM-kG-2bq"/>
                                 </constraints>
@@ -1421,11 +1412,10 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="0Vh-tz-NPu">
-                            <rect key="frame" x="15.333333333333343" y="50" width="276.33333333333326" height="200"/>
+                            <rect key="frame" x="15.333333333333343" y="30" width="276.33333333333326" height="200"/>
                             <subviews>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="jbd-il-swr" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="jbd-il-swr" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="276.33333333333331" height="64"/>
-                                    <nil key="textColor"/>
                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <userDefinedRuntimeAttributes>
@@ -1437,9 +1427,8 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="yJb-6D-2pP" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="yJb-6D-2pP" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="68" width="276.33333333333331" height="64"/>
-                                    <nil key="textColor"/>
                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     <userDefinedRuntimeAttributes>
@@ -1451,9 +1440,8 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="phN-Q1-F4f" customClass="HoshiTextField" customModule="Espy" customModuleProvider="target">
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PlaceHolder" textAlignment="natural" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="phN-Q1-F4f" customClass="HoshiTextField" customModule="Rider" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="136" width="276.33333333333331" height="64"/>
-                                    <nil key="textColor"/>
                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     <userDefinedRuntimeAttributes>
@@ -1471,7 +1459,7 @@
                             </constraints>
                         </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJl-so-OwP">
-                            <rect key="frame" x="15.333333333333343" y="266" width="276.33333333333326" height="19.333333333333314"/>
+                            <rect key="frame" x="15.333333333333343" y="246" width="276.33333333333326" height="19.333333333333314"/>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

@@ -157,7 +157,7 @@ DEPENDENCIES:
   - Stripe (~> 13.2)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - AccountKit
     - Alamofire
     - AppAuth
@@ -247,4 +247,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b1806b1d41c1a5cf73f828210e11d97729d2831b
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.3

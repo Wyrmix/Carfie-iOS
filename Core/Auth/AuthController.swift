@@ -57,6 +57,10 @@ public protocol AuthController {
     /// - Parameter url: url to handle
     /// - Returns: boolean value that represents if the app should handle the url request
     func handleGoogleAuthUrl(_ url: URL) -> Bool
+    
+    /// Initiate a request to permanently revoke all permissions for the active auth provider
+    /// - Parameter completion: returns and error if the revocation failed
+    func revokeCredentials(completion: @escaping (Error?) -> Void)
 }
 
 // MARK: Delegates
@@ -190,6 +194,10 @@ extension DefaultAuthController: AuthController {
 
     public func handleGoogleAuthUrl(_ url: URL) -> Bool {
         return googleAuthProvider.handleGoogleAuthUrl(url)
+    }
+    
+    public func revokeCredentials(completion: @escaping (Error?) -> Void) {
+        _currentAuthProvider?.revoker?.revoke(completion: completion)
     }
 }
 
