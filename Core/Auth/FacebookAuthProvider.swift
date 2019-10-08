@@ -12,6 +12,8 @@ import FacebookLogin
 final class FacebookAuthProvider: AuthProvider {
 
     let type: AuthProviderType = .facebook
+    
+    private(set) var revoker: CredentialRevoker?
 
     weak var delegate: AuthProviderDelegate?
 
@@ -31,6 +33,7 @@ final class FacebookAuthProvider: AuthProvider {
             case .failed(let error):
                 sself.delegate?.completeLogin(with: .failure(error: error), andAccessToken: nil)
             case .success(_, _, let token):
+                sself.revoker = FacebookCredentialRevoker()
                 sself.delegate?.completeLogin(with: .success(provider: .facebook), andAccessToken: token.tokenString)
             }
         }

@@ -29,17 +29,6 @@ class ProfileViewController: UITableViewController {
     
     @IBOutlet var textFieldServiceType: HoshiTextField!
     
-//    private var tripType :TripType = .Business { // Store Radio option TripType
-//
-//        didSet {
-//
-//            self.imageViewBusiness.image = tripType == .Business ? #imageLiteral(resourceName: "radio-on-button") : #imageLiteral(resourceName: "circle-shape-outline")
-//            self.imageViewPersonal.image = tripType == .Personal ? #imageLiteral(resourceName: "radio-on-button") : #imageLiteral(resourceName: "circle-shape-outline")
-//
-//        }
-//
-//    }
-    
     private var changedImage : UIImage?
     let profile = profilePostModel()
     var servicemodel = ServiceModel()
@@ -48,33 +37,19 @@ class ProfileViewController: UITableViewController {
     let accountKit = AKFAccountKit(responseType: .accessToken)
     
     private lazy var loader : UIView = {
-        
         return createActivityIndicator(UIScreen.main.focusedView ?? self.view)
-        
     }()
     
-    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        self.initialLoads()
+        initialLoads()
+        navigationController?.isNavigationBarHidden = false
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.setLayout()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    
 }
 
 // MARK:- Methods
@@ -87,7 +62,6 @@ extension ProfileViewController {
         self.viewBusiness.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.setTripTypeAction(sender:))))
         self.viewImageChange.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.changeImage)))
         self.buttonSave.addTarget(self, action: #selector(self.buttonSaveAction), for: .touchUpInside)
-        self.buttonChangePassword.addTarget(self, action: #selector(self.changePasswordAction), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
         self.navigationItem.title = Constants.string.profile.localize()
         getProfile()
@@ -96,7 +70,24 @@ extension ProfileViewController {
         self.setProfile()
         self.view.dismissKeyBoardonTap()
         
-        self.buttonChangePassword.isHidden = (User.main.loginType != LoginType.manual.rawValue)
+        setupChangePasswordButton()
+    }
+    
+    private func setupChangePasswordButton() {
+        guard let loginString = User.main.loginType, let loginType = LoginType(rawValue: loginString) else { return }
+        
+        switch loginType {
+        case .manual:
+            buttonChangePassword.setTitle(Constants.string.lookingToChangePassword.localize(), for: .normal)
+            buttonChangePassword.addTarget(self, action: #selector(changePasswordAction), for: .touchUpInside)
+            buttonChangePassword.isHidden = false
+        case .facebook:
+            buttonChangePassword.setTitle("Revoke Facebook permissions", for: .normal)
+            buttonChangePassword.addTarget(self, action: #selector(showRevokePermissionsDialog), for: .touchUpInside)
+            buttonChangePassword.isHidden = false
+        case .google:
+            buttonChangePassword.isHidden = true
+        }
     }
     
     private func getProfile(){
@@ -108,16 +99,6 @@ extension ProfileViewController {
     // MARK:- Set Profile Details
     
     private func setProfile(){
-        
-        
-//        let url = (User.main.picture?.contains(WebConstants.string.http) ?? false) ? User.main.picture : Common.getImageUrl(for: User.main.picture)
-//        
-//        Cache.image(forUrl: url) { (image) in
-//            DispatchQueue.main.async {
-//                self.imageViewProfile.image = image == nil ? #imageLiteral(resourceName: "userPlaceholder") : image
-//            }
-//        }
-        
         Cache.image(forUrl: "\(baseUrl)/\(Constants.string.storage)/\(String(describing: User.main.picture ?? "0"))") { (image) in
             DispatchQueue.main.async {
                 self.imageViewProfile.image = image == nil ? #imageLiteral(resourceName: "young-male-avatar-image") : image
@@ -129,10 +110,7 @@ extension ProfileViewController {
         self.textFieldEmail.text = User.main.email
         self.textFieldPhone.text = User.main.mobile
         self.textFieldServiceType.text = User.main.serviceType
-        
     }
-    
-    
     
     //MARK:- Set Designs
     
@@ -146,13 +124,11 @@ extension ProfileViewController {
             $0?.borderActiveColor = nil
             Common.setFont(to: $0!)
         })
-        
     }
     
     // MARK:- Show Image
     
     @IBAction private func changeImage(){
-        
         self.showImage { (image) in
             if image != nil {
                 self.imageViewProfile.image = image
@@ -164,13 +140,7 @@ extension ProfileViewController {
     
     // MARK:- Trip Type Action
     
-    @IBAction private func setTripTypeAction(sender : UITapGestureRecognizer) {
-        
-//        guard let senderView = sender.view else { return }
-//
-//        self.tripType = senderView == viewPersonal ? .Personal : .Business
-//
-    }
+    @IBAction private func setTripTypeAction(sender : UITapGestureRecognizer) { }
     
     // MARK:- Update Profile Details
     
@@ -219,15 +189,6 @@ extension ProfileViewController {
         if self.changedImage != nil, let dataImg = self.changedImage?.pngData() {
             data = dataImg
         }
-        
-//        let akPhone = AKFPhoneNumber(countryCode: "in", phoneNumber: mobile)
-//        let accountKitVC = accountKit.viewControllerForPhoneLogin(with: akPhone, state: UUID().uuidString)
-//        accountKitVC.enableSendToFacebook = true
-//        self.prepareLogin(viewcontroller: accountKitVC)
-//        self.present(accountKitVC, animated: true, completion: nil)
-//
-        
-       
         servicemodel.service = User.main.serviceId
         
         profile.device_token = deviceTokenString
@@ -249,9 +210,6 @@ extension ProfileViewController {
             json.removeValue(forKey : "service")
             self.presenter?.post(api: .updateProfile, imageData: [WebConstants.string.picture : data!], parameters: json)
         }
-        
-        
-        
     }
     
     private func setLayout(){
@@ -259,42 +217,52 @@ extension ProfileViewController {
         self.imageViewProfile.makeRoundedCorner()
         
     }
+    
     private func prepareLogin(viewcontroller : UIViewController&AKFViewController) {
-        
         viewcontroller.delegate = self
         viewcontroller.uiManager = AKFSkinManager(skinType: .contemporary, primaryColor: .primary)
         viewcontroller.uiManager.theme?()?.buttonTextColor = .white
-        
     }
     
     // MARK:- Localize
     
     private func localize() {
-        
         self.textFieldFirst.placeholder = Constants.string.firsrName.localize()
         self.textFieldLast.placeholder = Constants.string.lastName.localize()
         self.textFieldPhone.placeholder = Constants.string.phoneNumber.localize()
         self.textFieldEmail.placeholder = Constants.string.email.localize()
         self.textFieldServiceType.placeholder = Constants.string.service.localize()
-        //self.labelTripType.text = Constants.string.tripType.localize()
-        //self.labelBusiness.text = Constants.string.business.localize()
-        //self.labelPersonal.text = Constants.string.personal.localize()
-        self.buttonChangePassword.setTitle(Constants.string.lookingToChangePassword.localize(), for: .normal)
-        
     }
     
     //MARK:- Button Change Password Action
     
     @IBAction private func changePasswordAction() {
-        
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.ChangeResetPasswordController) as? ChangeResetPasswordController {
             vc.isChangePassword = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
     }
     
+    @objc func showRevokePermissionsDialog() {
+        UserFacingDestructiveErrorIntent(
+            title: "Revoke Credentials",
+            message: "Are you sure you want to revoke Facebook? This will permanently remove Facebook authorization and log you out of the app.",
+            destructiveTitle: "Yes, I'm sure",
+            destructiveAction: { _ in
+                self.revokeCredentials()
+            }).execute(via: self)
+    }
     
+    private func revokeCredentials() {
+        DefaultAuthController.shared.revokeCredentials { error in
+            guard error == nil else {
+                UserFacingErrorIntent(title: "Something went wrong", message: "Please try again.").execute(via: self)
+                return
+            }
+            
+            forceLogout()
+        }
+    }
 }
 
 
@@ -303,7 +271,6 @@ extension ProfileViewController {
 extension ProfileViewController : UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         return textField.resignFirstResponder()
     }
     
@@ -314,26 +281,17 @@ extension ProfileViewController : UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         (textField as! HoshiTextField).borderActiveColor = UIColor.primary
     }
-    
 }
 
 
 // MARK:- ScrollView Delegate
 
 extension ProfileViewController {
-    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         guard scrollView.contentOffset.y<0 else { return }
-        
-        print(scrollView.contentOffset)
-        
         let inset = abs(scrollView.contentOffset.y/imageViewProfile.frame.height)
-        
         self.imageViewProfile.transform = CGAffineTransform(scaleX: 1+inset, y: 1+inset)
-        
     }
-    
 }
 
 extension ProfileViewController : AKFViewControllerDelegate {
@@ -368,7 +326,6 @@ extension ProfileViewController : AKFViewControllerDelegate {
                 self.presenter?.post(api: .updateProfile, imageData: [WebConstants.string.picture : self.data!], parameters: json)
             }
         }
-        
     }
 }
 
@@ -378,16 +335,13 @@ extension ProfileViewController : AKFViewControllerDelegate {
 extension ProfileViewController : PostViewProtocol {
     
     func onError(api: Base, message: String, statusCode code: Int) {
-        
         DispatchQueue.main.async {
             self.view.make(toast: message)
             self.loader.isHidden = true
         }
-        
     }
     
     func getProfile(api: Base, data: Profile?) {
-        //print("service ID:\(data?.avatar)")
         if api == .updateProfile {
             toastSuccess(self.view, message: Constants.string.profileUpdatedSucess as NSString, smallFont: true, isPhoneX: true, color: .primary)
             let serviceType = User.main.serviceType  // Patch since service details not provided from backend 
@@ -400,16 +354,13 @@ extension ProfileViewController : PostViewProtocol {
                 self.loader.isHidden = true
                 self.setProfile()
             }
-
-        }else{
+        } else {
             Common.storeUserData(from: data)
             storeInUserDefaults()
             DispatchQueue.main.async {
                 self.loader.isHidden = true
                 self.setProfile()
             }
-
         }
-        
     }
 }
