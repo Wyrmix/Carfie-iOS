@@ -217,11 +217,6 @@ extension PasswordViewController : RiderPostViewProtocol {
         guard data != nil  else { return  }
         Common.storeUserData(from: data)
         storeInUserDefaults()
-        let drawer = Common.setDrawerController() //Router.main.instantiateViewController(withIdentifier: Storyboard.Ids.DrawerController)
-        self.present(drawer, animated: true, completion: {
-            self.navigationController?.viewControllers.removeAll()
-        })
+        NotificationCenter.default.post(name: .OnboardingDidComplete, object: self)
     }
-    
-    
 }

@@ -181,7 +181,8 @@ extension DefaultAuthController: AuthController {
 
     public func logout() {
         guard let authProvider = _currentAuthProvider else {
-            assertionFailure("No auth provider.")
+            // TECH DEBT: workaround until Carfie login is incorporated into this controller.
+            NotificationCenter.default.post(name: .UserDidLogout, object: self)
             return
         }
 
@@ -214,11 +215,13 @@ extension DefaultAuthController: AuthProviderDelegate {
         }
 
         loginDelegate?.authController(self, loginDidCompleteWith: result)
+        NotificationCenter.default.post(name: .UserDidLogin, object: self)
     }
 
     func completeLogout(with result: AuthResult) {
         _currentAuthProvider = nil
         _currentAccessToken = nil
         logoutDelegate?.authController(self, userDidSignOutWith: result)
+        NotificationCenter.default.post(name: .UserDidLogout, object: self)
     }
 }

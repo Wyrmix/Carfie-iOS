@@ -167,27 +167,17 @@ class Common {
     }
     
     //MARK:- Set Drawer Controller
-    class func setDrawerController()->UIViewController {
-        
+    class func setDrawerController() -> UIViewController {
         let drawerController =  DrawerController()
         if let sideBarController = Router.main.instantiateViewController(withIdentifier: Storyboard.Ids.SideBarTableViewController) as? SideBarTableViewController  {
-            //let drawerSide : DrawerSide = selectedLanguage == .arabic ? .right : .left
             let mainController = Router.main.instantiateViewController(withIdentifier: Storyboard.Ids.LaunchNavigationController)
             drawerController.setViewController(sideBarController, for: .left)
-            drawerController.setViewController(sideBarController, for: .right)
             drawerController.setViewController(mainController, for: .none)
-            drawerController.getSideOption(for: .left)?.isGesture = false
-            drawerController.getSideOption(for: .right)?.isGesture = false 
+            drawerController.getSideOption(for: .left)?.isGesture = false 
         }
         return drawerController
     }
-    
-    
 }
-
-
-
-
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {

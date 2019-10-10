@@ -202,22 +202,15 @@ func toastSuccess(_ view:UIView,message:NSString,smallFont:Bool,isPhoneX:Bool, c
 
 
 func forceLogout(with message : String? = nil) {
-
     DefaultAuthController.shared.logout()
     AKFAccountKit(responseType: .accessToken).logOut()
-
     AVPlayerHelper.player.stop()
     BackGroundTask.backGroundInstance.stopBackGroundTimer() // stopping timer on unauthorized status
     BackGroundTask.refresh()
     clearUserDefaults()
-    UIApplication.shared.windows.last?.rootViewController?.popOrDismiss(animation: true)
-    UIApplication.shared.windows.first?.rootViewController = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.UserNavigationViewController)
-    UIApplication.shared.windows.first?.makeKeyAndVisible()
-    UIApplication.shared.windows.last?.removeFromSuperview()
     if message != nil {
         UIApplication.shared.windows.last?.rootViewController?.view.makeToast(message, duration: 2, position: .center, title: nil, image: nil, style: ToastStyle(), completion: nil)
     }
-    
 }
 
 // Initialize User

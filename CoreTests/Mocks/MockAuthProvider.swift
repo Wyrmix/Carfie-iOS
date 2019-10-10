@@ -14,6 +14,8 @@ enum MockAuthError: Error {
 
 class MockAuthProvider: AuthProvider {
     var type: AuthProviderType
+    
+    var revoker: CredentialRevoker?
 
     weak var delegate: AuthProviderDelegate?
 

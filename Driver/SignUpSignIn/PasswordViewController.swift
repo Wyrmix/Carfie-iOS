@@ -221,12 +221,7 @@ extension PasswordViewController : PostViewProtocol {
         DispatchQueue.main.async {
             self.loader.isHidden = true
             toastSuccess(UIApplication.shared.keyWindow! , message: Constants.string.loginSucess as NSString, smallFont: true, isPhoneX: true, color: UIColor.primary)
-            self.present(Common.setDrawerController(), animated: true, completion: nil)
-            
+            NotificationCenter.default.post(name: .OnboardingDidComplete, object: self)
         }
-        
     }
- 
-    
-    
 }

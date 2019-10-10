@@ -215,11 +215,6 @@ func forceLogout(with message : String? = nil) {
          HomePageHelper.shared.stopListening()
     }
     clearUserDefaults()
-    UIApplication.shared.windows.last?.rootViewController?.popOrDismiss(animation: true)
-    let navigationController = UINavigationController(rootViewController: Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.LaunchViewController))
-    navigationController.isNavigationBarHidden = true
-    UIApplication.shared.windows.first?.rootViewController = navigationController
-    UIApplication.shared.windows.first?.makeKeyAndVisible()
     if message != nil {
         UIApplication.shared.keyWindow?.makeToast(message)
     }
