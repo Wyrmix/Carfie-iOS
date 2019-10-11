@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static let shared = AppDelegate()
 
     private let authController = DefaultAuthController.shared
-    private let rootContainerInteractor = RootContainerInteractor()
+    private var rootContainerInteractor = RootContainerInteractor()
     
     private var shouldShowLogin = false
 
@@ -76,26 +76,30 @@ extension AppDelegate {
     private func configureRootInteractor() {
         rootContainerInteractor.delegate = self
         
-        window?.rootViewController = rootContainerInteractor.rootViewController
-        
         let loginViewController = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.LaunchViewController)
         rootContainerInteractor.configureLoginViewController(loginViewController)
         
         let mainViewController = Common.setDrawerController()
         rootContainerInteractor.configureChildViewController(mainViewController)
         
+        rootContainerInteractor.configureRootViewController(RootViewController())
+    }
+}
+
+// MARK: - RootContainerInteractorDelegate
+extension AppDelegate: RootContainerInteractorDelegate {
+    func rootViewIsLoaded() {
+        window?.rootViewController = rootContainerInteractor.rootViewController
+        window?.makeKeyAndVisible()
+        
         if shouldShowLogin {
-            window?.makeKeyAndVisible()
             // Do not animate present on initial launch
             rootContainerInteractor.presentLoginExperience(animated: false)
         } else {
             rootContainerInteractor.start()
-            window?.makeKeyAndVisible()
         }
     }
-}
-
-extension AppDelegate: RootContainerInteractorDelegate {
+    
     func onboardingDidComplete() {
         rootContainerInteractor.dismissLoginExperience()
     }

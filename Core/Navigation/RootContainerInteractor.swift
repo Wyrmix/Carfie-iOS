@@ -10,6 +10,12 @@ import UIKit
 
 /// Delegate protocol for communicating updates from the RootContainerInteractor
 protocol RootContainerInteractorDelegate: class {
+    
+    /// Signals that the root view controller's viewDidLoad() successfully completed. The delegate can
+    /// then perform any actions that require the view to be loaded (e.g. present login).
+    func rootViewIsLoaded()
+    
+    /// Signals that onboarding has been completed so the delegate can complete any post-onboarding actions.
     func onboardingDidComplete()
 }
 
@@ -21,7 +27,7 @@ final class RootContainerInteractor {
     weak var delegate: RootContainerInteractorDelegate?
     
     /// This is the root view controller for main app functionality.
-    let rootViewController = UIViewController()
+    var rootViewController: RootViewController?
     
     /// This property exists for state testing. Though it may be valuable for other features in the future.
     var isPresentingLoginExperience: Bool?
@@ -35,7 +41,6 @@ final class RootContainerInteractor {
     // MARK: Init
     
     init() {
-        rootViewController.view.backgroundColor = .white
         addObservers()
     }
     
@@ -50,6 +55,12 @@ final class RootContainerInteractor {
     /// Loads the child "main app" view controller and makes it visible.
     func start() {
         loadChildViewController()
+    }
+    
+    func configureRootViewController(_ viewController: RootViewController) {
+        rootViewController = viewController
+        rootViewController?.delegate = self
+        rootViewController?.view.backgroundColor = .white
     }
     
     /// Preps the login view controller and holds it in memory for presentation.
@@ -85,7 +96,7 @@ final class RootContainerInteractor {
             navigationController.isModalInPresentation = true
         }
         
-        rootViewController.present(navigationController, animated: animated) {
+        rootViewController?.present(navigationController, animated: animated) {
             self.isPresentingLoginExperience = true
             self.unloadChildViewController()
             completion?()
@@ -96,7 +107,7 @@ final class RootContainerInteractor {
     /// - Parameter completion: closure to be called after dismiss(animated:completion:) completes
     func dismissLoginExperience(completion: (() -> Void)? = nil) {
         start()
-        rootViewController.dismiss(animated: true) {
+        rootViewController?.dismiss(animated: true) {
             self.isPresentingLoginExperience = false
             completion?()
         }
@@ -105,7 +116,8 @@ final class RootContainerInteractor {
     // MARK: Private
     
     private func loadChildViewController() {
-        guard let child = childViewController else { return }
+        guard let rootViewController = rootViewController,
+              let child = childViewController else { return }
         
         rootViewController.addChild(child)
         child.view.frame = rootViewController.view.frame
@@ -136,5 +148,12 @@ final class RootContainerInteractor {
         NotificationCenter.default.removeObserver(self, name: .UserDidLogout, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidLogin), name: .UserDidLogin, object: nil)
         presentLoginExperience()
+    }
+}
+
+extension RootContainerInteractor: RootViewControllerDelegate {
+    func rootViewController(_ viewController: RootViewController, isLoaded: Bool) {
+        guard isLoaded else { return }
+        delegate?.rootViewIsLoaded()
     }
 }

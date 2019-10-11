@@ -17,13 +17,14 @@ class RootContainerInteractorSpec: QuickSpec {
             
             beforeEach {
                 subject = RootContainerInteractor()
+                subject.configureRootViewController(RootViewController())
             }
             
             context("on start") {
                 it("should load the childViewController as a child of the rootViewController") {
                     subject.configureChildViewController(UIViewController())
                     subject.start()
-                    expect(subject.rootViewController.children.first!).toNot(beNil())
+                    expect(subject.rootViewController!.children.first!).toNot(beNil())
                 }
             }
             
@@ -32,7 +33,7 @@ class RootContainerInteractorSpec: QuickSpec {
                     subject.configureChildViewController(UIViewController())
                     subject.configureLoginViewController(UIViewController())
                     NotificationCenter.default.post(name: .UserDidLogout, object: nil)
-                    expect(subject.rootViewController.children.first).to(beNil())
+                    expect(subject.rootViewController!.children.first).to(beNil())
                 }
             }
             
@@ -40,7 +41,7 @@ class RootContainerInteractorSpec: QuickSpec {
                 it("should load the childViewController as a child of the rootViewController") {
                     subject.configureChildViewController(UIViewController())
                     subject.dismissLoginExperience()
-                    expect(subject.rootViewController.children.first!).toNot(beNil())
+                    expect(subject.rootViewController!.children.first!).toNot(beNil())
                 }
             }
         }
