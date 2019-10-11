@@ -33,8 +33,7 @@ struct PhoneValidator: Validator {
     func validate(_ field: String?) -> Result<String> {
         guard let phone = field else { return Result.failure(PhoneValidationError.noPhoneNumberEntered) }
 
-        let phoneSansWhitespace = phone.trimmingCharacters(in: .whitespaces)
-        let sanitizedPhoneNumber = phoneSansWhitespace.replacingOccurrences(of: "-", with: "")
+        let sanitizedPhoneNumber = phone.replacingOccurrences(of: "-", with: "")
                                                       .replacingOccurrences(of: " ", with: "")
                                                       .replacingOccurrences(of: "(", with: "")
                                                       .replacingOccurrences(of: ")", with: "")
