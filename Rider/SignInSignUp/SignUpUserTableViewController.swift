@@ -23,10 +23,6 @@ class SignUpUserTableViewController: UITableViewController {
     private var userInfo : UserData?
     private var accountKit : AKFAccountKit?
 
-    private lazy var authValidator: AuthValidator = {
-        return AuthValidator()
-    }()
-
     private lazy var  loader = {
         return createActivityIndicator(UIApplication.shared.keyWindow ?? self.view)
     }()
@@ -114,7 +110,8 @@ extension SignUpUserTableViewController {
     
     @IBAction func nextBtnTapped(sender : UITapGestureRecognizer){
         self.view.endEditingForce()
-        guard let email = self.validateEmail() else { return }
+        
+        guard let email = validateField(emailtext.text, with: EmailValidator()) else { return }
         
         guard let firstName = self.firstNameText.text, !firstName.isEmpty else {
             self.showToast(string: ErrorMessage.list.enterFirstName.localize())
@@ -125,10 +122,8 @@ extension SignUpUserTableViewController {
             return
         }
        
-        guard let phoneNumber = phoneNumber.text, !phoneNumber.isEmpty, let mobile = Int(phoneNumber)  else {
-            self.showToast(string: ErrorMessage.list.enterMobileNumber.localize())
-            return
-        }
+        guard let phoneNumber = validateField(phoneNumber.text, with: PhoneValidator()) else { return }
+
         guard let password = passwordText.text, !password.isEmpty, password.count>=6 else {
              self.showToast(string: ErrorMessage.list.enterPassword.localize())
             return
@@ -141,31 +136,22 @@ extension SignUpUserTableViewController {
             self.showToast(string: ErrorMessage.list.passwordDonotMatch.localize())
             return
         }
-        userInfo =  MakeJson.signUp(loginBy: .manual, email: email, password: password, socialId: nil, firstName: firstName, lastName: lastName, mobile: mobile)
+        userInfo =  MakeJson.signUp(loginBy: .manual, email: email, password: password, socialId: nil, firstName: firstName, lastName: lastName, mobile: Int(phoneNumber))
 
        self.accountKit = AKFAccountKit(responseType: .accessToken)
-       let akPhone = AKFPhoneNumber(countryCode: "in", phoneNumber: phoneNumber)
+        let akPhone = AKFPhoneNumber(countryCode: "in", phoneNumber: phoneNumber)
        let accountKitVC = accountKit?.viewControllerForPhoneLogin(with: akPhone, state: UUID().uuidString)
        accountKitVC!.enableSendToFacebook = true
        self.prepareLogin(viewcontroller: accountKitVC!)
        self.present(accountKitVC!, animated: true, completion: nil)
-      
-        
     }
     
-    private func validateEmail() -> String? {
+    private func validateField(_ field: String?, with validator: Validator) -> String? {
         do {
-            let email = try authValidator.validateEmail(emailtext.text).resolve()
-            return email
-        } catch let error as EmailValidationError {
-            switch error {
-            case .noEmailEntered:
-                showToast(string: ErrorMessage.list.enterEmail.localize())
-            case .notAValidEmail:
-                self.showToast(string: ErrorMessage.list.enterValidEmail.localize())
-            }
-
-            emailtext.becomeFirstResponder()
+            let field = try FieldValidator(validator: validator).validate(field).resolve()
+            return field
+        } catch let error as ValidationError {
+            showToast(string: error.errorMessage)
             return nil
         } catch {
             return nil
@@ -278,7 +264,7 @@ extension SignUpUserTableViewController : UITextFieldDelegate {
         if textField == emailtext {
             if textField.text?.count == 0 {
                 textField.placeholder = Constants.string.emailPlaceHolder.localize()
-            } else if let email = validateEmail() {
+            } else if let email = validateField(emailtext.text, with: EmailValidator()) {
                 textField.resignFirstResponder()
                 let user = User()
                 user.email = email

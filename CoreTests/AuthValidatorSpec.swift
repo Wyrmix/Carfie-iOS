@@ -11,13 +11,13 @@ import Quick
 
 //@testable import Driver
 
-class AuthValidatorSpec: QuickSpec {
+class EmailValidatorSpec: QuickSpec {
     override func spec() {
         describe("An AuthValidator") {
-            var subject: AuthValidator!
+            var subject: EmailValidator!
 
             beforeEach {
-                subject = AuthValidator()
+                subject = EmailValidator()
             }
 
             context("email validation") {

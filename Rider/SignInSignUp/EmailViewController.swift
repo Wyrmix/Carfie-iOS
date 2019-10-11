@@ -93,37 +93,24 @@ extension EmailViewController {
     //MARK:- Next View Tap Action
     
     @IBAction private func nextAction(){
+        viewNext.addPressAnimation()
         
-       self.viewNext.addPressAnimation()
-       
-       guard  let emailText = self.textFieldEmail.text, !emailText.isEmpty else {
-            
-            self.view.make(toast: ErrorMessage.list.enterEmail) {
-                self.textFieldEmail.becomeFirstResponder()
+        do {
+            let email = try EmailValidator().validate(textFieldEmail.text).resolve()
+            presentPasswordViewController(withEmail: email)
+        } catch let error as ValidationError {
+            view.make(toast: error.errorMessage) { [weak self] in
+                self?.textFieldEmail.becomeFirstResponder()
             }
-            
-            return
+        } catch {
+            textFieldEmail.becomeFirstResponder()
         }
-        
-        
-        guard Common.isValid(email: emailText) else {
-            self.view.make(toast: ErrorMessage.list.enterValidEmail) {
-                self.textFieldEmail.becomeFirstResponder()
-            }
-            
-            return
-
-        }
-        
-        if let passwordVC = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.PasswordViewController) as? PasswordViewController {
-            
-            passwordVC.set(email: emailText)
-            self.navigationController?.pushViewController(passwordVC, animated: true)
-            
-        }
-        
-        
-        
+    }
+    
+    private func presentPasswordViewController(withEmail email: String) {
+        guard let passwordVC = storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.PasswordViewController) as? PasswordViewController else { return }
+        passwordVC.set(email: email)
+        navigationController?.pushViewController(passwordVC, animated: true)
     }
     
     //MARK:- Create Account

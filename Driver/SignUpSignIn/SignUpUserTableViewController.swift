@@ -144,18 +144,16 @@ extension SignUpUserTableViewController {
             UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterLastName)
             return
         }
-        guard let email = emailtext.text, email.isEmpty else {
-            UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterEmail)
-            return
-        }
+        
+        guard let email = validateField(emailtext.text, with: EmailValidator()) else { return }
+
         guard let password = passwordText.text, password.isEmpty else {
             UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterPassword)
             return
         }
-        guard let phoneNumber = phoneNumber.text, phoneNumber.isEmpty else {
-            UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterPhoneNumber)
-            return
-        }
+        
+        guard let phoneNumber = validateField(phoneNumber.text, with: PhoneValidator()) else { return }
+        
         guard let confirmPwd = confirmPwdText.text, confirmPwd.isEmpty else {
             UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterConfirmPwd)
             return
@@ -177,7 +175,15 @@ extension SignUpUserTableViewController {
         
     }
     
-
+    private func validateField(_ field: String?, with validator: Validator) -> String? {
+        do {
+            let field = try FieldValidator(validator: validator).validate(field).resolve()
+            return field
+        } catch let error as ValidationError {
+            UIApplication.shared.keyWindow?.makeToast(error.errorMessage)
+            return nil
+        } catch {
+            return nil
+        }
+    }
 }
-
-

@@ -119,47 +119,30 @@ extension EmailViewController {
     //MARK:- Next View Tap Action
     
     @IBAction private func nextAction(){
+        viewNext.addPressAnimation()
         
-       self.viewNext.addPressAnimation()
-       
-       guard  let emailText = self.textFieldEmail.text, !emailText.isEmpty else {
+        do {
+            let email = try EmailValidator().validate(textFieldEmail.text).resolve()
+            presentPasswordViewController(withEmail: email)
+        } catch let error as ValidationError {
             vibrate(sound: .cancelled)
             self.textFieldEmail.shake()
-//            self.view.make(toast: ErrorMessage.list.enterEmail) {
-//
-//                self.textFieldEmail.becomeFirstResponder()
-//            }
-        self.view.make(toast: ErrorMessage.list.enterEmail, duration: 0.5) {
-            self.textFieldEmail.becomeFirstResponder()
-        }
-            
-            return
-        }
-        
-        
-        guard Common.isValid(email: emailText) else {
-                vibrate(sound: .cancelled)
-                self.textFieldEmail.shake()
-
-            self.view.make(toast: ErrorMessage.list.enterValidEmail, duration: 0.5) {
-                self.textFieldEmail.becomeFirstResponder()
+            view.make(toast: error.errorMessage) { [weak self] in
+                self?.textFieldEmail.becomeFirstResponder()
             }
-            
-            return
-
+        } catch {
+            vibrate(sound: .cancelled)
+            self.textFieldEmail.shake()
+            textFieldEmail.becomeFirstResponder()
         }
-        
-        
-        if let passwordVC = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.PasswordViewController) as? PasswordViewController {
-            
-            passwordVC.set(email: emailText)
-            self.navigationController?.pushViewController(passwordVC, animated: true)
-            
-        }
-        
-        
-        
     }
+    
+    private func presentPasswordViewController(withEmail email: String) {
+        guard let passwordVC = storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.PasswordViewController) as? PasswordViewController else { return }
+        passwordVC.set(email: email)
+        navigationController?.pushViewController(passwordVC, animated: true)
+    }
+
     
     //MARK:- Create Account
     
