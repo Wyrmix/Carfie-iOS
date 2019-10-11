@@ -179,7 +179,7 @@ extension SocialLoginViewController : RiderPostViewProtocol {
         if api == .getProfile {
             Common.storeUserData(from: data)
             storeInUserDefaults()
-            self.navigationController?.present(Common.setDrawerController(), animated: true, completion: nil)
+            NotificationCenter.default.post(name: .OnboardingDidComplete, object: self)
         }
         loader.isHideInMainThread(true)
     }

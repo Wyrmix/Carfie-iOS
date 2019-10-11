@@ -446,9 +446,9 @@ extension SignUpTableViewController : PostViewProtocol {
         Common.storeUserData(from: data)
         storeInUserDefaults()
         DispatchQueue.main.async {
-        self.loader.isHidden = true
-        toastSuccess(UIApplication.shared.keyWindow! , message: Constants.string.signUpSucess as NSString, smallFont: true, isPhoneX: true, color: UIColor.primary)
-            self.present(Common.setDrawerController(), animated: true, completion: nil)
+            self.loader.isHidden = true
+            toastSuccess(UIApplication.shared.keyWindow! , message: Constants.string.signUpSucess as NSString, smallFont: true, isPhoneX: true, color: UIColor.primary)
+            NotificationCenter.default.post(name: .OnboardingDidComplete, object: self)
         }
         
     }

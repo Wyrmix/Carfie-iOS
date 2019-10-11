@@ -105,8 +105,8 @@ class HelpViewController: UIViewController {
         view.backgroundColor = .white
 
         navigationController?.isNavigationBarHidden = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
-        navigationItem.title = Constants.string.help.localize()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popOrDismiss))
+        navigationItem.title = "Help"
 
         addButtonTargets()
     }
@@ -121,7 +121,8 @@ class HelpViewController: UIViewController {
 
         [callButton, messageButton, homePageButton].forEach {
             $0.backgroundColor = .carfieBlue
-            $0.makeRoundedCorner()
+            $0.layer.masksToBounds = true
+            $0.layer.cornerRadius = $0.bounds.width / 2
         }
     }
 

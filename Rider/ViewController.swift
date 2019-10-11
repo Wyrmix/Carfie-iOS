@@ -20,24 +20,6 @@ extension UIViewController {
         
     }
     
-    //MARK:- Pop or dismiss View Controller
-    
-    func popOrDismiss(animation : Bool){
-        
-        DispatchQueue.main.async {
-            
-            if self.navigationController != nil {
-                
-                self.navigationController?.popViewController(animated: animation)
-            } else {
-                
-                self.dismiss(animated: animation, completion: nil)
-            }
-            
-        }
-        
-    }
-    
     //MARK:- Present
     
     func present(id : String, animation : Bool, fromSB storyBoard: UIStoryboard = Router.main){

@@ -16,9 +16,13 @@ import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private let authController = DefaultAuthController.shared
     var window: UIWindow?
     var locationManager:CLLocationManager!
+    
+    private let authController = DefaultAuthController.shared
+    private let rootContainerInteractor = RootContainerInteractor()
+    
+    private var shouldShowLogin = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.appearence()
@@ -26,12 +30,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerPush(forApp: application)
         setGoogleSignIn()
         stripe()
-        let navigationController =  Router.setWireFrame()
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+        
+        Router.configure()
+        
+        // This needs to be called to load User data which is used to determine Auth state. This is very bad.
+        // It also returns a boolean that is used to determine if we should show login/onboarding. This is some
+        // serious tech debt that needs to be addressed soon.
+        //
+        // If user data does not exist we will show login.
+        shouldShowLogin = !retrieveUserData()
+        
+        configureRootInteractor()
+
         initiateLocationManager()
         self.checkUpdates()
         return true
+    }
+}
+
+// MARK: - Root ViewController configuration and login
+extension AppDelegate {
+    private func configureRootInteractor() {
+        rootContainerInteractor.delegate = self
+        
+        let loginViewController = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.LaunchViewController)
+        rootContainerInteractor.configureLoginViewController(loginViewController)
+        
+        let mainViewController = Common.setDrawerController()
+        rootContainerInteractor.configureChildViewController(mainViewController)
+        
+        rootContainerInteractor.configureRootViewController(RootViewController())
+    }
+}
+
+// MARK: - RootContainerInteractorDelegate
+extension AppDelegate: RootContainerInteractorDelegate {
+    func rootViewIsLoaded() {
+        window?.rootViewController = rootContainerInteractor.rootViewController
+        window?.makeKeyAndVisible()
+        
+        if shouldShowLogin {
+            // Do not animate present on initial launch
+            rootContainerInteractor.presentLoginExperience(animated: false)
+        } else {
+            rootContainerInteractor.start()
+        }
+    }
+    
+    func onboardingDidComplete() {
+        rootContainerInteractor.dismissLoginExperience()
     }
 }
 

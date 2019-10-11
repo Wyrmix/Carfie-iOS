@@ -215,7 +215,7 @@ extension SignUpUserTableViewController : RiderPostViewProtocol {
             User.main.accessToken = data?.access_token
             Common.storeUserData(from: data)
             storeInUserDefaults()
-            self.navigationController?.present(Common.setDrawerController(), animated: true, completion: nil)
+            NotificationCenter.default.post(name: .OnboardingDidComplete, object: self)
             return
         }
     }
