@@ -80,7 +80,9 @@ targets:
       - target: Driver
 
   CoreTests:
-    scheme: {}
+    scheme:
+      testTargets:
+        - CoreTests
     platform: iOS
     type: bundle.unit-test
     sources:
