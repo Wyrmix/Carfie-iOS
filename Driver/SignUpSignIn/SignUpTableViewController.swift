@@ -156,21 +156,9 @@ extension SignUpTableViewController {
     
     @objc private func nextIconTapped(sender: UITapGestureRecognizer){
       
-        guard let email = self.EmailTxt.text, !email.isEmpty else {
-            vibrate(sound: .cancelled)
-            self.EmailTxt.shake()
-            UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterEmail.localize())
+        guard let email = validateField(EmailTxt.text, with: EmailValidator()) else {
+            EmailTxt.shake()
             return
-        }
-        guard Common.isValid(email: email) else {
-            self.view.make(toast: ErrorMessage.list.enterValidEmail.localize()) {
-                vibrate(sound: .cancelled)
-                self.EmailTxt.shake()
-                UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterEmail.localize())
-                self.EmailTxt.becomeFirstResponder()
-            }
-            return
-            
         }
 
         guard let firstName = self.FirstName.text, !firstName.isEmpty else {
@@ -186,12 +174,12 @@ extension SignUpTableViewController {
              UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterLastName.localize())
             return
         }
-        guard let phoneNumber = self.textFieldPhoneNumber.text, !phoneNumber.isEmpty else {
-            vibrate(sound: .cancelled)
+        
+        guard let phoneNumber = validateField(textFieldPhoneNumber.text, with: PhoneValidator()) else {
             textFieldPhoneNumber.shake()
-             UIApplication.shared.keyWindow?.make(toast: ErrorMessage.list.enterPhoneNumber.localize())
             return
         }
+        
         guard let password = self.textFieldPassword.text, !password.isEmpty, password.count>=6 else {
             vibrate(sound: .cancelled)
             textFieldPassword.shake()
@@ -268,19 +256,18 @@ extension SignUpTableViewController {
     @IBAction private func backBarButton(sender: UIButton){
         self.popOrDismiss(animation: true)
     }
-  
-    private func validateEmail()->String? {
-        guard let email = EmailTxt.text?.trimmingCharacters(in: .whitespaces), !email.isEmpty else {
-            self.showToast(string: ErrorMessage.list.enterEmail.localize())
-            EmailTxt.becomeFirstResponder()
+    
+    private func validateField(_ field: String?, with validator: Validator) -> String? {
+        do {
+            let field = try FieldValidator(validator: validator).validate(field).resolve()
+            return field
+        } catch let error as ValidationError {
+            vibrate(sound: .cancelled)
+            showToast(string: error.errorMessage)
+            return nil
+        } catch {
             return nil
         }
-        guard Common.isValid(email: email) else {
-            self.showToast(string: ErrorMessage.list.enterValidEmail.localize())
-            EmailTxt.becomeFirstResponder()
-            return nil
-        }
-        return email
     }
     
     //MARK:- Show Custom Toast
@@ -334,7 +321,7 @@ extension SignUpTableViewController : UITextFieldDelegate {
         if textField == EmailTxt {
             if textField.text?.count == 0 {
                 textField.placeholder = Constants.string.emailPlaceHolder.localize()
-            } else if let email = validateEmail(){
+            } else if let email = validateField(EmailTxt.text, with: EmailValidator()) {
                 textField.resignFirstResponder()
                 let user = User()
                 user.email = email

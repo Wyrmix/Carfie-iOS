@@ -162,30 +162,9 @@ extension ProfileViewController {
             return
         }
         
-        guard let mobile = self.textFieldPhone.text, mobile.count>0 else {
-            vibrate(sound: .cancelled)
-            textFieldPhone.shake()
-            UIScreen.main.focusedView?.make(toast: ErrorMessage.list.enterPhoneNumber.localize())
-            return
-        }
-        
-        guard let email = self.textFieldEmail.text, email.count>0 else {
-            vibrate(sound: .cancelled)
-            textFieldEmail.shake()
-            
-            UIScreen.main.focusedView?.make(toast: ErrorMessage.list.enterEmail.localize())
-            return
-        }
-        
-        guard Common.isValid(email: email) else {
-            vibrate(sound: .cancelled)
-            textFieldEmail.shake()
-            UIScreen.main.focusedView?.make(toast: ErrorMessage.list.enterValidEmail.localize())
-            return
-        }
-        
-        
-        
+        guard let email = validateField(textFieldEmail.text, with: EmailValidator()),
+              let phoneNumber = validateField(textFieldPhone.text, with: PhoneValidator()) else { return }
+                
         if self.changedImage != nil, let dataImg = self.changedImage?.pngData() {
             data = dataImg
         }
@@ -195,7 +174,7 @@ extension ProfileViewController {
         profile.email = email
         profile.first_name = firstName
         profile.last_name = lastName
-        profile.mobile = mobile
+        profile.mobile = phoneNumber
         profile.service = servicemodel.service
         self.loader.isHidden = false
 
@@ -211,6 +190,23 @@ extension ProfileViewController {
             self.presenter?.post(api: .updateProfile, imageData: [WebConstants.string.picture : data!], parameters: json)
         }
     }
+    
+    private func validateField(_ field: String?, with validator: Validator) -> String? {
+        do {
+            let field = try FieldValidator(validator: validator).validate(field).resolve()
+            return field
+        } catch let error as ValidationError {
+            vibrate(sound: .cancelled)
+            textFieldPhone.shake()
+            UIScreen.main.focusedView?.make(toast: error.errorMessage)
+            return nil
+        } catch {
+            vibrate(sound: .cancelled)
+            textFieldPhone.shake()
+            return nil
+        }
+    }
+
     
     private func setLayout(){
         

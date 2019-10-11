@@ -84,28 +84,21 @@ extension ForgotPasswordViewController {
     //MARK:- Next View Tap Action
     
     @IBAction private func nextAction(){
-        
-        self.viewNext.addPressAnimation()
-        
-        guard  let emailText = self.textFieldEmail.text, !emailText.isEmpty else {
-            self.view.make(toast: ErrorMessage.list.enterEmail) {
-                self.textFieldEmail.becomeFirstResponder()
+        viewNext.addPressAnimation()
+
+        do {
+            let email = try EmailValidator().validate(textFieldEmail.text).resolve()
+            let userData = UserData()
+            userData.email = email
+            loader.isHidden = false
+            presenter?.post(api: .forgotPassword, data: userData.toData())
+        } catch let error as ValidationError {
+            view.make(toast: error.errorMessage) { [weak self] in
+                self?.textFieldEmail.becomeFirstResponder()
             }
-            return
+        } catch {
+            textFieldEmail.becomeFirstResponder()
         }
-        
-        guard Common.isValid(email: emailText) else {
-            self.view.make(toast: ErrorMessage.list.enterValidEmail) {
-                self.textFieldEmail.becomeFirstResponder()
-            }
-            return
-        }
-        
-        let userData = UserData()
-        userData.email = emailText
-        self.loader.isHidden = false
-        self.presenter?.post(api: .forgotPassword, data: userData.toData())
-    
     }
 }
 

@@ -14,8 +14,6 @@ struct ErrorMessage {
 
     let serverError = "Server Could not be reached. \n Try Again"
     let notReachable = "The Internet connection appears to be offline."
-    let enterEmail = "Enter Email Id"
-    let enterValidEmail = "Enter Valid Email Id"
     let enterPassword = "Enter Password"
     let enterConfirmPassword = "Enter Confirm Password"
     let passwordNotMatch = "Password and confirm password doesn't match"
@@ -43,7 +41,6 @@ struct ErrorMessage {
     let enterReferralCode = "Enter referral Code"
     let yourAccountNotVerified = "You account has not been approved for driving"
 
-    let enterMobileNumber = "Enter Mobile Number"
     let enterCountry = "Enter Country"
     let enterTimezone = "Enter TimeZone"
     let passwordDonotMatch = "Password and Confirm password donot match"

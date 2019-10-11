@@ -172,10 +172,7 @@ extension ProfileViewController {
             return
         }
         
-        guard let mobile = self.textFieldPhone.text, mobile.count>0 else {
-            UIScreen.main.focusedView?.make(toast: ErrorMessage.list.enterMobileNumber.localize())
-            return
-        }
+        guard let mobile = validatePhoneNumber() else { return }
         
         self.loader.isHidden = false
         
@@ -198,6 +195,19 @@ extension ProfileViewController {
             self.presenter?.post(api: .updateProfile, imageData: [WebConstants.string.picture : dataImg], parameters: json)
         } else {
             self.presenter?.post(api: .updateProfile, data: profile.toData())
+        }
+    }
+    
+    private func validatePhoneNumber() -> String? {
+        do {
+            let phone = try PhoneValidator().validate(textFieldPhone.text).resolve()
+            return String(phone)
+        } catch let error as ValidationError {
+            UIScreen.main.focusedView?.make(toast: error.errorMessage)
+            return nil
+        } catch {
+            UIScreen.main.focusedView?.make(toast: SignUp.ErrorMessage.invalidPhoneNumber)
+            return nil
         }
     }
   

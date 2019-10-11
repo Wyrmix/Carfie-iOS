@@ -77,18 +77,14 @@ extension resetPasswordVC {
     
     
     @IBAction func nextBtnTapped(sender: UITapGestureRecognizer){
-    
-        guard let email = emailTxt.text, !email.isEmpty else {
-            UIApplication.shared.keyWindow?.makeToast(ErrorMessage.list.enterEmail)
-            return
-        }
-        guard Common.isValid(email: email) else {
-            self.view.make(toast: ErrorMessage.list.enterValidEmail) {
-                self.emailTxt.becomeFirstResponder()
+        do {
+            let _ = try EmailValidator().validate(emailTxt.text).resolve()
+        } catch let error as ValidationError {
+            view.make(toast: error.errorMessage) { [weak self] in
+                self?.emailTxt.becomeFirstResponder()
             }
-            
-            return
-            
+        } catch {
+            emailTxt.becomeFirstResponder()
         }
 
         guard let OTP = OTPText.text, !OTP.isEmpty else {
@@ -105,12 +101,7 @@ extension resetPasswordVC {
         }
         
       //  self.presenter?.post(api: .resepwd, data: MakeJson.resetPassword(password: newPassword, confirmPassword: newPassword, oldPassword: oldPassword))
-        
-        
-        
     }
-    
-    
 }
 
 extension resetPasswordVC : UITextFieldDelegate {
