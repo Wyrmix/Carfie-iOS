@@ -24,10 +24,6 @@ enum EmailValidationError: ValidationError {
 
 struct EmailValidator: Validator {
 
-    // MARK: - Init
-
-    init() {}
-
     // MARK: - Public Validators
 
     func validate(_ field: String?) -> Result<String> {

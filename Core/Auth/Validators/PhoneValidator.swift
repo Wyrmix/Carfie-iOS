@@ -24,10 +24,6 @@ enum PhoneValidationError: ValidationError {
 
 struct PhoneValidator: Validator {
     
-    // MARK: - Init
-
-    init() {}
-
     // MARK: - Public Validators
 
     func validate(_ field: String?) -> Result<String> {

@@ -14,9 +14,6 @@ struct ErrorMessage {
 
     let serverError = "Server Could not be reached. \n Try Again"
     let notReachable = "The Internet connection appears to be offline."
-    let enterPassword = "Enter Password"
-    let enterConfirmPassword = "Enter Confirm Password"
-    let passwordNotMatch = "Password and confirm password doesn't match"
     let enterFirstName = "Enter First Name"
     let enterLastName = "Enter Last Name"
     let enterPhoneNumber = "Enter Phone Number"
@@ -33,9 +30,6 @@ struct ErrorMessage {
     let agreeTheTerms = "Agree The Terms and Condition"
     let enterOTP = "Enter OTP"
     let wrongOTP = "Wrong OTP"
-    let enterNewPwd = "Enter New Password"
-    let enterOldPassword = "Enter Old Password"
-    let enterConfirmPwd = "Enter Confirm Password"
     let EnterCountry = "Enter the Country"
     let enterTimeZone = "Enter Time Zone"
     let enterReferralCode = "Enter referral Code"
@@ -43,5 +37,4 @@ struct ErrorMessage {
 
     let enterCountry = "Enter Country"
     let enterTimezone = "Enter TimeZone"
-    let passwordDonotMatch = "Password and Confirm password donot match"
 }
