@@ -114,6 +114,12 @@ extension AppDelegate {
         }else {
             setLocalization(language: .english)
         }
+        
+        // disable Dark Mode in iOS 13
+        if #available(iOS 13, *) {
+            window?.overrideUserInterfaceStyle = .light
+        }
+        
         UINavigationBar.appearance().barTintColor = .white
         UINavigationBar.appearance().tintColor = .darkGray
         var attributes = [NSAttributedString.Key : Any]()
