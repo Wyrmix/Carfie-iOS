@@ -25,7 +25,6 @@ struct Storyboard {
     let SocialLoginViewController = "SocialLoginViewController"
     let navigation = "navigation"
     let UserNavigationViewController = "UserNavigationViewController"
-    //let resetPasswordVC = "resetPasswordVC"
     let ProfileViewController = "ProfileViewController"
     let yourTripViewController = "yourTripViewController"
     let EarningsViewController = "EarningsViewController"
@@ -60,7 +59,7 @@ struct XIB {
     let offlineView = "offlineView"
     let rideArrivedView = "rideArrivedView"
     let invoiceView = "invoiceView"
-    let yourTripCell = "YourTripCell"
+    let yourTripCell = "yourTripCell"
     let headerView = "headerView"
     let sectionView = "sectionView"
     let earningCell = "earningCell"
@@ -71,13 +70,3 @@ struct XIB {
     let WalletListTableViewCell = "WalletListTableViewCell"
     let DocumentsTableViewCell = "DocumentsTableViewCell"
 }
-
-
-//MARK:- Notification
-
-extension Notification.Name {
-   //public static let reachabilityChanged = Notification.Name("reachabilityChanged")
-}
-
-
-
