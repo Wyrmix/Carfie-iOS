@@ -12,39 +12,15 @@ import Stripe
 
 class Common {
     
-    class func isValid(email : String)->Bool{
-        
-        let emailTest = NSPredicate(format:"SELF MATCHES %@","[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
-        return emailTest.evaluate(with: email)
-        
-    }
-    
     class func getBackButton()->UIBarButtonItem{
         let backItem = UIBarButtonItem()
         backItem.title = "Back"
         return backItem// This will show in the next view controller being pushed
     }
     
-//    class func GMSAutoComplete(fromView : GMSAutocompleteViewControllerDelegate?)->GMSAutocompleteViewController{
-//
-//    let gmsAutoCompleteFilter = GMSAutocompleteFilter()
-//    gmsAutoCompleteFilter.country =  GMSCountryCode
-//    gmsAutoCompleteFilter.type = .city
-//    let gmsAutoComplete = GMSAutocompleteViewController()
-//    gmsAutoComplete.delegate = fromView
-//    gmsAutoComplete.autocompleteFilter = gmsAutoCompleteFilter
-//    return gmsAutoComplete
-//    }
-    
-    
     class func getCurrentCode()->String?{
-        
        return (Locale.current as NSLocale).object(forKey:  NSLocale.Key.countryCode) as? String
-  
     }
-    
-    
-    
     
     //MARK:- Get Countries from JSON
     
