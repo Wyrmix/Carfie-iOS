@@ -5,47 +5,33 @@
 version: 2
 
 jobs:
-  build:
-  generate-project-file:
+  build-and-test:
     macos:
-      xcode: "11.0"
-    steps:
-      - checkout
-      - run:
-          command: |
-            brew install xcodegen
-            xcodegen generate
+        xcode: "11.0"
+      steps:
+        - checkout
 
-  install-cocoapods:
-    macos:
-      xcode: "11.0"
-    steps:
-      - checkout
-      - run:
-          name: Fetch CocoaPods specs
-          command: |
-            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-      - run:
-          name: Install CocoaPods
-          command: pod install
+        # Install Xcodegen and create the project file from source
+        - run:
+            command: |
+              brew install xcodegen
+              xcodegen generate
 
-  core-tests:
-    macos:
-      xcode: "11.0"
-    steps:
-      - checkout
-      - run:
-          name: Build and run tests
-          command: fastlane scan
-          environment:
-            SCAN_DEVICE: iPhone 6
-            SCAN_SCHEME: CoreTests
+        # Fetch Cocoapods specs from the CircleCI cache to save build time
+        - run:
+            name: Fetch CocoaPods specs
+            command: |
+              curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
-workflows:
-  version: 2
-  build-test:
-    jobs:
-      - generate-project-file
-      - install-cocoapods
-      - build
-      - core-tests
+        # Install Cocoapods
+        - run:
+            name: Install CocoaPods
+            command: pod install
+
+        # Run Core tests
+        - run:
+            name: Build and run tests
+            command: fastlane scan
+            environment:
+              SCAN_DEVICE: iPhone 6
+              SCAN_SCHEME: CoreTests
