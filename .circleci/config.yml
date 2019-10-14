@@ -14,7 +14,7 @@ jobs:
       # Install Xcodegen and create the project file from source
       - run:
           command: |
-            brew install xcodegen
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
             xcodegen generate
 
       # Fetch Cocoapods specs from the CircleCI cache to save build time
