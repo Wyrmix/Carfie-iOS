@@ -5,6 +5,7 @@
 version: 2
 
 jobs:
+  build:
   generate-project-file:
     macos:
       xcode: "11.0"
@@ -21,10 +22,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install CocoaPods
+          name: Fetch CocoaPods specs
           command: |
             curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-            pod install
+      - run:
+          name: Install CocoaPods
+          command: pod install
 
   core-tests:
     macos:
@@ -37,3 +40,12 @@ jobs:
           environment:
             SCAN_DEVICE: iPhone 6
             SCAN_SCHEME: CoreTests
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - generate-project-file
+      - install-cocoapods
+      - build
+      - core-tests
