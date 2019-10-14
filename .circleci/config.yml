@@ -12,6 +12,8 @@ jobs:
       - checkout
 
       # Install Xcodegen and create the project file from source
+      # Prefix for brew install will cut build times down by 2+ minutes, but
+      # could eventually become a problem if Homebrew is out of date.
       - run:
           command: |
             HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
@@ -24,9 +26,17 @@ jobs:
             curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
       # Install Cocoapods
+      - restore_cache:
+          key: 1-pods-{{ checksum "Podfile.lock" }}
       - run:
-          name: Install CocoaPods
+          name: Install Pods
           command: pod install
+      - save_cache:
+          keys:
+            - 1-pods-{{ checksum "Podfile.lock" }}
+            - 1-pods-
+          paths:
+            - ./Pods
 
       # Run Core tests
       - run:
