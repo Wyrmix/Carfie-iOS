@@ -7,31 +7,31 @@ version: 2
 jobs:
   build-and-test:
     macos:
-        xcode: "11.0"
-      steps:
-        - checkout
+      xcode: "11.0"
+    steps:
+      - checkout
 
-        # Install Xcodegen and create the project file from source
-        - run:
-            command: |
-              brew install xcodegen
-              xcodegen generate
+      # Install Xcodegen and create the project file from source
+      - run:
+          command: |
+            brew install xcodegen
+            xcodegen generate
 
-        # Fetch Cocoapods specs from the CircleCI cache to save build time
-        - run:
-            name: Fetch CocoaPods specs
-            command: |
-              curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+      # Fetch Cocoapods specs from the CircleCI cache to save build time
+      - run:
+          name: Fetch CocoaPods specs
+          command: |
+            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
-        # Install Cocoapods
-        - run:
-            name: Install CocoaPods
-            command: pod install
+      # Install Cocoapods
+      - run:
+          name: Install CocoaPods
+          command: pod install
 
-        # Run Core tests
-        - run:
-            name: Build and run tests
-            command: fastlane scan
-            environment:
-              SCAN_DEVICE: iPhone 6
-              SCAN_SCHEME: CoreTests
+      # Run Core tests
+      - run:
+          name: Build and run tests
+          command: fastlane scan
+          environment:
+            SCAN_DEVICE: iPhone 6
+            SCAN_SCHEME: CoreTests
