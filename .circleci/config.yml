@@ -41,7 +41,7 @@ jobs:
           command: fastlane scan
           environment:
             SCAN_DEVICE: iPhone 6
-            SCAN_SCHEME: RiderTests
+            SCAN_SCHEME: Rider
 
       # Build the app and run tests
       - run:
@@ -49,7 +49,7 @@ jobs:
           command: fastlane scan
           environment:
             SCAN_DEVICE: iPhone 6
-            SCAN_SCHEME: DriverTests
+            SCAN_SCHEME: Driver
 
       # Collect XML test results data to show in the UI,
       # and save the same XML files under test-results folder
