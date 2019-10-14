@@ -46,3 +46,19 @@ jobs:
           environment:
             SCAN_DEVICE: iPhone 6
             SCAN_SCHEME: CoreTests
+
+      # Run Rider tests
+      - run:
+          name: Build and run tests
+          command: fastlane scan
+          environment:
+            SCAN_DEVICE: iPhone 6
+            SCAN_SCHEME: Rider
+
+      # Run Driver tests
+      - run:
+          name: Build and run tests
+          command: fastlane scan
+          environment:
+            SCAN_DEVICE: iPhone 6
+            SCAN_SCHEME: Driver
