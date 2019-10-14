@@ -17,8 +17,7 @@ jobs:
       - run:
           command: |
             git clone https://github.com/yonaskolb/XcodeGen.git
-            cd XcodeGen
-            make install
+            make XcodeGen/install
             xcodegen generate
 
       # Install CocoaPods
