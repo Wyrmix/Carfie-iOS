@@ -26,6 +26,7 @@ jobs:
             curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
       # Install Cocoapods
+      # Caching the Pods directory saves about 30-60 seconds of build time.
       - restore_cache:
           keys: 
             - 1-pods-{{ checksum "Podfile.lock" }}
