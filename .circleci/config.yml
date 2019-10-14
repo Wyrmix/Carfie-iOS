@@ -27,14 +27,14 @@ jobs:
 
       # Install Cocoapods
       - restore_cache:
-          key: 1-pods-{{ checksum "Podfile.lock" }}
+          keys: 
+            - 1-pods-{{ checksum "Podfile.lock" }}
+            - 1-pods-
       - run:
           name: Install Pods
           command: pod install
       - save_cache:
-          keys:
-            - 1-pods-{{ checksum "Podfile.lock" }}
-            - 1-pods-
+          key: 1-pods-{{ checksum "Podfile.lock" }}
           paths:
             - ./Pods
 
