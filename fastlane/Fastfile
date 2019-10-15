@@ -1,15 +1,3 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
 default_platform(:ios)
 
 platform :ios do
@@ -19,10 +7,47 @@ platform :ios do
     setup_circle_ci
   end
   
-  desc "Build and run tests"
+  desc "Build and run all tests"
   lane :test do
+    core_tests
+    rider_tests
+    driver_tests
+  end
+
+  desc "Build and run Core tests"
+  lane :core_tests do
     run_tests(scheme: "CoreTests")
+  end
+
+  desc "Build and run Rider tests"
+  lane :rider_tests do
     run_tests(scheme: "Rider")
+  end
+
+  desc "Build and run Driver tests"
+  lane :driver_tests do
     run_tests(scheme: "Driver")
+  end
+
+  desc "Build and deploy all app targets"
+  lane :beta do
+    beta_rider
+    beta_driver
+  end
+
+  desc "Build and deploy Rider to TestFlight"
+  lane :beta_rider do
+    build_app(scheme: "Rider",
+              workspace: "Carfie.xcworkspace",
+              include_bitcode: true)
+    upload_to_testflight(username: "gocarfie@gmail.com")
+  end
+
+  desc "Build and deploy Driver to TestFlight"
+  lane :beta_driver do
+    build_app(scheme: "Driver",
+              workspace: "Carfie.xcwworkspace",
+              include_bitcode: true)
+    upload_to_testflight(username: "gocarfie@gmail.com")
   end
 end

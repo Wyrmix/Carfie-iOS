@@ -53,5 +53,5 @@ jobs:
       
       # Build and run all tests
       - run:
-          name: fastlane tests
+          name: fastlane test
           command: bundle exec fastlane $FASTLANE_LANE

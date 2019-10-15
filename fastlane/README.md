@@ -16,11 +16,41 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
+### ios test
+```
+fastlane ios test
+```
+Build and run all tests
 ### ios core_tests
 ```
 fastlane ios core_tests
 ```
-Run Core tests
+Build and run Core tests
+### ios rider_tests
+```
+fastlane ios rider_tests
+```
+Build and run Rider tests
+### ios driver_tests
+```
+fastlane ios driver_tests
+```
+Build and run Driver tests
+### ios beta
+```
+fastlane ios beta
+```
+Build and deploy all app targets
+### ios beta_rider
+```
+fastlane ios beta_rider
+```
+Build and deploy Rider to TestFlight
+### ios beta_driver
+```
+fastlane ios beta_driver
+```
+Build and deploy Driver to TestFlight
 
 ----
 
