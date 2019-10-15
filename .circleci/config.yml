@@ -19,7 +19,8 @@ jobs:
             HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
             xcodegen generate
 
-      # Fetch Cocoapods specs from the CircleCI cache to save build time
+      # Fetch Cocoapods specs from the CircleCI cache to save build time.
+      # Sadly, this step still takes ~4 minutes.
       - run:
           name: Fetch CocoaPods specs
           command: |
@@ -41,7 +42,7 @@ jobs:
 
       # Run Core tests
       - run:
-          name: Build and run tests
+          name: Build and run Core tests
           command: fastlane scan
           environment:
             SCAN_DEVICE: iPhone 6
@@ -49,7 +50,7 @@ jobs:
 
       # Run Rider tests
       - run:
-          name: Build and run tests
+          name: Build and run Rider tests
           command: fastlane scan
           environment:
             SCAN_DEVICE: iPhone 6
@@ -57,7 +58,7 @@ jobs:
 
       # Run Driver tests
       - run:
-          name: Build and run tests
+          name: Build and run Driver tests
           command: fastlane scan
           environment:
             SCAN_DEVICE: iPhone 6
