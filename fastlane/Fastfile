@@ -1,0 +1,28 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+default_platform(:ios)
+
+platform :ios do
+
+  # Necessary for CircleCI integration
+  before_all do
+    setup_circle_ci
+  end
+  
+  desc "Build and run tests"
+  lane :test do
+    run_tests(scheme: "CoreTests")
+    run_tests(scheme: "Rider")
+    run_tests(scheme: "Driver")
+  end
+end
