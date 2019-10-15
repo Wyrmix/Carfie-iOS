@@ -38,11 +38,6 @@ class ChangeResetPasswordController: UIViewController {
         self.initialLoads()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.viewNext.makeRoundedCorner()
@@ -55,7 +50,6 @@ class ChangeResetPasswordController: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         
     }
-    
 }
 
 //MARK:- Methods
@@ -70,9 +64,11 @@ extension ChangeResetPasswordController {
         self.viewNext.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextAction)))
         self.buttonNext.addTarget(self, action: #selector(self.nextAction), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
-        if #available(iOS 11.0, *), !isChangePassword {
+        
+        if !isChangePassword {
             self.navigationController?.navigationBar.prefersLargeTitles = true
         }
+        
         self.scrollView.addSubview(viewScroll)
         self.buttonNext.isHidden = !isChangePassword
         self.viewNext.isHidden = isChangePassword
@@ -86,13 +82,9 @@ extension ChangeResetPasswordController {
     
     
     private func setDesigns(){
-        
-        //        self.textFieldEmail.borderInactiveColor = .lightGray
-        //        self.textFieldEmail.placeholderColor = .gray
-        //        self.textFieldEmail.textColor = .black
-        self.textFieldOtpOrCurrentPassword.delegate = self
-        self.textFieldNewPassword.delegate = self
-        self.textFieldConfirmPassword.delegate = self
+        textFieldOtpOrCurrentPassword.delegate = self
+        textFieldNewPassword.delegate = self
+        textFieldConfirmPassword.delegate = self
         Common.setFont(to: textFieldNewPassword)
         Common.setFont(to: textFieldConfirmPassword)
         Common.setFont(to: textFieldOtpOrCurrentPassword)
@@ -128,33 +120,44 @@ extension ChangeResetPasswordController {
             return
         }
         
-        guard  let newPassword = self.textFieldNewPassword.text, !newPassword.isEmpty else {
-            self.view.make(toast: Constants.string.enterNewpassword.localize()) {
-                self.textFieldNewPassword.becomeFirstResponder()
-            }
+        guard let newPassword = validatePassword(textFieldNewPassword.text) else {
+            textFieldNewPassword.becomeFirstResponder()
             return
         }
         
-        guard  let confirmPassword = self.textFieldNewPassword.text, !confirmPassword.isEmpty else {
-            self.view.make(toast: Constants.string.enterConfirmPassword.localize()) {
-                self.textFieldConfirmPassword.becomeFirstResponder()
-            }
+        guard let confirmPassword = validatePassword(textFieldConfirmPassword.text) else {
+            textFieldConfirmPassword.becomeFirstResponder()
+            return
+        }
+        
+        guard newPassword == confirmPassword else {
+            view.make(toast: SignUp.ErrorMessage.passwordsDoNotMatch)
             return
         }
        
         if isChangePassword {
-            self.userDataObject = UserDataResponse()
-            self.userDataObject?.old_password = otpCurrentPassword
+            userDataObject = UserDataResponse()
+            userDataObject?.old_password = otpCurrentPassword
         }
-        self.userDataObject?.password = newPassword
-        self.userDataObject?.password_confirmation = confirmPassword
-        self.loader.isHidden = false
-        self.presenter?.post(api: isChangePassword ? .changePassword : .resetPassword, data: self.userDataObject?.toData())
         
+        userDataObject?.password = newPassword
+        userDataObject?.password_confirmation = confirmPassword
+        loader.isHidden = false
+        presenter?.post(api: isChangePassword ? .changePassword : .resetPassword, data: self.userDataObject?.toData())
     }
     
-    
-    
+    private func validatePassword(_ password: String?) -> String? {
+        do {
+            let password = try PasswordValidator().validate(password).resolve()
+            return password
+        } catch let error as ValidationError {
+            view.make(toast: error.errorMessage)
+        } catch {
+            view.make(toast: SignUp.ErrorMessage.mustEnterPassword)
+        }
+        
+        return nil
+    }
 }
 
 //MARK:- UITextFieldDelegate

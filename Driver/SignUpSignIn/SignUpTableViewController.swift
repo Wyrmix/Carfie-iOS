@@ -180,24 +180,20 @@ extension SignUpTableViewController {
             return
         }
         
-        guard let password = self.textFieldPassword.text, !password.isEmpty, password.count>=6 else {
-            vibrate(sound: .cancelled)
+        guard let password = validateField(textFieldPassword.text, with: PasswordValidator()) else {
             textFieldPassword.shake()
-             UIApplication.shared.keyWindow?.make(toast: ErrorMessage.list.enterPassword.localize())
             return
         }
-        guard let confirmPassword = self.fieldConfirmPassword.text, !confirmPassword.isEmpty, confirmPassword.count>=6 else {
-            vibrate(sound: .cancelled)
-            fieldConfirmPassword.shake()
-             UIApplication.shared.keyWindow?.make(toast: ErrorMessage.list.enterConfirmPassword.localize())
-            return
-        }
-        if textFieldPassword.text != fieldConfirmPassword.text {
-             UIApplication.shared.keyWindow?.make(toast: ErrorMessage.list.passwordNotMatch.localize())
-            return
-        }
-        //self.loader.isHidden = false
         
+        guard let confirmPassword = validateField(fieldConfirmPassword.text, with: PasswordValidator()) else {
+            fieldConfirmPassword.shake()
+            return
+        }
+        
+        guard password == confirmPassword else {
+            UIApplication.shared.keyWindow?.make(toast: SignUp.ErrorMessage.passwordsDoNotMatch)
+            return
+        }
         
         let akPhone = AKFPhoneNumber(countryCode: "in", phoneNumber: phoneNumber)
         let accountKitVC = accountKit.viewControllerForPhoneLogin(with: akPhone, state: UUID().uuidString)
@@ -205,9 +201,7 @@ extension SignUpTableViewController {
         self.prepareLogin(viewcontroller: accountKitVC)
         self.present(accountKitVC, animated: true, completion: nil)
         
-        userSignUpInfo = MakeJson.SingUp(firstName: firstName, lastName: lastName, email: email, mobile: Int(phoneNumber) ?? 0, password: password, ConfirmPassword: password, device_Id: deviceId, device_type: DeviceType.ios.rawValue , device_token: deviceTokenString)
-
-       // self.presenter?.post(api: .signUp, data: MakeJson.SingUp(firstName: firstName, lastName: lastName, email: email, mobile: Int(self.textFieldPhoneNumber.text!)!, password: self.textFieldPassword.text!, ConfirmPassword: self.textFieldPassword.text!, device_Id: deviceId, device_type: DeviceType.ios.rawValue , device_token: deviceToken) )
+        userSignUpInfo = MakeJson.SingUp(firstName: firstName, lastName: lastName, email: email, mobile: Int(phoneNumber) ?? 0, password: password, ConfirmPassword: confirmPassword, device_Id: deviceId, device_type: DeviceType.ios.rawValue , device_token: deviceTokenString)
     }
     
     

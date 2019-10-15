@@ -123,17 +123,11 @@ extension SignUpUserTableViewController {
         }
        
         guard let phoneNumber = validateField(phoneNumber.text, with: PhoneValidator()) else { return }
+        guard let password = validateField(passwordText.text, with: PasswordValidator()) else { return }
+        guard let confirmPwd = validateField(confirmPwdText.text, with: PasswordValidator()) else { return }
 
-        guard let password = passwordText.text, !password.isEmpty, password.count>=6 else {
-             self.showToast(string: ErrorMessage.list.enterPassword.localize())
-            return
-        }
-        guard let confirmPwd = confirmPwdText.text, !confirmPwd.isEmpty else {
-             self.showToast(string: ErrorMessage.list.enterConfirmPassword.localize())
-            return
-        }
         guard confirmPwd == password else {
-            self.showToast(string: ErrorMessage.list.passwordDonotMatch.localize())
+            self.showToast(string: SignUp.ErrorMessage.passwordsDoNotMatch)
             return
         }
         userInfo =  MakeJson.signUp(loginBy: .manual, email: email, password: password, socialId: nil, firstName: firstName, lastName: lastName, mobile: Int(phoneNumber))

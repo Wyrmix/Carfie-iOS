@@ -131,7 +131,7 @@ extension PasswordViewController {
         guard  let passwordText = self.textFieldPassword.text, !passwordText.isEmpty else {
             vibrate(sound: .cancelled)
             textFieldPassword.shake()
-            self.view.make(toast: ErrorMessage.list.enterPassword) {
+            self.view.make(toast: SignUp.ErrorMessage.mustEnterPassword) {
                 self.textFieldPassword.becomeFirstResponder()
             }
             
