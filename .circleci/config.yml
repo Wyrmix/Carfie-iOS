@@ -1,0 +1,57 @@
+# iOS CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/ios-migrating-from-1-2/ for more details
+#
+version: 2
+
+jobs:
+  build:
+    macos:
+      xcode: "11.1.0"
+    environment:
+      FASTLANE_LANE: test
+    steps:
+      - checkout
+
+      # Install Xcodegen and create the project file from source
+      # Prefix for brew install will cut build times down by 2+ minutes, but
+      # could eventually become a problem if Homebrew is out of date.
+      - run:
+          command: |
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
+            xcodegen generate
+
+      # Fetch Cocoapods specs from the CircleCI cache to save build time.
+      # Sadly, this step still takes ~4 minutes.
+      - run:
+          name: Fetch CocoaPods specs
+          command: |
+            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+
+      # Install Cocoapods
+      # Caching the Pods directory saves about 30-60 seconds of build time.
+      - restore_cache:
+          keys: 
+            - 1-pods-{{ checksum "Podfile.lock" }}
+            - 1-pods-
+      - run:
+          name: Install Pods
+          command: pod install
+      - save_cache:
+          key: 1-pods-{{ checksum "Podfile.lock" }}
+          paths:
+            - ./Pods
+
+      # Setup Fastlane
+      - restore_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+      - run: bundle check || bundle install --path vendor/bundle
+      - save_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      
+      # Build and run all tests
+      - run:
+          name: fastlane test
+          command: bundle exec fastlane $FASTLANE_LANE
