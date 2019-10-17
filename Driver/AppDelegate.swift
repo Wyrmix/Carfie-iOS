@@ -53,6 +53,10 @@ extension AppDelegate {
     private func configureRootInteractor() {
         rootContainerInteractor.delegate = self
         
+        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: [LocationPermissionsViewController(), CarfieSignUpViewController()])
+        onboardingInteractor.delegate = rootContainerInteractor
+        rootContainerInteractor.configureOnboardingNavigationController(OnboardingNavigationController.navigationController(for: onboardingInteractor))
+        
         let loginViewController = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.LaunchViewController)
         rootContainerInteractor.configureLoginViewController(loginViewController)
         
@@ -71,7 +75,8 @@ extension AppDelegate: RootContainerInteractorDelegate {
         
         if shouldShowLogin {
             // Do not animate present on initial launch
-            rootContainerInteractor.presentLoginExperience(animated: false)
+            rootContainerInteractor.presentOnboardingExperience()
+//            rootContainerInteractor.presentLoginExperience(animated: false)
         } else {
             rootContainerInteractor.start()
         }

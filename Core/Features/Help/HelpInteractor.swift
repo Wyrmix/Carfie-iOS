@@ -3,6 +3,7 @@
 //  Rider
 //
 //  Created by Christopher Olsen on 10/2/19.
+//  Copyright © 2019 Carfie. All rights reserved.
 //
 
 import MessageUI

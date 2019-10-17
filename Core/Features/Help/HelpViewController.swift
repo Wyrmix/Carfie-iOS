@@ -2,8 +2,8 @@
 //  helpViewController.swift
 //  User
 //
-//  Created by CSS on 08/05/18.
-//  Copyright © 2018 Appoets. All rights reserved.
+//  Created by Christopher Olsen on 10/2/19.
+//  Copyright © 2019 Carfie. All rights reserved.
 //
 
 
