@@ -46,7 +46,7 @@ platform :ios do
   desc "Build and deploy Driver to TestFlight"
   lane :beta_driver do
     build_app(scheme: "Driver",
-              workspace: "Carfie.xcwworkspace",
+              workspace: "Carfie.xcworkspace",
               include_bitcode: true)
     upload_to_testflight(username: "gocarfie@gmail.com")
   end
