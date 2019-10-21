@@ -351,9 +351,12 @@ extension HomepageViewController {
             (vc as! DocumentsTableViewController).isGettingDocuments = true
             self.removeCardVC()
             if self.documentController == nil {
-                self.documentController = UINavigationController(rootViewController: vc)
-                present(self.documentController!, animated: true, completion: nil)
+//                self.documentController = UINavigationController(rootViewController: vc)
+//                present(self.documentController!, animated: true, completion: nil)
+                self.documentController = UINavigationController(rootViewController: DriverDocumentsTableViewController.viewController())
+                present(self.documentController!, animated: true)
             }
+            
         } else if type(of: vc) == AddCardViewController.self {
             (vc as! AddCardViewController).isGettingDocuments = true
             self.removeDocumentsVC()
