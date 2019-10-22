@@ -209,28 +209,5 @@ extension DocumentsTableViewController : PostViewProtocol {
             forceLogout(with: data)
         }
     }
- 
-//    private func updateDocumentsAndResizeImage(_ image: UIImage) {
-//        guard var imageData = image.pngData() else { return }
-//        var size = Double(imageData.count) / 1024
-//        while size > 2048 {
-//            guard let imageResized = image.resize(with: 0.9), let imageObjectData = imageResized.pngData() else { return }
-//            imageData = imageObjectData
-//            size = Double(imageObjectData.count)/1024
-//        }
-//        
-//        modifiedDocuments.updateValue((image: imageResized, data: imageData), forKey: documentId)
-//    }
 }
 
-//extension DocumentsTableViewController: UIImagePickerControllerDelegate {
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        picker.dismiss(animated: true) {
-//            guard let image = info[UIImagePickerController.InfoKey.editedImage.rawValue] as? UIImage else { return }
-//        }
-//    }
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        picker.dismiss(animated: true)
-//    }
-//}
