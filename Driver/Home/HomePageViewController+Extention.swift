@@ -354,6 +354,7 @@ extension HomepageViewController {
                 self.documentController = UINavigationController(rootViewController: vc)
                 present(self.documentController!, animated: true, completion: nil)
             }
+            
         } else if type(of: vc) == AddCardViewController.self {
             (vc as! AddCardViewController).isGettingDocuments = true
             self.removeDocumentsVC()
