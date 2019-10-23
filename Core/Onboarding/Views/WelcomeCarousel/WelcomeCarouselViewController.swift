@@ -8,13 +8,17 @@
 
 import UIKit
 
+/// The first view controller the User sees when launching the app.
+/// Contains links for sign-in and sign-up as well as a carousel of promotions and other info for the user.
 class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
-    static func viewController(theme: AppTheme) -> WelcomeCarouselViewController {
-        let viewController = WelcomeCarouselViewController(theme: theme)
+    static func viewController(theme: AppTheme, interactor: WelcomeCarouselInteractor) -> WelcomeCarouselViewController {
+        let viewController = WelcomeCarouselViewController(theme: theme, interactor: interactor)
         return viewController
     }
     
     weak var onboardingDelegate: OnboardingScreenDelegate?
+    
+    private var interactor: WelcomeCarouselInteractor
     
     private let theme: AppTheme
     
@@ -33,10 +37,14 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         return imageView
     }()
     
-    private let carouselView: UIView = {
-        let view = UIView()
+    private let carouselView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
+        view.isPagingEnabled = true
+        view.showsHorizontalScrollIndicator = false
         return view
     }()
     
@@ -49,24 +57,35 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     
     private let signUpButton: CarfieButton
     private let signInButton: CarfieButton
+    
+    private let reuseIdentifier = "WelcomePromoCell"
+    
+    private var carouselItems: [WelcomeCarouselCellViewState] = []
         
-    init(theme: AppTheme) {
+    init(theme: AppTheme, interactor: WelcomeCarouselInteractor) {
         self.theme = theme
+        self.interactor = interactor
         self.signUpButton = CarfieButton(theme: theme)
         self.signInButton = CarfieButton(theme: theme)
         
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .white
+        self.interactor.viewController = self
         setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        interactor.getCarouselItemsData()
         addGradientLayer()
     }
     
     private func setupViews() {
+        carouselView.register(WelcomeCarouselCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        carouselView.delegate = self
+        carouselView.dataSource = self
+        
         logoImageView.image = theme.logoImage
         signUpButton.setTitle("Sign Up", for: .normal)
         signInButton.setTitle("Sign In", for: .normal)
@@ -128,5 +147,40 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     
     @objc private func nextButtonTouchUpInside(_ sender: Any) {
         onboardingDelegate?.onboardingScreenComplete()
+    }
+}
+
+// MARK: - UICollectionViewDelegate & DataSource
+extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func presentCarouselItems(_ carouselItems: [WelcomeCarouselCellViewState]) {
+        self.carouselItems = carouselItems
+        carouselView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return carouselItems.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? WelcomeCarouselCollectionViewCell else {
+            fatalError("Could not dequeue UICollectionViewCell of type WelcomeCarouselCollectionViewCell")
+        }
+        
+        cell.configure(with: carouselItems[indexPath.row])
+        return cell
+    }
+}
+
+extension WelcomeCarouselViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }

@@ -13,6 +13,7 @@ enum AppTheme {
     case driver
     case rider
     
+    /// Gradient background color used for onboarding screens.
     var onboardingGradientColors: [CGColor] {
         switch self {
         case .driver:
@@ -22,6 +23,7 @@ enum AppTheme {
         }
     }
     
+    /// The main hero image used for eachj app flavor.
     var logoImage: UIImage? {
         switch self {
         case .driver:
