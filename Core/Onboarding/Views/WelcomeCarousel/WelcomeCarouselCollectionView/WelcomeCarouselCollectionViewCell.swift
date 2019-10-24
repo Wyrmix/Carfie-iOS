@@ -20,6 +20,7 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
     
     private var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -39,7 +40,7 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
     private var cellStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 16
@@ -81,7 +82,7 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
             cellStackView.topAnchor.constraint(equalTo: topAnchor),
             cellStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             cellStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            cellStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            cellStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
         ])
     }
     
@@ -92,8 +93,8 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
     func configure(with viewState: WelcomeCarouselCellViewState) {
         // Order of operations is important here. It will determine the order the items appear
         // in the cell StackView.
+        setupTopLabel(with: viewState.topLabelText)
         setupImageView(with: viewState.image)
-        
         boldLabel.text = viewState.boldText
         cellStackView.addArrangedSubview(boldLabel)
         setupBottomLabel(with: viewState.bottomLabelText)
@@ -106,8 +107,16 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
         guard let image = image else { return }
         
         imageView.image = image
-        imageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         cellStackView.addArrangedSubview(imageView)
+    }
+    
+    private func setupTopLabel(with text: String?) {
+        guard let text = text else { return }
+        
+        topLabel.text = text
+        cellStackView.addArrangedSubview(topLabel)
     }
     
     private func setupBottomLabel(with text: String?) {

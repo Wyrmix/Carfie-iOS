@@ -23,6 +23,8 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     
     private let theme: AppTheme
     
+    // MARK: UI Components
+    
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +54,7 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     private let pageIndicator: UIPageControl = {
         let indicator = UIPageControl()
         indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.isUserInteractionEnabled = false
         indicator.currentPageIndicatorTintColor = .white
         indicator.backgroundColor = .clear
         indicator.currentPage = 0
@@ -61,10 +64,13 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     private let signUpButton: CarfieButton
     private let signInButton: CarfieButton
     
-    private let reuseIdentifier = "WelcomePromoCell"
+    // MARK: Collection View Properties
     
+    private let reuseIdentifier = "WelcomePromoCell"
     private var carouselItems: [WelcomeCarouselCellViewState] = []
-        
+    
+    // MARK: Lifecycle
+    
     init(theme: AppTheme, interactor: WelcomeCarouselInteractor) {
         self.theme = theme
         self.interactor = interactor
@@ -77,12 +83,18 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         setupViews()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented.")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         interactor.getCarouselItemsData()
         addGradientLayer()
     }
+    
+    // MARK: View Setup
     
     private func setupViews() {
         carouselView.register(WelcomeCarouselCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -114,15 +126,16 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
             
             carfieLogoImageView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor),
             carfieLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            carfieLogoImageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 24),
+            logoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 80),
+//            carfieLogoImageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 24),
             carfieLogoHeightConstraint,
             
             carouselView.topAnchor.constraint(greaterThanOrEqualTo: carfieLogoImageView.bottomAnchor, constant: 16),
             carouselView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             carouselView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            carouselView.heightAnchor.constraint(equalToConstant: 386),
+            carouselView.heightAnchor.constraint(equalToConstant: 416),
             
-            pageIndicator.topAnchor.constraint(equalTo: carouselView.bottomAnchor, constant: 16),
+            pageIndicator.topAnchor.constraint(equalTo: carouselView.bottomAnchor, constant: 4),
             pageIndicator.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -16),
             pageIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageIndicator.widthAnchor.constraint(equalToConstant: 60),
@@ -144,9 +157,7 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         view.layer.insertSublayer(gradient, at: 0)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented.")
-    }
+    // MARK: Selectors
     
     @objc private func nextButtonTouchUpInside(_ sender: Any) {
         onboardingDelegate?.onboardingScreenComplete()
@@ -182,6 +193,7 @@ extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionV
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension WelcomeCarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)

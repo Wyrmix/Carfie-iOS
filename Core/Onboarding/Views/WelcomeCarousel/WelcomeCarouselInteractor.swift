@@ -6,7 +6,7 @@
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 class WelcomeCarouselInteractor {
     weak var viewController: WelcomeCarouselViewController?
@@ -17,44 +17,15 @@ class WelcomeCarouselInteractor {
         self.theme = theme
     }
     
+    /// Get data to populate the welcome carousels.
+    /// Will trigger a reload of the collection view.
+    // TODO: Add a presentation layer
     func getCarouselItemsData() {
         switch theme {
         case .driver:
             viewController?.presentCarouselItems(WelcomeCarouselData.driverItems)
         case .rider:
-            viewController?.presentCarouselItems(WelcomeCarouselData.driverItems)
+            viewController?.presentCarouselItems(WelcomeCarouselData.riderItems)
         }
     }
-}
-
-struct WelcomeCarouselData {
-    static let driverItems: [WelcomeCarouselCellViewState] = [
-        WelcomeCarouselCellViewState(
-            theme: .driver,
-            topLabelText: nil,
-            image: nil,
-            boldText: "Drive for Carfie.\nGet Paid.\nEarn rewards.",
-            bottomLabelText: "The only ridesharing app for events and conventions",
-            showActionButton: false,
-            actionButtonLink: nil
-        ),
-        WelcomeCarouselCellViewState(
-            theme: .driver,
-            topLabelText: nil,
-            image: UIImage(named: "Jingleball"),
-            boldText: "Complete 2 rides to and from Jingle ball for a $1000 sign up bonus",
-            bottomLabelText: nil,
-            showActionButton: true,
-            actionButtonLink: nil
-        ),
-        WelcomeCarouselCellViewState(
-            theme: .driver,
-            topLabelText: nil,
-            image: UIImage(named: "WalletBonus"),
-            boldText: "Complete 150 rides in 90 days for a $500 bonus",
-            bottomLabelText: nil,
-            showActionButton: true,
-            actionButtonLink: nil
-        ),
-    ]
 }
