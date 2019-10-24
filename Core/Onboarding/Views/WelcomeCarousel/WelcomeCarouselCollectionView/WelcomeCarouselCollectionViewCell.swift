@@ -10,6 +10,8 @@ import UIKit
 
 class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
     
+    // MARK: UI components
+    
     private var topLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
@@ -34,11 +36,6 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private var actionButton: CarfieButton = {
-        let button = CarfieButton(theme: .driver)
-        return button
-    }()
-    
     private var cellStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,6 +46,10 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
+    private var actionButton: CarfieButton?
+    
+    // MARK: Inits
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
@@ -56,6 +57,15 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented.")
+    }
+    
+    // MARK: View Setup
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cellStackView.arrangedSubviews.forEach {
+            cellStackView.removeArrangedSubview($0)
+        }
     }
     
     private func setup() {
@@ -75,6 +85,8 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    // MARK: Public view conmfiguration
+    
     /// Configure the cell's UI components.
     /// - Parameter viewState: ViewState object that represents the configuration for the cell.
     func configure(with viewState: WelcomeCarouselCellViewState) {
@@ -85,8 +97,10 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
         boldLabel.text = viewState.boldText
         cellStackView.addArrangedSubview(boldLabel)
         setupBottomLabel(with: viewState.bottomLabelText)
-        setupActionButton(isVisible: viewState.showActionButton)
+        setupActionButton(isVisible: viewState.showActionButton, withTheme: viewState.theme)
     }
+    
+    // MARK: Private view configuration
     
     private func setupImageView(with image: UIImage?) {
         guard let image = image else { return }
@@ -103,16 +117,24 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
         cellStackView.addArrangedSubview(bottomLabel)
     }
     
-    private func setupActionButton(isVisible: Bool) {
+    private func setupActionButton(isVisible: Bool, withTheme theme: AppTheme) {
         guard isVisible else { return }
         
-        actionButton.setTitle("Details", for: .normal)
+        // We only want to create this button once or we'll get duplicate buttons in
+        // the stack view.
+        if actionButton == nil {
+            actionButton = CarfieButton(theme: theme, style: .smallPrimary)
+        }
+        
+        actionButton?.setTitle("Details", for: .normal)
+        
+        guard actionButton != nil else { return }
         
         NSLayoutConstraint.activate([
-            actionButton.widthAnchor.constraint(equalToConstant: 120),
-            actionButton.heightAnchor.constraint(equalToConstant: 32),
+            actionButton!.widthAnchor.constraint(equalToConstant: 120),
+            actionButton!.heightAnchor.constraint(equalToConstant: 32),
         ])
         
-        cellStackView.addArrangedSubview(actionButton)
+        cellStackView.addArrangedSubview(actionButton!)
     }
 }

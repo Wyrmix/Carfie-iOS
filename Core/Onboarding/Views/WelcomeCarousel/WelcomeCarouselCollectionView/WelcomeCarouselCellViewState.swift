@@ -7,7 +7,8 @@
 
 import UIKit
 
-struct WelcomeCarouselCellViewState {
+struct WelcomeCarouselCellViewState: Equatable {
+    let theme: AppTheme
     let topLabelText: String?
     let image: UIImage?
     let boldText: String

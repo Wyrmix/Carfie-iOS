@@ -53,8 +53,7 @@ extension AppDelegate {
     private func configureRootInteractor() {
         rootContainerInteractor.delegate = self
         
-        let welcomeCarouselInteractor = DriverWelcomeCarouselInteractor()
-        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: [WelcomeCarouselViewController.viewController(theme: .driver, interactor: welcomeCarouselInteractor)])
+        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: [WelcomeCarouselViewController.viewController(theme: .driver)])
         onboardingInteractor.delegate = rootContainerInteractor
         rootContainerInteractor.configureOnboardingNavigationController(OnboardingNavigationController.navigationController(for: onboardingInteractor))
         

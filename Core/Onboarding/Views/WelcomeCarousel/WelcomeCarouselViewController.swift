@@ -11,7 +11,8 @@ import UIKit
 /// The first view controller the User sees when launching the app.
 /// Contains links for sign-in and sign-up as well as a carousel of promotions and other info for the user.
 class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
-    static func viewController(theme: AppTheme, interactor: WelcomeCarouselInteractor) -> WelcomeCarouselViewController {
+    static func viewController(theme: AppTheme) -> WelcomeCarouselViewController {
+        let interactor = WelcomeCarouselInteractor(theme: theme)
         let viewController = WelcomeCarouselViewController(theme: theme, interactor: interactor)
         return viewController
     }
@@ -48,10 +49,12 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         return view
     }()
     
-    private let pageIndicator: UIView = {
-        let indicator = UIView()
+    private let pageIndicator: UIPageControl = {
+        let indicator = UIPageControl()
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.backgroundColor = .white
+        indicator.currentPageIndicatorTintColor = .white
+        indicator.backgroundColor = .clear
+        indicator.currentPage = 0
         return indicator
     }()
     
@@ -154,6 +157,7 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
 extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func presentCarouselItems(_ carouselItems: [WelcomeCarouselCellViewState]) {
         self.carouselItems = carouselItems
+        pageIndicator.numberOfPages = carouselItems.count
         carouselView.reloadData()
     }
     
@@ -168,6 +172,13 @@ extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionV
         
         cell.configure(with: carouselItems[indexPath.row])
         return cell
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        for cell in carouselView.visibleCells {
+            guard let index = carouselView.indexPath(for: cell)?.row else { return }
+            pageIndicator.currentPage = index
+        }
     }
 }
 
