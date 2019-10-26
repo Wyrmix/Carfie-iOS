@@ -36,4 +36,7 @@ extension UIColor {
     
     /// Carfie teal color.
     static let carfieTeal = UIColor.fromRGB(components: (46, 149, 153))
+    
+    /// Carfie dark gray (mostly for text).
+    static let carfieDarkGray = UIColor.fromRGB(components: (39, 39, 39))
 }
