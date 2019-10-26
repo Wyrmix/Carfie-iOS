@@ -27,9 +27,9 @@ enum AppTheme {
     var logoImage: UIImage? {
         switch self {
         case .driver:
-            return UIImage(named: "DriverLogo")
+            return UIImage(named: "driverLogo")
         case .rider:
-            return UIImage(named: "RiderLogo")
+            return UIImage(named: "riderLogo")
         }
     }
 }
