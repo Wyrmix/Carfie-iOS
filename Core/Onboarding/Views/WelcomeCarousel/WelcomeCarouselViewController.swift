@@ -66,7 +66,6 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     
     // MARK: Collection View Properties
     
-    private let reuseIdentifier = "WelcomePromoCell"
     private var carouselItems: [WelcomeCarouselCellViewState] = []
     
     // MARK: Lifecycle
@@ -97,7 +96,8 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     // MARK: View Setup
     
     private func setupViews() {
-        carouselView.register(WelcomeCarouselCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        carouselView.register(WelcomeCarouselTextCell.self, forCellWithReuseIdentifier: WelcomeCarouselTextCell.reuseIdentifier)
+        carouselView.register(WelcomeCarouselImageCell.self, forCellWithReuseIdentifier: WelcomeCarouselImageCell.reuseIdentifier)
         carouselView.delegate = self
         carouselView.dataSource = self
         
@@ -123,7 +123,8 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         carfieLogoHeightConstraint.priority = .defaultLow
         
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            logoImageView.topAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            logoImageView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 124),
             
@@ -192,12 +193,21 @@ extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? WelcomeCarouselCollectionViewCell else {
-            fatalError("Could not dequeue UICollectionViewCell of type WelcomeCarouselCollectionViewCell")
+        var cell: (UICollectionViewCell & WelcomeCell)?
+        
+        switch carouselItems[indexPath.row].cellType {
+        case .text:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WelcomeCarouselTextCell.reuseIdentifier, for: indexPath) as? WelcomeCarouselTextCell & WelcomeCell
+        case .image:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WelcomeCarouselImageCell.reuseIdentifier, for: indexPath) as? WelcomeCarouselImageCell & WelcomeCell
         }
         
-        cell.configure(with: carouselItems[indexPath.row])
-        return cell
+        guard let welcomeCell = cell else {
+            fatalError("Could not dequeue UICollectionViewCell of type WelcomeCell")
+        }
+        
+        welcomeCell.configure(with: carouselItems[indexPath.row])
+        return welcomeCell
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

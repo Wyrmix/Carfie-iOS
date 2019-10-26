@@ -21,6 +21,8 @@ extension UIColor {
         return UIColor(red: components.red/255, green: components.green/255, blue: components.blue/255, alpha: alpha)
     }
 
+    // TODO: remove all references to this.
+    /// Legacy color, do not use.
     static let carfieBlue = UIColor.fromRGB(components: (49, 153, 215))
     
     /// Carfie orange color. Primary button color for the Driver app.

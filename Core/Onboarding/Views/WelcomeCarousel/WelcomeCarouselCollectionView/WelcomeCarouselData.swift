@@ -16,6 +16,7 @@ struct WelcomeCarouselData {
     static let driverItems: [WelcomeCarouselCellViewState] = [
         WelcomeCarouselCellViewState(
             theme: .driver,
+            cellType: .text,
             topLabelText: nil,
             image: nil,
             boldText: "Drive for Carfie.\nGet Paid.\nEarn rewards.",
@@ -25,6 +26,7 @@ struct WelcomeCarouselData {
         ),
         WelcomeCarouselCellViewState(
             theme: .driver,
+            cellType: .image,
             topLabelText: nil,
             image: UIImage(named: "Jingleball"),
             boldText: "Complete 2 rides to and from Jingle ball for a $1000 sign up bonus",
@@ -34,6 +36,7 @@ struct WelcomeCarouselData {
         ),
         WelcomeCarouselCellViewState(
             theme: .driver,
+            cellType: .image,
             topLabelText: nil,
             image: UIImage(named: "WalletBonus"),
             boldText: "Complete 150 rides in 90 days for a $500 bonus",
@@ -48,6 +51,7 @@ struct WelcomeCarouselData {
     static let riderItems: [WelcomeCarouselCellViewState] = [
         WelcomeCarouselCellViewState(
             theme: .rider,
+            cellType: .text,
             topLabelText: nil,
             image: nil,
             boldText: "Ride with Carfie.\nEarn rewards.\nSave Money.",
@@ -57,6 +61,7 @@ struct WelcomeCarouselData {
         ),
         WelcomeCarouselCellViewState(
             theme: .rider,
+            cellType: .image,
             topLabelText: "To celebrate our official partnership with iHeart Radio Jingleball 2019 we are offering our riders",
             image: UIImage(named: "Jingleball"),
             boldText: "10% off your first ride and a chance to win $1000",
@@ -66,6 +71,7 @@ struct WelcomeCarouselData {
         ),
         WelcomeCarouselCellViewState(
             theme: .rider,
+            cellType: .image,
             topLabelText: "Take a selfie in your Carfie ride post to social media and tag Carfie",
             image: UIImage(named: "WalletBonus"),
             boldText: "For a chance to win $1000",

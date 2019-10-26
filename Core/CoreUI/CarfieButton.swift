@@ -32,10 +32,10 @@ enum ButtonStyle {
 /// a semi-bold title.
 class CarfieButton: UIButton {
     
-    private let theme: AppTheme
+    private let theme: AppTheme?
     private let style: ButtonStyle
     
-    init(theme: AppTheme, style: ButtonStyle = .primary) {
+    init(theme: AppTheme?, style: ButtonStyle = .primary) {
         self.theme = theme
         self.style = style
         super.init(frame: .zero)
@@ -47,18 +47,18 @@ class CarfieButton: UIButton {
         fatalError("init(coder:) has not been implemented.")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.height / 2
+    }
+    
     private func setup() {
         tintColor = .white
         clipsToBounds = true
         setTitleColor(.white, for: .normal)
         titleLabel?.font = style.font
         
-        switch theme {
-        case .driver:
-            backgroundColor = .carfieOrange
-        case .rider:
-            backgroundColor = .carfieFuscia
-        }
+        applyTheme(theme)
         
         layer.shadowRadius = 6
         layer.shadowOffset = CGSize(width: 0, height: 3)
@@ -67,8 +67,21 @@ class CarfieButton: UIButton {
         layer.masksToBounds = false
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.cornerRadius = bounds.height / 2
+    /// Apply a new app theme to the button. Useful for situations where the theme cannot be
+    /// injected during initialization.
+    /// - Parameter theme: the app theme (Driver or Rider)
+    func applyNewTheme(_ theme: AppTheme) {
+        applyTheme(theme)
+    }
+    
+    private func applyTheme(_ theme: AppTheme?) {
+        switch theme {
+        case .driver:
+            backgroundColor = .carfieOrange
+        case .rider:
+            backgroundColor = .carfieFuscia
+        default:
+            backgroundColor = .carfieTeal
+        }
     }
 }
