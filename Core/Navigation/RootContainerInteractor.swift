@@ -19,6 +19,13 @@ protocol RootContainerInteractorDelegate: class {
     func onboardingDidComplete()
 }
 
+/// Delegate for communicating events from the onboading interactor.
+protocol OnboardingDelegate: class {
+    
+    /// Notifies the delegate that the user has completed the onboarding experience.
+    func onboardingWillComplete()
+}
+
 /// Root Interactor for the app. Encapsulates logic for setting and displaying "Root" experiences:
 /// - Home Drawer Controller
 /// - Login/Onboarding
@@ -29,14 +36,14 @@ final class RootContainerInteractor {
     /// This is the root view controller for main app functionality.
     var rootViewController: RootViewController?
     
-    /// This property exists for state testing. Though it may be valuable for other features in the future.
-    var isPresentingLoginExperience: Bool?
-    
     /// The current child view controller contained by the root view controller.
     private var childViewController: UIViewController?
     
     /// The default login view controller to show on login and logout after the user has completed onboarding.
     private var loginViewController: UIViewController?
+    
+    /// The default onboarding experience to show on first launch.
+    private var onboardingNavigationController: UINavigationController?
     
     // MARK: Init
     
@@ -75,6 +82,32 @@ final class RootContainerInteractor {
         childViewController = viewController
     }
     
+    /// Preps the onboarding navigation controller and holds it in memory for presentation.
+    /// - Parameter viewController: the onboarding navigation controller
+    func configureOnboardingNavigationController(_ navigationController: UINavigationController) {
+        onboardingNavigationController = navigationController
+    }
+    
+    /// Presents the onboarding experience by embedding it in a navigation controller and modally presenting it.
+    /// - Parameter completion: closure to be called after present(_:animated:completion) completes
+    func presentOnboardingExperience(completion: (() -> Void)? = nil) {
+        guard let navigationController = onboardingNavigationController else {
+            assertionFailure("Presenting onboarding with no onboarding navigation controller.")
+            return
+        }
+        
+        // ensure full screen presentation of login and onboarding in iOS 13.
+        navigationController.modalPresentationStyle = .fullScreen
+        if #available(iOS 13.0, *) {
+            navigationController.isModalInPresentation = true
+        }
+        
+        rootViewController?.present(navigationController, animated: false) {
+            self.unloadChildViewController()
+            completion?()
+        }
+    }
+    
     /// Presents the logon experience by embedding it in a navigation controller and modally presenting it.
     /// - Parameter animated: determines if the presentation is animated
     /// - Parameter completion: closure to be called after present(_:animated:completion) completes
@@ -97,8 +130,17 @@ final class RootContainerInteractor {
         }
         
         rootViewController?.present(navigationController, animated: animated) {
-            self.isPresentingLoginExperience = true
             self.unloadChildViewController()
+            completion?()
+        }
+    }
+    
+    /// Dismisses the onboarding experience and starts the main app view controller
+    /// - Parameter completion: closure to be called after dismiss(animated:completion:) completes
+    func dismissOnboardingExperience(completion: (() -> Void)? = nil) {
+        // TODO: actually hook up all post onboarding events
+//        start()
+        rootViewController?.dismiss(animated: true) {
             completion?()
         }
     }
@@ -108,7 +150,6 @@ final class RootContainerInteractor {
     func dismissLoginExperience(completion: (() -> Void)? = nil) {
         start()
         rootViewController?.dismiss(animated: true) {
-            self.isPresentingLoginExperience = false
             completion?()
         }
     }
@@ -155,5 +196,13 @@ extension RootContainerInteractor: RootViewControllerDelegate {
     func rootViewController(_ viewController: RootViewController, isLoaded: Bool) {
         guard isLoaded else { return }
         delegate?.rootViewIsLoaded()
+    }
+}
+
+extension RootContainerInteractor: OnboardingDelegate {
+    func onboardingWillComplete() {
+        dismissOnboardingExperience {
+            self.presentLoginExperience(animated: false)
+        }
     }
 }

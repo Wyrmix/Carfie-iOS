@@ -10,6 +10,7 @@ import UIKit
 
 extension UIViewController {
     
+    // TODO: I hate this and it needs to go away at some point.
     @objc func popOrDismiss(animation: Bool = true) {
         DispatchQueue.main.async {
             if self.navigationController != nil {

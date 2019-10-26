@@ -21,13 +21,13 @@ abstract_target 'Apps' do
     pod 'ImagePicker'
     pod 'KWDrawerController'
     pod 'Lightbox'
+    pod 'lottie-ios'
     pod 'PopupDialog'
     pod 'Stripe', '~> 13.2'
 
     target 'Rider' do
         pod 'DateTimePicker'
         pod 'IQKeyboardManagerSwift'
-        pod 'lottie-ios'
     end
 
     target 'Driver' do
