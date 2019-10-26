@@ -36,9 +36,6 @@ final class RootContainerInteractor {
     /// This is the root view controller for main app functionality.
     var rootViewController: RootViewController?
     
-    /// This property exists for state testing. Though it may be valuable for other features in the future.
-    var isPresentingLoginExperience: Bool?
-    
     /// The current child view controller contained by the root view controller.
     private var childViewController: UIViewController?
     
@@ -91,6 +88,8 @@ final class RootContainerInteractor {
         onboardingNavigationController = navigationController
     }
     
+    /// Presents the onboarding experience by embedding it in a navigation controller and modally presenting it.
+    /// - Parameter completion: closure to be called after present(_:animated:completion) completes
     func presentOnboardingExperience(completion: (() -> Void)? = nil) {
         guard let navigationController = onboardingNavigationController else {
             assertionFailure("Presenting onboarding with no onboarding navigation controller.")
@@ -104,7 +103,6 @@ final class RootContainerInteractor {
         }
         
         rootViewController?.present(navigationController, animated: false) {
-            self.isPresentingLoginExperience = true
             self.unloadChildViewController()
             completion?()
         }
@@ -132,7 +130,6 @@ final class RootContainerInteractor {
         }
         
         rootViewController?.present(navigationController, animated: animated) {
-            self.isPresentingLoginExperience = true
             self.unloadChildViewController()
             completion?()
         }
@@ -141,7 +138,8 @@ final class RootContainerInteractor {
     /// Dismisses the onboarding experience and starts the main app view controller
     /// - Parameter completion: closure to be called after dismiss(animated:completion:) completes
     func dismissOnboardingExperience(completion: (() -> Void)? = nil) {
-        start()
+        // TODO: actually hook up all post onboarding events
+//        start()
         rootViewController?.dismiss(animated: true) {
             completion?()
         }
@@ -152,7 +150,6 @@ final class RootContainerInteractor {
     func dismissLoginExperience(completion: (() -> Void)? = nil) {
         start()
         rootViewController?.dismiss(animated: true) {
-            self.isPresentingLoginExperience = false
             completion?()
         }
     }
@@ -204,6 +201,8 @@ extension RootContainerInteractor: RootViewControllerDelegate {
 
 extension RootContainerInteractor: OnboardingDelegate {
     func onboardingWillComplete() {
-        dismissOnboardingExperience()
+        dismissOnboardingExperience {
+            self.presentLoginExperience(animated: false)
+        }
     }
 }

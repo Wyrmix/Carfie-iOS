@@ -80,8 +80,8 @@ class WelcomeCarouselCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             cellStackView.topAnchor.constraint(equalTo: topAnchor),
-            cellStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            cellStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            cellStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            cellStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             cellStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
         ])
     }

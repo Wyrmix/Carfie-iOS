@@ -103,7 +103,10 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         
         logoImageView.image = theme.logoImage
         signUpButton.setTitle("Sign Up", for: .normal)
+        signUpButton.addTarget(self, action: #selector(signUpButtonTouchUpInside(_:)), for: .touchUpInside)
+        
         signInButton.setTitle("Sign In", for: .normal)
+        signInButton.addTarget(self, action: #selector(signInButtonTouchUpInside(_:)), for: .touchUpInside)
         
         let buttonStackView = UIStackView(arrangedSubviews: [signUpButton, signInButton])
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -127,12 +130,11 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
             carfieLogoImageView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor),
             carfieLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 80),
-//            carfieLogoImageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 24),
             carfieLogoHeightConstraint,
             
             carouselView.topAnchor.constraint(greaterThanOrEqualTo: carfieLogoImageView.bottomAnchor, constant: 16),
-            carouselView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            carouselView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            carouselView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            carouselView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             carouselView.heightAnchor.constraint(equalToConstant: 416),
             
             pageIndicator.topAnchor.constraint(equalTo: carouselView.bottomAnchor, constant: 4),
@@ -150,6 +152,15 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         ])
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // This is a, hopefully, temporary hack to make things look ok on an iPhone SE.
+        if carfieLogoImageView.bounds.height < 24 {
+            carfieLogoImageView.isHidden = true
+        }
+    }
+    
     private func addGradientLayer() {
         let gradient  = CAGradientLayer()
         gradient.frame = view.bounds
@@ -159,7 +170,11 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     
     // MARK: Selectors
     
-    @objc private func nextButtonTouchUpInside(_ sender: Any) {
+    @objc private func signInButtonTouchUpInside(_ sender: Any) {
+        onboardingDelegate?.onboardingScreenComplete()
+    }
+    
+    @objc private func signUpButtonTouchUpInside(_ sender: Any) {
         onboardingDelegate?.onboardingScreenComplete()
     }
 }

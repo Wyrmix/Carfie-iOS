@@ -74,9 +74,7 @@ extension AppDelegate: RootContainerInteractorDelegate {
         window?.makeKeyAndVisible()
         
         if shouldShowLogin {
-            // Do not animate present on initial launch
             rootContainerInteractor.presentOnboardingExperience()
-//            rootContainerInteractor.presentLoginExperience(animated: false)
         } else {
             rootContainerInteractor.start()
         }
