@@ -209,20 +209,20 @@ extension UIViewController {
 //MARK:- UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
 extension UIViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
+
         picker.dismiss(animated: true) {
             if let image = info[UIImagePickerController.InfoKey.editedImage.rawValue] as? UIImage {
                 imageCompletion?(image)
             }
         }
     }
-    
+
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-    
+
 }
 
 
