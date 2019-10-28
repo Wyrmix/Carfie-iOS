@@ -172,7 +172,7 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     // MARK: Selectors
     
     @objc private func signInButtonTouchUpInside(_ sender: Any) {
-        onboardingDelegate?.onboardingScreenComplete()
+        onboardingDelegate?.launchLogin()
     }
     
     @objc private func signUpButtonTouchUpInside(_ sender: Any) {

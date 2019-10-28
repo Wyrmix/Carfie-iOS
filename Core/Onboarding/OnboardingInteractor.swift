@@ -12,6 +12,9 @@ import UIKit
 protocol OnboardingScreenDelegate: class {
     /// Indicates that the user has completed all necessary steps for an onboarding screen
     func onboardingScreenComplete()
+    
+    /// Indicates that the user wants to login with an existing account (effectively bypassing onboarding).
+    func launchLogin()
 }
 
 /// An onboarding screen.
@@ -61,5 +64,10 @@ extension OnboardingInteractor: OnboardingScreenDelegate {
     func onboardingScreenComplete() {
         // increment index to set the next active onboarding screen
         onboardingIndex += 1
+    }
+    
+    func launchLogin() {
+        // TODO: actually launch login once we have screens
+        onboardingComplete()
     }
 }
