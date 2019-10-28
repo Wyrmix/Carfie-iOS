@@ -1,15 +1,15 @@
 //
 //  WelcomeConfiguration.swift
-//  Rider
+//  Driver
 //
-//  Created by Christopher Olsen on 10/26/19.
+//  Created by Christopher Olsen on 10/27/19.
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
 import UIKit
 
 struct WelcomeConfiguration {
-    private static let theme: AppTheme = .rider
+    private static let theme: AppTheme = .driver
     
     let viewControllers: [UIViewController & OnboardingScreen] = [
         WelcomeCarouselViewController.viewController(theme: WelcomeConfiguration.theme),

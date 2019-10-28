@@ -10,6 +10,8 @@ import UIKit
 
 extension UIFont {
     
+    static let carfieHeroHeading = UIFont.systemFont(ofSize: 28, weight: .bold)
+    
     /// Font size: 20, weight: light
     static let carfieHeading = UIFont.systemFont(ofSize: 20, weight: .light)
     

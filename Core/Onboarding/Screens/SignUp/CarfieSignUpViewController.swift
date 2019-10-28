@@ -30,6 +30,7 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
         return scrollView
     }()
     
+    // TODO: fix truncation on iPhone SE
     private let privacyPolicyButton: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
