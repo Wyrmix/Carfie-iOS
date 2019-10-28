@@ -18,26 +18,15 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     
     private let theme: AppTheme
     
+    private var activeTextField: UITextField?
+    
     // MARK: UI Components
-    
-    private let logoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private let carfieLogoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "carfieLogo")
-        return imageView
-    }()
     
     private let signUpScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .white
+        scrollView.layer.cornerRadius = 33
         return scrollView
     }()
     
@@ -64,6 +53,7 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
         signUpView.delegate = self
         
         view.backgroundColor = .white
+        addObservers()
         setupViews()
     }
     
@@ -81,33 +71,22 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     
     // MARK: View Setup
     
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     private func setupViews() {
-        logoImageView.image = theme.logoImage
-        
         signUpView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(logoImageView)
-        view.addSubview(carfieLogoImageView)
         view.addSubview(signUpScrollView)
         signUpScrollView.addSubview(signUpView)
         view.addSubview(privacyPolicyButton)
         
         privacyPolicyButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
-        let carfieLogoHeightConstraint = carfieLogoImageView.heightAnchor.constraint(equalToConstant: 80)
-        carfieLogoHeightConstraint.priority = .defaultLow
-        
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            logoImageView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 124),
-            
-            carfieLogoImageView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor),
-            carfieLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            carfieLogoHeightConstraint,
-            
-            signUpScrollView.topAnchor.constraint(equalTo: carfieLogoImageView.bottomAnchor, constant: 16),
+            signUpScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             signUpScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             signUpScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             
@@ -132,13 +111,42 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     }
 }
 
+// MARK: - SignUpViewDelegate and Keyboard Management
 extension CarfieSignUpViewController: SignUpViewDelegate {
     func signUpButtonTouchUpInside() {
         // TODO: validation logic for sign up being complete
         onboardingDelegate?.onboardingScreenComplete()
     }
-}
-
-extension CarfieSignUpViewController: UIScrollViewDelegate {
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeTextField = nil
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardFrame = keyboardSize.cgRectValue
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
+        signUpScrollView.contentInset = contentInsets
+        signUpScrollView.scrollIndicatorInsets = contentInsets
+        
+        guard let textField = activeTextField else { return }
+        
+        var visibleRect = self.view.frame
+        visibleRect.size.height -= keyboardFrame.height
+        if visibleRect.contains(textField.frame.origin) {
+            signUpScrollView.scrollRectToVisible(textField.frame, animated: true)
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        let contentInsets = UIEdgeInsets.zero
+        signUpScrollView.contentInset = contentInsets
+        signUpScrollView.scrollIndicatorInsets = contentInsets
+    }
 }
