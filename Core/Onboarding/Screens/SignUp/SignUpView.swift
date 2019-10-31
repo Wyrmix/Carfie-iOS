@@ -9,9 +9,9 @@
 import UIKit
 
 protocol SignUpViewDelegate: class {
-    func signUpButtonTouchUpInside()
-    func textFieldDidBeginEditing(_ textField: UITextField)
-    func textFieldDidEndEditing(_ textField: UITextField)
+    func signUpRequested(with item: SignUpItem)
+    func textFieldDidBeginEditing(_ textInputView: CarfieTextInputView)
+    func textFieldDidEndEditing(_ textInputView: CarfieTextInputView)
 }
 
 class SignUpView: UIView {
@@ -34,11 +34,11 @@ class SignUpView: UIView {
     
     // MARK: Input Fields
     
-    private let firstNameTextInputView = CarfieTextInputView(title: "First Name", placeholder: "ex John")
-    private let lastNameTextInputView = CarfieTextInputView(title: "Last Name", placeholder: "ex Smith")
-    private let emailTextInputView = CarfieTextInputView(title: "Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress)
+    private let firstNameTextInputView = CarfieTextInputView(title: "First Name", placeholder: "ex John", validator: EmptyFieldValidator())
+    private let lastNameTextInputView = CarfieTextInputView(title: "Last Name", placeholder: "ex Smith", validator: EmptyFieldValidator())
+    private let emailTextInputView = CarfieTextInputView(title: "Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress, validator: EmailValidator())
     private let confirmEmailTextInputView = CarfieTextInputView(title: "Confirm Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress)
-    private let passwordTextInputView = CarfieTextInputView(title: "Password", placeholder: "ex Password1234", isSecureTextEntry: true)
+    private let passwordTextInputView = CarfieTextInputView(title: "Password", placeholder: "ex Password1234", isSecureTextEntry: true, validator: PasswordValidator())
     private let confirmPasswordTextInputView = CarfieTextInputView(title: "Confirm Password", placeholder: "ex Password1234", isSecureTextEntry: true)
     
     // MARK: Inits
@@ -65,11 +65,12 @@ class SignUpView: UIView {
         
         [lastNameTextInputView, firstNameTextInputView, emailTextInputView, confirmEmailTextInputView, passwordTextInputView, confirmPasswordTextInputView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.textField.delegate = self
+            $0.delegate = self
         }
         
         let nameFieldStackView = UIStackView(arrangedSubviews: [firstNameTextInputView, lastNameTextInputView])
         nameFieldStackView.distribution = .fillEqually
+        nameFieldStackView.alignment = .firstBaseline
         nameFieldStackView.spacing = 14
         
         let emailFieldStackView = UIStackView(arrangedSubviews: [emailTextInputView, confirmEmailTextInputView])
@@ -89,7 +90,6 @@ class SignUpView: UIView {
         ])
         
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
-        containerStackView.distribution = .fillProportionally
         containerStackView.axis = .vertical
         containerStackView.alignment = .center
         containerStackView.spacing = 24
@@ -117,35 +117,54 @@ class SignUpView: UIView {
     // MARK: Selectors
     
     @objc private func signUpButtonTouchUpInside(_ sender: Any) {
-        delegate?.signUpButtonTouchUpInside()
+        let item = SignUpItem(
+            firstName: firstNameTextInputView.text,
+            lastName: lastNameTextInputView.text,
+            email: emailTextInputView.text,
+            confirmEmail: confirmEmailTextInputView.text,
+            password: passwordTextInputView.text,
+            confirmPassword: confirmPasswordTextInputView.text
+        )
+        
+        delegate?.signUpRequested(with: item)
     }
 }
 
-// MARK: - UITextFieldDelegate
-extension SignUpView: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        delegate?.textFieldDidBeginEditing(textField)
+extension SignUpView: CarfieTextInputViewDelegate {
+    func textInputViewDidBeginEditing(_ textInputView: CarfieTextInputView) {
+        delegate?.textFieldDidBeginEditing(textInputView)
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate?.textFieldDidEndEditing(textField)
+    func textInputViewDidEndEditing(_ textInputView: CarfieTextInputView) {
+        delegate?.textFieldDidEndEditing(textInputView)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch textField {
-        case firstNameTextInputView.textField:
+    func textInputViewShouldReturn(_ textInputView: CarfieTextInputView) -> Bool {
+        let textInputView = textInputView
+        
+        switch textInputView {
+        case firstNameTextInputView:
             lastNameTextInputView.makeTextFieldFirstResponser()
-        case lastNameTextInputView.textField:
+        case lastNameTextInputView:
             emailTextInputView.makeTextFieldFirstResponser()
-        case emailTextInputView.textField:
+        case emailTextInputView:
             confirmEmailTextInputView.makeTextFieldFirstResponser()
-        case confirmEmailTextInputView.textField:
+        case confirmEmailTextInputView:
+            textInputView.validator = MatchingFieldValidator(fieldToMatch: emailTextInputView.text)
             passwordTextInputView.makeTextFieldFirstResponser()
-        case passwordTextInputView.textField:
+        case passwordTextInputView:
             confirmPasswordTextInputView.makeTextFieldFirstResponser()
+        case confirmPasswordTextInputView:
+            textInputView.validator = MatchingFieldValidator(fieldToMatch: passwordTextInputView.text)
+            confirmPasswordTextInputView.resignFirstResponder()
         default:
-            textField.resignFirstResponder()
+            textInputView.resignFirstResponder()
         }
+        
+        // We don't care about the result here. This is just to provide immediate feedback to
+        // the user about their input. Actual confirmation of validation will occur when the
+        // "Sign Up" button is pressed.
+        _ = textInputView.validate()
         
         return true
     }
