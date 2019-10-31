@@ -16,10 +16,9 @@ struct CarfieProfile: Codable {
     let mobile: String
     let avatar: String?
     let deviceToken: String?
-    let accessToken: String
+    let accessToken: String?
     let currency: String
     let service: CarfieService?
-    var serviceId : Int?
     var walletBalance: Float?
     var measurement: String?
     var card: Int?

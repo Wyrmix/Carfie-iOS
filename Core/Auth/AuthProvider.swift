@@ -60,3 +60,9 @@ protocol AuthProvider {
     /// - Parameter completion: called upon completion of retrieval attempt
     func getAccessToken(completion: @escaping (String?) -> Void)
 }
+
+extension AuthProvider {
+    var revoker: CredentialRevoker? {
+        return nil
+    }
+}
