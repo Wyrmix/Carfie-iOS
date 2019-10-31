@@ -13,6 +13,7 @@ struct SignUp {
         // Email
         static let enterEmail = "You must enter an email"
         static let enterValidEmail = "Enter a valid email address"
+        static let emailAlreadyInUse = "Email already in use"
         
         // Phone number
         static let enterMobileNumber = "You must enter a phone number"

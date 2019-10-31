@@ -10,17 +10,28 @@ import UIKit
 
 typealias ScrollViewPosition = (insets: UIEdgeInsets, frame: CGRect)
 
+/// Delegate for communicating between the SignUpInteractor and the SignUpViewController..
 protocol SignUpInteractorDelegate: class {
+    
+    /// Asks the view controller to adjust its scroll view for the keyboard.
+    /// - Parameter scrollViewPosition: new content insets for the scroll view
+    /// - Parameter viewToScroll: view that should be scrolled above the keyboard
     func adjustScrollViewForKeyboard(_ scrollViewPosition: ScrollViewPosition, and viewToScroll: UIView?)
 }
 
+/// Interactor for the Sign Up experience.
 class SignUpInteractor {
     weak var viewController: (CarfieSignUpViewController & SignUpInteractorDelegate)?
     
     /// Text field that is currently being edited by the use
     private var activeTextInputView: CarfieTextInputView?
     
-    init() {
+    private let networkService: NetworkService
+    
+    var signUpViewPresenter: SignUpViewPresenter?
+    
+    init(networkService: NetworkService = DefaultNetworkService()) {
+        self.networkService = networkService
         addObservers()
     }
     
@@ -30,6 +41,7 @@ class SignUpInteractor {
     }
 }
 
+// MARK: - SignUpViewDelegate
 extension SignUpInteractor: SignUpViewDelegate {
     func textFieldDidBeginEditing(_ textInputView: CarfieTextInputView) {
         activeTextInputView = textInputView
@@ -45,11 +57,35 @@ extension SignUpInteractor: SignUpViewDelegate {
         do {
             validatedSignUp = try validateSignUpItem(item).resolve()
         } catch {
-            // TODO: something with error
+            // TODO: something with the error
         }
         
         // TODO: send values to sign up service
         viewController?.onboardingDelegate?.onboardingScreenComplete()
+    }
+    
+    func verifyEmailAvailability(_ items: (email: String?, confirmation: String?)) {
+        do {
+            let emailResult = try EmailValidator().validate(items.email).resolve()
+            _ = try MatchingFieldValidator(fieldToMatch: emailResult).validate(items.confirmation).resolve()
+            verifyEmailAvailability(emailResult)
+        } catch {
+            // TODO: something with the error
+        }
+    }
+    
+    private func verifyEmailAvailability(_ email: String) {
+        let request = VerifyEmailRequest(email: email)
+        networkService.request(request) { [weak self] result in
+            guard let self = self else { return }
+            
+            do {
+                // Do nothing on success. Email is good to use.
+                _ = try result.resolve()
+            } catch {
+                self.signUpViewPresenter?.present(emailInUseMessage: SignUp.ErrorMessage.emailAlreadyInUse)
+            }
+        }
     }
     
     private func validateSignUpItem(_ item: SignUpItem) -> Result<ValidatedSignUp> {

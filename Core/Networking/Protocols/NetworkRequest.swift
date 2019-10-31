@@ -33,3 +33,10 @@ extension NetworkRequest {
         return URL(string: "https://espyinnovation.com")!
     }
 }
+
+extension NetworkRequest {
+    // Default implementation since most requests won't need to add headers.
+    var headers: HTTPHeaders? {
+        return nil
+    }
+}
