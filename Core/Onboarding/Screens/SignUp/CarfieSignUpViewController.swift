@@ -10,7 +10,7 @@ import UIKit
 
 class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     static func viewController(theme: AppTheme) -> CarfieSignUpViewController {
-        let interactor = SignUpInteractor()
+        let interactor = SignUpInteractor(theme: theme)
         let viewController = CarfieSignUpViewController(theme: theme, interactor: interactor)
         interactor.viewController = viewController
         return viewController

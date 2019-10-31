@@ -27,10 +27,12 @@ class SignUpInteractor {
     private var activeTextInputView: CarfieTextInputView?
     
     private let networkService: NetworkService
+    private let theme: AppTheme
     
     var signUpViewPresenter: SignUpViewPresenter?
     
-    init(networkService: NetworkService = DefaultNetworkService()) {
+    init(theme: AppTheme, networkService: NetworkService = DefaultNetworkService()) {
+        self.theme = theme
         self.networkService = networkService
         addObservers()
     }
@@ -58,10 +60,11 @@ extension SignUpInteractor: SignUpViewDelegate {
             validatedSignUp = try validateSignUpItem(item).resolve()
         } catch {
             // TODO: something with the error
+            return
         }
         
-        // TODO: send values to sign up service
-        viewController?.onboardingDelegate?.onboardingScreenComplete()
+        signUp(validatedSignUp)
+//        viewController?.onboardingDelegate?.onboardingScreenComplete()
     }
     
     func verifyEmailAvailability(_ items: (email: String?, confirmation: String?)) {
@@ -92,24 +95,47 @@ extension SignUpInteractor: SignUpViewDelegate {
         do {
             let firstNameResult = try EmptyFieldValidator().validate(item.firstName).resolve()
             let lastNameResult = try EmptyFieldValidator().validate(item.lastName).resolve()
+            let phoneNumberResult = try PhoneValidator().validate(item.phone).resolve()
             let emailResult = try EmailValidator().validate(item.email).resolve()
             let passwordResult = try PasswordValidator().validate(item.password).resolve()
+            let passwordConfirmationResult = try MatchingFieldValidator(fieldToMatch: passwordResult).validate(item.confirmPassword).resolve()
             
-            // ensure password and email fields match
+            // ensure email fields match
             _ = try MatchingFieldValidator(fieldToMatch: emailResult).validate(item.confirmEmail).resolve()
-            _ = try MatchingFieldValidator(fieldToMatch: passwordResult).validate(item.confirmPassword).resolve()
             
             let validatedSignUp = ValidatedSignUp(
                 firstName: firstNameResult,
                 lastName: lastNameResult,
                 email: emailResult,
-                password: passwordResult
+                mobile: phoneNumberResult,
+                password: passwordResult,
+                passwordConfirmation: passwordConfirmationResult
             )
             return Result.success(validatedSignUp)
             
         } catch {
             return Result.failure(error)
         }
+    }
+    
+    private func signUp(_ signUp: ValidatedSignUp) {
+        let request = SignUpRequest(theme: theme, signUpData: signUp)
+        networkService.request(request) { [weak self] result in
+            guard let self = self else { return }
+            
+            do {
+                // We don't really care about this result. Just need to confirm it's successful.
+                // TODO: investigate if this object can be used instead of making another profile request.
+                _ = try result.resolve()
+                // TODO: complete signup
+            } catch {
+                // TODO: something with the error
+            }
+        }
+    }
+    
+    private func getNewUserProfile() {
+        
     }
 }
 

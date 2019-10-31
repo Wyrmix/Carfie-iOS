@@ -60,6 +60,7 @@ class DefaultNetworkService: NetworkService {
                                  cachePolicy: .useProtocolCachePolicy,
                                  timeoutInterval: 10.0)
         urlRequest.httpMethod = request.method.rawValue
+        urlRequest.httpBody = request.body
         addAdditionalHeaders(request.headers, request: &urlRequest)
         
         do {

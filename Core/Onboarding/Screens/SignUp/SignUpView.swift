@@ -37,6 +37,7 @@ class SignUpView: UIView {
     
     private let firstNameTextInputView = CarfieTextInputView(title: "First Name", placeholder: "ex John", validator: EmptyFieldValidator())
     private let lastNameTextInputView = CarfieTextInputView(title: "Last Name", placeholder: "ex Smith", validator: EmptyFieldValidator())
+    private let phoneNumberTextInputView = CarfieTextInputView(title: "Phone Number", placeholder: "ex 6518754689", keyboardType: .phonePad, validator: PhoneValidator())
     private let emailTextInputView = CarfieTextInputView(title: "Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress, validator: EmailValidator())
     private let confirmEmailTextInputView = CarfieTextInputView(title: "Confirm Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress)
     private let passwordTextInputView = CarfieTextInputView(title: "Password", placeholder: "ex Password1234", isSecureTextEntry: true, validator: PasswordValidator())
@@ -64,7 +65,7 @@ class SignUpView: UIView {
         signUpButton.translatesAutoresizingMaskIntoConstraints = false
         signUpButton.addTarget(self, action: #selector(signUpButtonTouchUpInside(_:)), for: .touchUpInside)
         
-        [lastNameTextInputView, firstNameTextInputView, emailTextInputView, confirmEmailTextInputView, passwordTextInputView, confirmPasswordTextInputView].forEach {
+        [lastNameTextInputView, firstNameTextInputView, phoneNumberTextInputView, emailTextInputView, confirmEmailTextInputView, passwordTextInputView, confirmPasswordTextInputView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.delegate = self
         }
@@ -85,6 +86,7 @@ class SignUpView: UIView {
         let containerStackView = UIStackView(arrangedSubviews: [
             titleLabel,
             nameFieldStackView,
+            phoneNumberTextInputView,
             emailFieldStackView,
             passwordFieldStackView,
             signUpButton,
@@ -106,6 +108,8 @@ class SignUpView: UIView {
             // We only need to restrict the first field in this stack view. The .fillEqually distribution will manage the other views.
             firstNameTextInputView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor, multiplier: 0.5, constant: -nameFieldStackView.spacing / 2),
             
+            phoneNumberTextInputView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor),
+            
             // We only need to restrict the width of the first field in each stack and the rest will fall in line.
             emailTextInputView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor),
             passwordTextInputView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor),
@@ -121,6 +125,7 @@ class SignUpView: UIView {
         let item = SignUpItem(
             firstName: firstNameTextInputView.text,
             lastName: lastNameTextInputView.text,
+            phone: phoneNumberTextInputView.text,
             email: emailTextInputView.text,
             confirmEmail: confirmEmailTextInputView.text,
             password: passwordTextInputView.text,
@@ -153,6 +158,8 @@ extension SignUpView: CarfieTextInputViewDelegate {
         case firstNameTextInputView:
             lastNameTextInputView.makeTextFieldFirstResponser()
         case lastNameTextInputView:
+            phoneNumberTextInputView.makeTextFieldFirstResponser()
+        case phoneNumberTextInputView:
             emailTextInputView.makeTextFieldFirstResponser()
         case emailTextInputView:
             confirmEmailTextInputView.makeTextFieldFirstResponser()
