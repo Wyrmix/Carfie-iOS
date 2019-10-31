@@ -20,8 +20,12 @@ struct SignUp {
         
         // Password
         static let mustEnterPassword = "You must enter a password"
-        static let passwordTooShort = "Your password must be at least 6 characters"
+        static let passwordTooShort = "Your password must be at least 8 characters"
         static let passwordsDoNotMatch = "Your passwords don't match"
         static let invalidPassword = "Password should contain at least 1 uppercase letter and 1 number"
+        
+        // Generic
+        static let requiredField = "This field is required"
+        static let fieldsMustMatch = "Fields must match"
     }
 }

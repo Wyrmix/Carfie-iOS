@@ -10,7 +10,9 @@ import UIKit
 
 class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     static func viewController(theme: AppTheme) -> CarfieSignUpViewController {
-        let viewController = CarfieSignUpViewController(theme: theme)
+        let interactor = SignUpInteractor()
+        let viewController = CarfieSignUpViewController(theme: theme, interactor: interactor)
+        interactor.viewController = viewController
         return viewController
     }
     
@@ -18,7 +20,7 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     
     private let theme: AppTheme
     
-    private var activeTextField: UITextField?
+    private let interactor: SignUpInteractor
     
     // MARK: UI Components
     
@@ -45,16 +47,16 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
 
     // MARK: Inits
     
-    init(theme: AppTheme) {
+    init(theme: AppTheme, interactor: SignUpInteractor) {
         self.theme = theme
+        self.interactor = interactor
         self.signUpView = SignUpView(theme: theme)
         
         super.init(nibName: nil, bundle: nil)
         
-        signUpView.delegate = self
+        signUpView.delegate = interactor
         
         view.backgroundColor = .white
-        addObservers()
         setupViews()
     }
     
@@ -71,11 +73,6 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     }
     
     // MARK: View Setup
-    
-    private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
     
     private func setupViews() {
         signUpView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +92,7 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
             signUpView.leadingAnchor.constraint(equalTo: signUpScrollView.leadingAnchor),
             signUpView.trailingAnchor.constraint(equalTo: signUpScrollView.trailingAnchor),
             signUpView.bottomAnchor.constraint(equalTo: signUpScrollView.bottomAnchor),
-            signUpView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -64),
+            signUpView.widthAnchor.constraint(equalTo: signUpScrollView.widthAnchor),
             
             privacyPolicyButton.topAnchor.constraint(equalTo: signUpScrollView.bottomAnchor, constant: 16),
             privacyPolicyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -112,42 +109,18 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     }
 }
 
-// MARK: - SignUpViewDelegate and Keyboard Management
-extension CarfieSignUpViewController: SignUpViewDelegate {
-    func signUpButtonTouchUpInside() {
-        // TODO: validation logic for sign up being complete
-        onboardingDelegate?.onboardingScreenComplete()
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        activeTextField = nil
-    }
-    
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+// MARK: - SignUpInteractorDelegate
+extension CarfieSignUpViewController: SignUpInteractorDelegate {
+    func adjustScrollViewForKeyboard(_ scrollViewPosition: ScrollViewPosition, and viewToScroll: UIView?) {
+        signUpScrollView.contentInset = scrollViewPosition.insets
+        signUpScrollView.scrollIndicatorInsets = scrollViewPosition.insets
         
-        let keyboardFrame = keyboardSize.cgRectValue
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
-        signUpScrollView.contentInset = contentInsets
-        signUpScrollView.scrollIndicatorInsets = contentInsets
-        
-        guard let textField = activeTextField else { return }
+        guard let viewToScroll = viewToScroll else { return }
         
         var visibleRect = self.view.frame
-        visibleRect.size.height -= keyboardFrame.height
-        if visibleRect.contains(textField.frame.origin) {
-            signUpScrollView.scrollRectToVisible(textField.frame, animated: true)
+        visibleRect.size.height -= scrollViewPosition.frame.height
+        if visibleRect.contains(viewToScroll.frame.origin) {
+            signUpScrollView.scrollRectToVisible(viewToScroll.frame, animated: true)
         }
-    }
-    
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        let contentInsets = UIEdgeInsets.zero
-        signUpScrollView.contentInset = contentInsets
-        signUpScrollView.scrollIndicatorInsets = contentInsets
     }
 }
