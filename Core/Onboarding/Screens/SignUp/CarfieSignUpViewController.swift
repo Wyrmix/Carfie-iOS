@@ -36,6 +36,7 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     private let privacyPolicyButton: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 2
         label.font = .carfieBody
         label.text = "By signing up you agree to our privacy policy"
         label.textColor = .white
@@ -54,7 +55,7 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
         
         super.init(nibName: nil, bundle: nil)
         
-        signUpView.delegate = interactor
+        setupPresenters()
         
         view.backgroundColor = .white
         setupViews()
@@ -62,6 +63,11 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented.")
+    }
+    
+    private func setupPresenters() {
+        signUpView.delegate = interactor
+        interactor.signUpViewPresenter = SignUpViewPresenter(signUpView: signUpView)
     }
     
     // MARK: Lifecycle

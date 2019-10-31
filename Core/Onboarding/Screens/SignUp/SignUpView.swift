@@ -12,6 +12,7 @@ protocol SignUpViewDelegate: class {
     func signUpRequested(with item: SignUpItem)
     func textFieldDidBeginEditing(_ textInputView: CarfieTextInputView)
     func textFieldDidEndEditing(_ textInputView: CarfieTextInputView)
+    func verifyEmailAvailability(_ items: (email: String?, confirmation: String?))
 }
 
 class SignUpView: UIView {
@@ -128,6 +129,12 @@ class SignUpView: UIView {
         
         delegate?.signUpRequested(with: item)
     }
+    
+    // MARK: Presenters
+    
+    func present(_ emailInUseMessage: String) {
+        emailTextInputView.errorMessageLabel.text = emailInUseMessage
+    }
 }
 
 extension SignUpView: CarfieTextInputViewDelegate {
@@ -151,6 +158,7 @@ extension SignUpView: CarfieTextInputViewDelegate {
             confirmEmailTextInputView.makeTextFieldFirstResponser()
         case confirmEmailTextInputView:
             textInputView.validator = MatchingFieldValidator(fieldToMatch: emailTextInputView.text)
+            delegate?.verifyEmailAvailability((email: emailTextInputView.text, confirmation: confirmEmailTextInputView.text))
             passwordTextInputView.makeTextFieldFirstResponser()
         case passwordTextInputView:
             confirmPasswordTextInputView.makeTextFieldFirstResponser()
