@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var reachability : Reachability?
-    static let shared = AppDelegate()
 
     private let authController = DefaultAuthController.shared
     private var rootContainerInteractor = RootContainerInteractor()
