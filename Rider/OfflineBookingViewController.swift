@@ -86,7 +86,7 @@ extension OfflineBookingViewController  {
     
     @IBAction private func buttonNoThanksAction() {
         
-        AppDelegate.shared.stopReachability()
+        (UIApplication.shared.delegate as! AppDelegate).stopReachability()
         self.dismiss(animated: true, completion: nil)
     }
     

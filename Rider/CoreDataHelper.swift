@@ -6,8 +6,8 @@
 //  Copyright © 2018 Appoets. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import UIKit
 
 enum CoreDataEntity : String {
     
@@ -24,7 +24,7 @@ class CoreDataHelper : NSObject {
     var homeObject : Home?
     
     var context:NSManagedObjectContext = {
-        return AppDelegate.shared.persistentContainer.viewContext
+        return (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }()
     
     
