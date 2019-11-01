@@ -14,17 +14,20 @@ struct CarfieProfile: Codable {
     let lastName: String
     let email: String
     let mobile: String
-    let avatar: String?
+    let avatar: String? // driver photo
+    let picture: String? // rider photo
     let deviceToken: String?
     let accessToken: String?
-    let currency: String
+    let currency: String?
     let service: CarfieService?
-    var walletBalance: Float?
-    var measurement: String?
-    var card: Int?
-    var cash: Int?
-    var stripeSecretKey: String?
-    var stripePublishableKey: String?
+    let walletBalance: Float?
+    let sos: String?
+    let appContact: String?
+    let measurement: String?
+    let card: Int?
+    let cash: Int?
+    let stripeSecretKey: String?
+    let stripePublishableKey: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -33,11 +36,14 @@ struct CarfieProfile: Codable {
         case email
         case mobile
         case avatar
+        case picture
         case deviceToken = "device_token"
         case accessToken = "access_token"
         case currency
         case service
         case walletBalance = "wallet_balance"
+        case sos
+        case appContact = "app_contact"
         case measurement
         case card
         case cash

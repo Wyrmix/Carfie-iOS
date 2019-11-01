@@ -20,6 +20,7 @@ protocol NetworkRequest {
     var task: HTTPTask { get }
     var headers: HTTPHeaders? { get }
     var body: Data? { get }
+    var isAuthorizedRequest: Bool { get }
 }
 
 extension NetworkRequest {
@@ -43,5 +44,9 @@ extension NetworkRequest {
     
     var body: Data? {
         return nil
+    }
+    
+    var isAuthorizedRequest: Bool {
+        return false
     }
 }

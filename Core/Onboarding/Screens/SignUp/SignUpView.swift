@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SignUpViewDelegate: class {
-    func signUpRequested(with item: SignUpItem)
+    func signUpRequested(with item: SignUpViewState)
     func textFieldDidBeginEditing(_ textInputView: CarfieTextInputView)
     func textFieldDidEndEditing(_ textInputView: CarfieTextInputView)
     func verifyEmailAvailability(_ items: (email: String?, confirmation: String?))
@@ -122,7 +122,7 @@ class SignUpView: UIView {
     // MARK: Selectors
     
     @objc private func signUpButtonTouchUpInside(_ sender: Any) {
-        let item = SignUpItem(
+        let item = SignUpViewState(
             firstName: firstNameTextInputView.text,
             lastName: lastNameTextInputView.text,
             phone: phoneNumberTextInputView.text,

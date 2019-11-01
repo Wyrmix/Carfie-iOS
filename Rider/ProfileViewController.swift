@@ -251,7 +251,7 @@ extension ProfileViewController {
     }
     
     private func revokeCredentials() {
-        DefaultAuthController.shared.revokeCredentials { error in
+        DefaultAuthController.shared(.rider).revokeCredentials { error in
             guard error == nil else {
                 UserFacingErrorIntent(title: "Something went wrong", message: "Please try again.").execute(via: self)
                 return

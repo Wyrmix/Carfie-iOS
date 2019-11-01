@@ -1,23 +1,12 @@
 //
-//  SignUp.swift
+//  ValidatedSignUp.swift
 //  Carfie
 //
-//  Created by Christopher Olsen on 10/31/19.
+//  Created by Christopher Olsen on 11/1/19.
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
 import Foundation
-
-/// A representation of sign up fields that require validation.
-struct SignUpItem {
-    let firstName: String?
-    let lastName: String?
-    let phone: String?
-    let email: String?
-    let confirmEmail: String?
-    let password: String?
-    let confirmPassword: String?
-}
 
 /// A representation of the fields required to complete a sign up request.
 struct ValidatedSignUp: Codable {
@@ -33,6 +22,7 @@ struct ValidatedSignUp: Codable {
     let deviceId: String = "no device"
     let deviceToken: String = "no device"
     let deviceType: String = "ios"
+    let loginBy: String = "manual"
     
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
@@ -44,5 +34,6 @@ struct ValidatedSignUp: Codable {
         case deviceId = "device_id"
         case deviceToken = "device_token"
         case deviceType = "device_type"
+        case loginBy = "login_by"
     }
 }

@@ -26,14 +26,21 @@ class SignUpInteractor {
     /// Text field that is currently being edited by the use
     private var activeTextInputView: CarfieTextInputView?
     
-    private let networkService: NetworkService
+    private let authController: AuthController
     private let theme: AppTheme
+    private let networkService: NetworkService
+    private let profileService: ProfileService
     
     var signUpViewPresenter: SignUpViewPresenter?
     
-    init(theme: AppTheme, networkService: NetworkService = DefaultNetworkService()) {
+    init(theme: AppTheme,
+         networkService: NetworkService = DefaultNetworkService(),
+         profileService: ProfileService = DefaultProfileService()
+    ) {
+        self.authController = DefaultAuthController.shared(theme)
         self.theme = theme
         self.networkService = networkService
+        self.profileService = profileService
         addObservers()
     }
     
@@ -53,7 +60,7 @@ extension SignUpInteractor: SignUpViewDelegate {
         activeTextInputView = nil
     }
     
-    func signUpRequested(with item: SignUpItem) {
+    func signUpRequested(with item: SignUpViewState) {
         var validatedSignUp: ValidatedSignUp
         
         do {
@@ -63,8 +70,15 @@ extension SignUpInteractor: SignUpViewDelegate {
             return
         }
         
-        signUp(validatedSignUp)
-//        viewController?.onboardingDelegate?.onboardingScreenComplete()
+        authController.signUp(with: validatedSignUp) { [weak self] result in
+            switch result {
+            case .success:
+                self?.getNewUserProfile()
+            case .failure:
+                // TODO: show error message and retry
+                break
+            }
+        }
     }
     
     func verifyEmailAvailability(_ items: (email: String?, confirmation: String?)) {
@@ -91,7 +105,7 @@ extension SignUpInteractor: SignUpViewDelegate {
         }
     }
     
-    private func validateSignUpItem(_ item: SignUpItem) -> Result<ValidatedSignUp> {
+    private func validateSignUpItem(_ item: SignUpViewState) -> Result<ValidatedSignUp> {
         do {
             let firstNameResult = try EmptyFieldValidator().validate(item.firstName).resolve()
             let lastNameResult = try EmptyFieldValidator().validate(item.lastName).resolve()
@@ -118,24 +132,22 @@ extension SignUpInteractor: SignUpViewDelegate {
         }
     }
     
-    private func signUp(_ signUp: ValidatedSignUp) {
-        let request = SignUpRequest(theme: theme, signUpData: signUp)
-        networkService.request(request) { [weak self] result in
+    private func getNewUserProfile() {
+        profileService.getProfile(theme: theme) { [weak self] result in
             guard let self = self else { return }
             
             do {
-                // We don't really care about this result. Just need to confirm it's successful.
-                // TODO: investigate if this object can be used instead of making another profile request.
-                _ = try result.resolve()
-                // TODO: complete signup
+                let profile = try result.resolve()
+                
+                // TECH-DEBT: handle user model better
+                Common.storeUserData(from: profile)
+                storeInUserDefaults()
+                
+                self.viewController?.onboardingDelegate?.onboardingScreenComplete()
             } catch {
-                // TODO: something with the error
+                // TODO: handle error. maybe retry?
             }
         }
-    }
-    
-    private func getNewUserProfile() {
-        
     }
 }
 

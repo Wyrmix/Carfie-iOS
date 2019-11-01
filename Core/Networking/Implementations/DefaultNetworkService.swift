@@ -61,6 +61,12 @@ class DefaultNetworkService: NetworkService {
                                  timeoutInterval: 10.0)
         urlRequest.httpMethod = request.method.rawValue
         urlRequest.httpBody = request.body
+        
+        // TECH-DEBT: refactor after updating how User model is handled
+        if request.isAuthorizedRequest, let token = User.main.accessToken {
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         addAdditionalHeaders(request.headers, request: &urlRequest)
         
         do {

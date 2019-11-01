@@ -13,7 +13,7 @@ class SocialLoginViewController: UITableViewController {
 
     private lazy var accountKit = AKFAccountKit(responseType: .accessToken)
     
-    private let authController = DefaultAuthController.shared
+    private let authController = DefaultAuthController.shared(.rider)
     private let tableCellId = "SocialLoginCell"
 
     private lazy var loader : UIView = {
@@ -72,6 +72,9 @@ extension SocialLoginViewController {
 
         let apiType: Base
         switch provider {
+        case .carfie:
+            // Since this is the social login controller we shouldn't need to check for Carfie login.
+            fatalError("User somehow got a provider type of `CARFIE` for social login.")
         case .facebook:
             apiType = .facebookLogin
         case .google:

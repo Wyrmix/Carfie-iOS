@@ -13,6 +13,7 @@ import UIKit
 /// - facebook: facebook account login
 /// - google: google account login
 public enum AuthProviderType: String {
+    case carfie
     case facebook
     case google
 }
