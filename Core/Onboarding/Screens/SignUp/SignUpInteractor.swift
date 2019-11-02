@@ -41,6 +41,7 @@ class SignUpInteractor {
         self.theme = theme
         self.networkService = networkService
         self.profileService = profileService
+        
         addObservers()
     }
     
