@@ -11,6 +11,11 @@ import Foundation
 class DefaultNetworkService: NetworkService {
     
     private var task: URLSessionTask?
+    private var authRepository: AuthRepository
+    
+    init(authRepository: AuthRepository = DefaultAuthRepository()) {
+        self.authRepository = authRepository
+    }
     
     /// Send a network request using URLSession shared session. The request is built from a NetworkRequest object.
     ///
@@ -63,7 +68,7 @@ class DefaultNetworkService: NetworkService {
         urlRequest.httpBody = request.body
         
         // TECH-DEBT: refactor after updating how User model is handled
-        if request.isAuthorizedRequest, let token = User.main.accessToken {
+        if request.isAuthorizedRequest, let token = authRepository.auth.accessToken {
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         

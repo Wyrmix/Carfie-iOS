@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var locationManager:CLLocationManager!
     
-    private let authController = DefaultAuthController.shared
+    private let authController = DefaultAuthController.shared(.driver)
     private let rootContainerInteractor = RootContainerInteractor()
     
     private var shouldShowLogin = false

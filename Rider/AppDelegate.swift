@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static let shared = AppDelegate()
 
     private let authController = DefaultAuthController.shared(.rider)
-    private var rootContainerInteractor = RootContainerInteractor()
+    private let rootContainerInteractor = RootContainerInteractor()
     
     private var shouldShowLogin = false
 
@@ -78,7 +78,11 @@ extension AppDelegate {
         
         let welcomeConfiguration = WelcomeConfiguration()
         
-        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers)
+        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers) { profile in
+            Common.storeUserData(from: profile)
+            storeInUserDefaults()
+        }
+        
         onboardingInteractor.delegate = rootContainerInteractor
         rootContainerInteractor.configureOnboardingNavigationController(OnboardingNavigationController.navigationController(for: onboardingInteractor))
         

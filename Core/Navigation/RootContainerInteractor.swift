@@ -24,6 +24,9 @@ protocol OnboardingDelegate: class {
     
     /// Notifies the delegate that the user has completed the onboarding experience.
     func onboardingWillComplete()
+    
+    /// Notifies the delegate that the user chose to go to login.
+    func showLogin()
 }
 
 /// Root Interactor for the app. Encapsulates logic for setting and displaying "Root" experiences:
@@ -138,8 +141,6 @@ final class RootContainerInteractor {
     /// Dismisses the onboarding experience and starts the main app view controller
     /// - Parameter completion: closure to be called after dismiss(animated:completion:) completes
     func dismissOnboardingExperience(completion: (() -> Void)? = nil) {
-        // TODO: actually hook up all post onboarding events
-//        start()
         rootViewController?.dismiss(animated: true) {
             completion?()
         }
@@ -188,7 +189,7 @@ final class RootContainerInteractor {
     @objc private func userDidLogout() {
         NotificationCenter.default.removeObserver(self, name: .UserDidLogout, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidLogin), name: .UserDidLogin, object: nil)
-        presentLoginExperience()
+        presentOnboardingExperience()
     }
 }
 
@@ -201,6 +202,11 @@ extension RootContainerInteractor: RootViewControllerDelegate {
 
 extension RootContainerInteractor: OnboardingDelegate {
     func onboardingWillComplete() {
+        start()
+        dismissOnboardingExperience()
+    }
+    
+    func showLogin() {
         dismissOnboardingExperience {
             self.presentLoginExperience(animated: false)
         }

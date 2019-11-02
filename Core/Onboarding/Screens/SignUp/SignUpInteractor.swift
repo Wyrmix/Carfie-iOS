@@ -138,11 +138,7 @@ extension SignUpInteractor: SignUpViewDelegate {
             
             do {
                 let profile = try result.resolve()
-                
-                // TECH-DEBT: handle user model better
-                Common.storeUserData(from: profile)
-                storeInUserDefaults()
-                
+                self.viewController?.onboardingDelegate?.onboardingScreen(didFetchUserProfile: profile)
                 self.viewController?.onboardingDelegate?.onboardingScreenComplete()
             } catch {
                 // TODO: handle error. maybe retry?

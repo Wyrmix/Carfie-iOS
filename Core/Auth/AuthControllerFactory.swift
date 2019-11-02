@@ -12,16 +12,20 @@ struct AuthControllerFactory {
         let carfieAuthProvider = CarfieAuthProvider()
         let facebookProvider = FacebookAuthProvider()
         let googleAuthProvider = DefaultGoogleAuthProvider()
+        let signUpProvider = CarfieSignUpProvider()
         let profileService = DefaultProfileService()
         let signUpService = DefaultSignUpService()
+        let authRepository = DefaultAuthRepository()
         
         return DefaultAuthController(
             theme: theme,
             carfieAuthProvider: carfieAuthProvider,
             facebookAuthProvider: facebookProvider,
             googleAuthProvider: googleAuthProvider,
+            signUpProvider: signUpProvider,
             profileService: profileService,
-            signUpService: signUpService
+            signUpService: signUpService,
+            authRepository: authRepository
         )
     }
 }

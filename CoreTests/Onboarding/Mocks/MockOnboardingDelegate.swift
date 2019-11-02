@@ -14,4 +14,6 @@ class MockOnboardingDelegate: OnboardingDelegate {
     func onboardingWillComplete() {
         onboardingWillCompleteWasCalled = true
     }
+    
+    func showLogin() {}
 }

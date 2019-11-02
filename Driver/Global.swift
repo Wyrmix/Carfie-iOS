@@ -133,9 +133,9 @@ func retrieveUserData() -> Bool{
 
         // Editing auth internal state from a global data layer function is not ideal, but will live on for now
         // until this tech debt can be addressed.
-        DefaultAuthController.shared.getAccessToken(completion: nil)
+        DefaultAuthController.shared(.driver).getAccessToken(completion: nil)
         if let loginType = userData.loginType, let authProvider = AuthProviderType(rawValue: loginType) {
-            DefaultAuthController.shared.currentAuthProviderType = authProvider
+            DefaultAuthController.shared(.driver).currentAuthProviderType = authProvider
         }
         
         return true
@@ -202,7 +202,7 @@ func toastSuccess(_ view:UIView,message:NSString,smallFont:Bool,isPhoneX:Bool, c
 
 
 func forceLogout(with message : String? = nil) {
-    DefaultAuthController.shared.logout()
+    DefaultAuthController.shared(.driver).logout()
     AKFAccountKit(responseType: .accessToken).logOut()
     AVPlayerHelper.player.stop()
     BackGroundTask.backGroundInstance.stopBackGroundTimer() // stopping timer on unauthorized status

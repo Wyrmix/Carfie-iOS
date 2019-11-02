@@ -24,7 +24,7 @@ class OnboardingInteractorSpec: QuickSpec {
             ]
             
             beforeEach {
-                subject = OnboardingInteractor(onboardingViewControllers: viewControllers)
+                subject = OnboardingInteractor(onboardingViewControllers: viewControllers, postLoginHandler: nil)
             }
             
             context("init") {

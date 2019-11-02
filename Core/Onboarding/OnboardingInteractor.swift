@@ -15,6 +15,8 @@ protocol OnboardingScreenDelegate: class {
     
     /// Indicates that the user wants to login with an existing account (effectively bypassing onboarding).
     func launchLogin()
+    
+    func onboardingScreen(didFetchUserProfile profile: CarfieProfile)
 }
 
 /// An onboarding screen.
@@ -33,6 +35,8 @@ final class OnboardingInteractor {
     /// All view controllers for the Onboarding stack.
     let viewControllers: [UIViewController & OnboardingScreen]
     
+    let postLoginHandler: ((CarfieProfile) -> Void)?
+    
     /// Index of the currently presented onboarding view controller. Starts at 0 and ends
     /// when onboardingIndex == viewControllers.count.
     private var onboardingIndex: Int = 0 {
@@ -49,8 +53,9 @@ final class OnboardingInteractor {
     
     /// Create a new instance of a OnboardingInteractor.
     /// - Parameter onboardingViewControllers: A complete array of all view controllers needed for onboarding.
-    init(onboardingViewControllers: [UIViewController & OnboardingScreen]) {
+    init(onboardingViewControllers: [UIViewController & OnboardingScreen], postLoginHandler: ((CarfieProfile) -> Void)?) {
         self.viewControllers = onboardingViewControllers
+        self.postLoginHandler = postLoginHandler
         self.viewControllers.first?.onboardingDelegate = self
     }
     
@@ -67,7 +72,10 @@ extension OnboardingInteractor: OnboardingScreenDelegate {
     }
     
     func launchLogin() {
-        // TODO: actually launch login once we have screens
-        onboardingComplete()
+        delegate?.showLogin()
+    }
+    
+    func onboardingScreen(didFetchUserProfile profile: CarfieProfile) {
+        postLoginHandler?(profile)
     }
 }

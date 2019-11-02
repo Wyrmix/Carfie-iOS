@@ -8,23 +8,12 @@
 
 import UIKit
 
-final class CarfieAuthProvider {
+final class CarfieAuthProvider: AuthProvider {
     
     let type: AuthProviderType = .carfie
     
     weak var delegate: AuthProviderDelegate?
     
-    func loginPostSignUp(_ signUp: SignUpResponse) {
-        // TECH-DEBT: move away from singleton User model
-        User.main.accessToken = signUp.accessToken
-        storeInUserDefaults()
-        
-        delegate?.completeLogin(with: .success(provider: .carfie), andAccessToken: signUp.accessToken)
-        // TODO: get profile
-    }
-}
-
-extension CarfieAuthProvider: AuthProvider {
     func login(withPresentingViewController viewController: UIViewController) {
         
     }

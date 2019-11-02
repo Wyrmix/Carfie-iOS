@@ -113,15 +113,13 @@ final class DefaultAuthController {
 
     // MARK: Controlled Properties
 
-    private var _currentAccessToken: String?
-
     var currentAccessToken: String? {
         get {
             // This is a somewhat unfortunate access issue created by Google's SDK providing only asynchronous access
             // to its access tokens. There are certainly some workarounds for this, but will remain a tech debt issue for
             // now and we will rely on the developer not accessing this token when it is nil.
-            assert(_currentAccessToken != nil, "Access token is nil, did you mean to call getAccessToken(completion:)?")
-            return _currentAccessToken
+            assert(authRepository.auth.accessToken != nil, "Access token is nil, did you mean to call getAccessToken(completion:)?")
+            return authRepository.auth.accessToken
         }
     }
 
@@ -148,34 +146,47 @@ final class DefaultAuthController {
 
     // MARK: Auth Providers
 
-    private var carfieAuthProvider: CarfieAuthProvider
+    private var carfieAuthProvider: AuthProvider
     private var facebookAuthProvider: AuthProvider
     private var googleAuthProvider: GoogleAuthProvider
+    
+    // MARK: Account Creation
+    
+    private var signUpProvider: SignUpProvider
     
     // MARK: Service
     
     private let profileService: ProfileService
     private let signUpService: SignUpService
+    
+    // MARK: Persistence
+    
+    private var authRepository: AuthRepository
 
     // MARK: Init
 
     init(theme: AppTheme,
-         carfieAuthProvider: CarfieAuthProvider,
+         carfieAuthProvider: AuthProvider,
          facebookAuthProvider: AuthProvider,
          googleAuthProvider: GoogleAuthProvider,
+         signUpProvider: SignUpProvider,
          profileService: ProfileService,
-         signUpService: SignUpService
+         signUpService: SignUpService,
+         authRepository: AuthRepository
     ) {
         self.theme = theme
         self.carfieAuthProvider = carfieAuthProvider
         self.facebookAuthProvider = facebookAuthProvider
         self.googleAuthProvider = googleAuthProvider
+        self.signUpProvider = signUpProvider
         self.profileService = profileService
         self.signUpService = signUpService
+        self.authRepository = authRepository
 
         self.carfieAuthProvider.delegate = self
         self.facebookAuthProvider.delegate = self
         self.googleAuthProvider.delegate = self
+        self.signUpProvider.delegate = self
     }
 
     // MARK: Private
@@ -183,7 +194,7 @@ final class DefaultAuthController {
     private func setCurrentAuthProvider(to authProviderType: AuthProviderType) {
         switch authProviderType {
         case .carfie:
-            _currentAuthProvider = CarfieAuthProvider()
+            _currentAuthProvider = carfieAuthProvider
         case .facebook:
             _currentAuthProvider = facebookAuthProvider
         case .google:
@@ -201,7 +212,7 @@ extension DefaultAuthController: AuthController {
         }
 
         currentAuthProvider.getAccessToken { [weak self] token in
-            self?._currentAccessToken = token
+            self?.authRepository.auth = CarfieAuth(accessToken: token)
             completion?(token)
         }
     }
@@ -237,7 +248,7 @@ extension DefaultAuthController: AuthController {
         signUpService.signUp(signUp, theme: theme) { result in
             do {
                 let signUp = try result.resolve()
-                self.carfieAuthProvider.loginPostSignUp(signUp)
+                self.signUpProvider.loginPostSignUp(signUp)
                 completion(result)
             } catch {
                 completion(result)
@@ -252,10 +263,10 @@ extension DefaultAuthController: AuthProviderDelegate {
         switch result {
         case .success(let provider):
             setCurrentAuthProvider(to: provider)
-            _currentAccessToken = token
+            authRepository.auth = CarfieAuth(accessToken: token)
         case .cancel, .failure:
             _currentAuthProvider = nil
-            _currentAccessToken = nil
+            authRepository.auth = CarfieAuth(accessToken: nil)
         }
 
         loginDelegate?.authController(self, loginDidCompleteWith: result)
@@ -264,7 +275,7 @@ extension DefaultAuthController: AuthProviderDelegate {
 
     func completeLogout(with result: AuthResult) {
         _currentAuthProvider = nil
-        _currentAccessToken = nil
+        authRepository.auth = CarfieAuth(accessToken: nil)
         logoutDelegate?.authController(self, userDidSignOutWith: result)
         NotificationCenter.default.post(name: .UserDidLogout, object: self)
     }
