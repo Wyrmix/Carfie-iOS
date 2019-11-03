@@ -55,7 +55,11 @@ extension AppDelegate {
         
         let welcomeConfiguration = WelcomeConfiguration()
         
-        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers)
+        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers) { profile in
+            Common.storeUserData(from: profile)
+            storeInUserDefaults()
+        }
+        
         onboardingInteractor.delegate = rootContainerInteractor
         rootContainerInteractor.configureOnboardingNavigationController(OnboardingNavigationController.navigationController(for: onboardingInteractor))
         
