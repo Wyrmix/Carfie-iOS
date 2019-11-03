@@ -16,6 +16,8 @@ class Webservice : RiderPostWebServiceProtocol {
     
     var completion : ((CustomError?, Data?)->())?
     
+    let authRepository = DefaultAuthRepository()
+    
     
     //MARK:- SEND WEBSERVICE REQUEST TO BACKEND
     
@@ -284,7 +286,7 @@ class Webservice : RiderPostWebServiceProtocol {
         urlRequest?.addValue(api.rawValue, forHTTPHeaderField: WebConstants.string.secretKey)
         urlRequest?.addValue(WebConstants.string.application_json, forHTTPHeaderField: WebConstants.string.Content_Type)
         urlRequest?.addValue(WebConstants.string.XMLHttpRequest, forHTTPHeaderField: WebConstants.string.X_Requested_With)
-        urlRequest?.addValue(WebConstants.string.bearer+String.removeNil(User.main.accessToken), forHTTPHeaderField: WebConstants.string.Authorization)
+        urlRequest?.addValue(WebConstants.string.bearer+String.removeNil(authRepository.auth.accessToken), forHTTPHeaderField: WebConstants.string.Authorization)
 
         Alamofire.request(urlRequest!).validate(statusCode: StatusCode.success.rawValue..<StatusCode.multipleResponse.rawValue).responseJSON { (response) in
             let api = response.request?.value(forHTTPHeaderField: WebConstants.string.secretKey) ?? .Empty
@@ -318,7 +320,7 @@ class Webservice : RiderPostWebServiceProtocol {
         headers.updateValue(api.rawValue, forKey: WebConstants.string.secretKey)
         headers.updateValue(WebConstants.string.multipartFormData, forKey: WebConstants.string.Content_Type)
         headers.updateValue(WebConstants.string.XMLHttpRequest, forKey: WebConstants.string.X_Requested_With)
-        headers.updateValue(WebConstants.string.bearer+String.removeNil(User.main.accessToken), forKey: WebConstants.string.Authorization)
+        headers.updateValue(WebConstants.string.bearer+String.removeNil(authRepository.auth.accessToken), forKey: WebConstants.string.Authorization)
 
 
         Alamofire.upload(multipartFormData: { (multipartFormData) in
