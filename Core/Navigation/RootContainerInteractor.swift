@@ -93,7 +93,7 @@ final class RootContainerInteractor {
     
     /// Presents the onboarding experience by embedding it in a navigation controller and modally presenting it.
     /// - Parameter completion: closure to be called after present(_:animated:completion) completes
-    func presentOnboardingExperience(completion: (() -> Void)? = nil) {
+    func presentOnboardingExperience(animated: Bool = false, completion: (() -> Void)? = nil) {
         guard let navigationController = onboardingNavigationController else {
             assertionFailure("Presenting onboarding with no onboarding navigation controller.")
             return
@@ -105,7 +105,7 @@ final class RootContainerInteractor {
             navigationController.isModalInPresentation = true
         }
         
-        rootViewController?.present(navigationController, animated: false) {
+        rootViewController?.present(navigationController, animated: animated) {
             self.unloadChildViewController()
             completion?()
         }
@@ -189,7 +189,7 @@ final class RootContainerInteractor {
     @objc private func userDidLogout() {
         NotificationCenter.default.removeObserver(self, name: .UserDidLogout, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidLogin), name: .UserDidLogin, object: nil)
-        presentOnboardingExperience()
+        presentOnboardingExperience(animated: true)
     }
 }
 
