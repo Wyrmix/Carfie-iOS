@@ -16,13 +16,29 @@ class AuthControllerSpec: QuickSpec {
         describe("An AuthController") {
             var subject: AuthController!
 
+            var carfieAuthProvider: MockAuthProvider!
             var facebookAuthProvider: MockAuthProvider!
             var googleAuthProvider: MockAuthProvider!
+            var signUpProvider: MockSignUpProvider!
+            var authRepository: MockAuthRepository!
 
             beforeEach {
+                carfieAuthProvider = MockAuthProvider(type: .carfie)
                 facebookAuthProvider = MockAuthProvider(type: .facebook)
                 googleAuthProvider = MockAuthProvider(type: .google)
-                subject = DefaultAuthController(facebookAuthProvider: facebookAuthProvider, googleAuthProvider: googleAuthProvider)
+                signUpProvider = MockSignUpProvider()
+                authRepository = MockAuthRepository()
+                
+                subject = DefaultAuthController(
+                    theme: .rider,
+                    carfieAuthProvider: carfieAuthProvider,
+                    facebookAuthProvider: facebookAuthProvider,
+                    googleAuthProvider: googleAuthProvider,
+                    signUpProvider: signUpProvider,
+                    profileService: MockProfileService(),
+                    signUpService: MockSignUpService(),
+                    authRepository: authRepository
+                )
             }
 
             context("on login") {

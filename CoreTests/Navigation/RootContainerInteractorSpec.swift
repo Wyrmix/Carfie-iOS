@@ -31,7 +31,7 @@ class RootContainerInteractorSpec: QuickSpec {
             context("on logout") {
                 it("should unload the child view controller if one exists") {
                     subject.configureChildViewController(UIViewController())
-                    subject.configureLoginViewController(UIViewController())
+                    subject.configureOnboardingNavigationController(UINavigationController())
                     NotificationCenter.default.post(name: .UserDidLogout, object: nil)
                     expect(subject.rootViewController!.children.first).to(beNil())
                 }

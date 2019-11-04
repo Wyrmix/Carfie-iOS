@@ -41,24 +41,11 @@
                                 <rect key="frame" x="20" y="614.66666666666663" width="374" height="55.333333333333371"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yt5-c5-uBn">
-                                        <rect key="frame" x="0.0" y="0.0" width="179" height="55.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="55.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="backgroundColorId">
                                                 <integer key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="3"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahg-tV-scR">
-                                        <rect key="frame" x="195" y="0.0" width="179" height="55.333333333333336"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="SIGNUP"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="backgroundColorId">
-                                                <integer key="value" value="2"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="3"/>
@@ -92,7 +79,6 @@
                     </view>
                     <connections>
                         <outlet property="buttonSignIn" destination="yt5-c5-uBn" id="lfh-xK-vfk"/>
-                        <outlet property="buttonSignUp" destination="Ahg-tV-scR" id="eLk-rg-Cr7"/>
                         <outlet property="buttonSocialLogin" destination="Ibb-hF-1i1" id="c6L-Yt-QoQ"/>
                     </connections>
                 </viewController>

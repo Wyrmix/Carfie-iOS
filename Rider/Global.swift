@@ -180,9 +180,9 @@ func retrieveUserData() -> Bool {
 
         // Editing auth internal state from a global data layer function is not ideal, but will live on for now
         // until this tech debt can be addressed.
-        DefaultAuthController.shared.getAccessToken(completion: nil)
+        DefaultAuthController.shared(.rider).getAccessToken(completion: nil)
         if let loginType = userData.loginType, let authProvider = AuthProviderType(rawValue: loginType) {
-            DefaultAuthController.shared.currentAuthProviderType = authProvider
+            DefaultAuthController.shared(.rider).currentAuthProviderType = authProvider
         }
     }
     return User.main.id != nil
@@ -208,7 +208,7 @@ func forceLogout(with message : String? = nil) {
     let user = User()
     user.id = User.main.id
 
-    DefaultAuthController.shared.logout()
+    DefaultAuthController.shared(.rider).logout()
 
     Webservice().retrieve(api: .logout, url: nil, data: user.toData(), imageData: nil, paramters: nil, type: .POST, completion: nil)
     DispatchQueue.main.async { // stopping timer on unauthorized status

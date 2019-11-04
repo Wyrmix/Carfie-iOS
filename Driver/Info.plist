@@ -66,11 +66,11 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Allow us to read contacts to find your friends</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_DISPLAY_NAME) uses location data to get your current location and connect with nearby provider, so they can pickup from your place.</string>
+	<string>Allows Riders to easily find your current location.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_DISPLAY_NAME) uses location data to get your current location and connect with nearby provider, so they can pickup from your place.</string>
+	<string>Allows Riders to easily find your current location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_DISPLAY_NAME) uses location data to get your current location and connect with nearby provider, so they can pickup from your place.</string>
+	<string>Allows Riders to easily find your current location.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_DISPLAY_NAME) would like to access microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -11,13 +11,17 @@ import UIKit
 
 class LocationPermissionsViewController: UIViewController, OnboardingScreen {
     static func viewController(theme: AppTheme) -> LocationPermissionsViewController {
-        let viewController = LocationPermissionsViewController(theme: theme)
+        let interactor = LocationPermissionsInteractor()
+        let viewController = LocationPermissionsViewController(theme: theme, interactor: interactor)
+        interactor.viewController = viewController
         return viewController
     }
     
     weak var onboardingDelegate: OnboardingScreenDelegate?
     
     private let theme: AppTheme
+    
+    private let interactor: LocationPermissionsInteractor
     
     private var subtitleThemedText: String {
         switch theme {
@@ -62,8 +66,9 @@ class LocationPermissionsViewController: UIViewController, OnboardingScreen {
     
     // MARK: Inits
     
-    init(theme: AppTheme) {
+    init(theme: AppTheme, interactor: LocationPermissionsInteractor) {
         self.theme = theme
+        self.interactor = interactor
         self.soundsGoodButton = CarfieButton(theme: theme)
         
         super.init(nibName: nil, bundle: nil)
@@ -142,7 +147,6 @@ class LocationPermissionsViewController: UIViewController, OnboardingScreen {
     // MARK: Selectors
     
     @objc private func soundsGoodButtonTouchUpInside(_ sender: Any) {
-        // TODO: Pop location permissions
-        onboardingDelegate?.onboardingScreenComplete()
+        interactor.requestLocationPermissions()
     }
 }

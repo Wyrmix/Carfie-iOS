@@ -19,6 +19,8 @@ protocol NetworkRequest {
     var method: HTTPMethod { get }
     var task: HTTPTask { get }
     var headers: HTTPHeaders? { get }
+    var body: Data? { get }
+    var isAuthorizedRequest: Bool { get }
 }
 
 extension NetworkRequest {
@@ -34,9 +36,17 @@ extension NetworkRequest {
     }
 }
 
+// Default implementations for lesser used properties
 extension NetworkRequest {
-    // Default implementation since most requests won't need to add headers.
     var headers: HTTPHeaders? {
         return nil
+    }
+    
+    var body: Data? {
+        return nil
+    }
+    
+    var isAuthorizedRequest: Bool {
+        return false
     }
 }

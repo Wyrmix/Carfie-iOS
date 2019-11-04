@@ -208,6 +208,8 @@ extension PasswordViewController : RiderPostViewProtocol {
            
             User.main.accessToken = accessToken
             User.main.refreshToken = refreshToken
+            var authRepository = DefaultAuthRepository()
+            authRepository.auth = CarfieAuth(accessToken: accessToken)
             self.presenter?.get(api: .getProfile, parameters: nil)
     }
     

@@ -21,6 +21,7 @@ struct VerifyEmailRequest: NetworkRequest {
     var parameters: Parameters {
         return [
             "email": email,
+            // TECH-DEBT: These properties certainly aren't needed, but are currently required by the service.
             "isCardAllowed": true,
             "measurement": "km",
         ]

@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     private var reachability : Reachability?
 
-    private let authController = DefaultAuthController.shared
-    private var rootContainerInteractor = RootContainerInteractor()
+    private let authController = DefaultAuthController.shared(.rider)
+    private let rootContainerInteractor = RootContainerInteractor()
     
     private var shouldShowLogin = false
 
@@ -37,8 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setAppearance()
         self.google()
         self.IQKeyboard()
-        self.siri()
-        self.registerPush(forApp: application)
         self.stripe()
         Router.configure()
         
@@ -77,7 +75,11 @@ extension AppDelegate {
         
         let welcomeConfiguration = WelcomeConfiguration()
         
-        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers)
+        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers) { profile in
+            Common.storeUserData(from: profile)
+            storeInUserDefaults()
+        }
+        
         onboardingInteractor.delegate = rootContainerInteractor
         rootContainerInteractor.configureOnboardingNavigationController(OnboardingNavigationController.navigationController(for: onboardingInteractor))
         
@@ -227,15 +229,6 @@ extension AppDelegate {
         IQKeyboardManager.shared.enable = false
     }
     
-    private func siri() {
-        
-        if INPreferences.siriAuthorizationStatus() != .authorized {
-            INPreferences.requestSiriAuthorization { (status) in
-                print("Is Siri Authorized  -",status == .authorized)
-            }
-        }
-    }
-    
     //MARK:- Stripe
     
     private func stripe(){
@@ -248,20 +241,6 @@ extension AppDelegate {
 // MARK:- Reachability
 
 extension AppDelegate {
-    
-    // MARK:- Register Push
-    private func registerPush(forApp application : UIApplication){
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options:[.alert, .sound]) { (granted, error) in
-            
-            if granted {
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
-            }
-        }
-    }
-    
     // MARK:- Offline Booking on No Internet Connection
     
     func startReachabilityChecking() {

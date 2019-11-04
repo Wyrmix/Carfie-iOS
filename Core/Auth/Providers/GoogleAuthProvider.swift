@@ -17,9 +17,6 @@ protocol GoogleAuthProvider: AuthProvider {
 final class DefaultGoogleAuthProvider: NSObject, GoogleAuthProvider {
 
     let type: AuthProviderType = .google
-    
-    /// Not used for Google auth
-    private(set) var revoker: CredentialRevoker?
 
     weak var delegate: AuthProviderDelegate?
 

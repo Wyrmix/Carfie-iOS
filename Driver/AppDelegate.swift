@@ -17,17 +17,14 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var locationManager:CLLocationManager!
     
-    private let authController = DefaultAuthController.shared
+    private let authController = DefaultAuthController.shared(.driver)
     private let rootContainerInteractor = RootContainerInteractor()
-    
     private var shouldShowLogin = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.appearence()
         self.setgoogleMap()
-        registerPush(forApp: application)
         setGoogleSignIn()
         stripe()
         
@@ -42,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         configureRootInteractor()
 
-        initiateLocationManager()
+        registerForLocationUpdates()
         self.checkUpdates()
         return true
     }
@@ -55,7 +52,11 @@ extension AppDelegate {
         
         let welcomeConfiguration = WelcomeConfiguration()
         
-        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers)
+        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers) { profile in
+            Common.storeUserData(from: profile)
+            storeInUserDefaults()
+        }
+        
         onboardingInteractor.delegate = rootContainerInteractor
         rootContainerInteractor.configureOnboardingNavigationController(OnboardingNavigationController.navigationController(for: onboardingInteractor))
         
@@ -84,6 +85,16 @@ extension AppDelegate: RootContainerInteractorDelegate {
     
     func onboardingDidComplete() {
         rootContainerInteractor.dismissLoginExperience()
+    }
+}
+
+// MARK: - Location Updates
+extension AppDelegate {
+    func registerForLocationUpdates() {
+        DistanceFilteredLocationProvider.shared.registerForLocationUpdates(self) { location in
+            BackGroundTask.backGroundInstance.userStoredDetail.latitude = location.coordinate.latitude
+            BackGroundTask.backGroundInstance.userStoredDetail.lontitude = location.coordinate.longitude
+        }
     }
 }
 
@@ -116,20 +127,6 @@ extension AppDelegate {
         UIPageControl.appearance().pageIndicatorTintColor = .lightGray
         UIPageControl.appearance().currentPageIndicatorTintColor = .primary
         UIPageControl.appearance().backgroundColor = .clear
-    }
-    
-    
-    // MARK:- Register Push
-    private func registerPush(forApp application : UIApplication){
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options:[.alert, .sound]) { (granted, error) in
-            
-            if granted {
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
-            }
-        }
     }
     
     private func setgoogleMap(){
@@ -194,24 +191,4 @@ extension AppDelegate {
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}
-    
-    func initiateLocationManager(){
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 200
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-    }
-}
-
-extension AppDelegate: CLLocationManagerDelegate{
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locationCordinates : CLLocationCoordinate2D = (manager.location?.coordinate)!
-        BackGroundTask.backGroundInstance.userStoredDetail.latitude = locationCordinates.latitude
-        BackGroundTask.backGroundInstance.userStoredDetail.lontitude = locationCordinates.longitude
-    }
 }

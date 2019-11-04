@@ -56,8 +56,29 @@ class Common {
         return baseUrl+"/storage/"+String.removeNil(urlString)
     }
     
+    // TECH-DEBT: Refactor after fixing user onject management
+    class func storeUserData(from profile: CarfieProfile) {
+        User.main.id = profile.id
+        User.main.email = profile.email
+        User.main.firstName = profile.firstName
+        User.main.lastName = profile.lastName
+        User.main.mobile = profile.mobile
+        User.main.picture = profile.avatar
+        User.main.currency  = profile.currency
+        User.main.walletBalance = profile.walletBalance
+        User.main.measurement = profile.measurement
+        User.main.isCardAllowed = profile.card == 1
+        
+        User.main.serviceType = profile.service?.serviceType?.name
+        User.main.serviceId = profile.service?.serviceType?.id
+        
+        if let stripeKey = profile.stripePublishableKey {
+            User.main.stripeKey = stripeKey
+            STPPaymentConfiguration.shared().publishableKey = stripeKey
+        }
+    }
     
-    class func storeUserData(from profile : Profile?){
+    class func storeUserData(from profile: Profile?){
         print("Updating defaults")
         User.main.id = profile?.id
         User.main.email = profile?.email

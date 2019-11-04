@@ -9,19 +9,12 @@
 import Foundation
 
 /// A representation of sign up fields that require validation.
-struct SignUpItem {
+struct SignUpViewState {
     let firstName: String?
     let lastName: String?
+    let phone: String?
     let email: String?
     let confirmEmail: String?
     let password: String?
     let confirmPassword: String?
-}
-
-/// A representation of the fields required to complete a sign up request.
-struct ValidatedSignUp: Codable {
-    let firstName: String
-    let lastName: String
-    let email: String
-    let password: String
 }

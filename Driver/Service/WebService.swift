@@ -16,6 +16,8 @@ class Webservice : PostWebServiceProtocol {
     
     var completion : ((CustomError?, Data?)->())?
     
+    let authRepository = DefaultAuthRepository()
+    
     
     //MARK:- SEND WEBSERVICE REQUEST TO BACKEND
     
@@ -281,7 +283,7 @@ class Webservice : PostWebServiceProtocol {
     
         urlRequest?.addValue(WebConstants.string.XMLHttpRequest, forHTTPHeaderField: WebConstants.string.X_Requested_With)
         if api != .login {
-            if let accesstoken = User.main.accessToken{
+            if let accesstoken = authRepository.auth.accessToken {
                 urlRequest?.addValue( "Bearer \(accesstoken)", forHTTPHeaderField: WebConstants.string.Authorization)
             }
         }
@@ -325,7 +327,7 @@ class Webservice : PostWebServiceProtocol {
         headers.updateValue(WebConstants.string.XMLHttpRequest, forKey: WebConstants.string.X_Requested_With)
 
         if api != .login {
-            if let accesstoken = User.main.accessToken {
+            if let accesstoken = authRepository.auth.accessToken {
                 
                 headers.updateValue("Bearer \(accesstoken)", forKey: WebConstants.string.Authorization)
                 

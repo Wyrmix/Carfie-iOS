@@ -26,18 +26,36 @@ class SignUpInteractor {
     /// Text field that is currently being edited by the use
     private var activeTextInputView: CarfieTextInputView?
     
+    private let authController: AuthController
+    private let theme: AppTheme
     private let networkService: NetworkService
+    private let profileService: ProfileService
     
     var signUpViewPresenter: SignUpViewPresenter?
     
-    init(networkService: NetworkService = DefaultNetworkService()) {
+    init(theme: AppTheme,
+         networkService: NetworkService = DefaultNetworkService(),
+         profileService: ProfileService = DefaultProfileService()
+    ) {
+        self.authController = DefaultAuthController.shared(theme)
+        self.theme = theme
         self.networkService = networkService
+        self.profileService = profileService
+        
         addObservers()
     }
     
     private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func showPrivacyPolicy() {
+        guard let viewController = viewController,
+              let url = Bundle.main.url(forResource: "privacy_policy", withExtension: "pdf") else { return }
+
+        let webView = WebViewViewController.viewController(url: url)
+        viewController.present(webView, animated: true)
     }
 }
 
@@ -51,17 +69,25 @@ extension SignUpInteractor: SignUpViewDelegate {
         activeTextInputView = nil
     }
     
-    func signUpRequested(with item: SignUpItem) {
+    func signUpRequested(with item: SignUpViewState) {
         var validatedSignUp: ValidatedSignUp
         
         do {
             validatedSignUp = try validateSignUpItem(item).resolve()
         } catch {
             // TODO: something with the error
+            return
         }
         
-        // TODO: send values to sign up service
-        viewController?.onboardingDelegate?.onboardingScreenComplete()
+        authController.signUp(with: validatedSignUp) { [weak self] result in
+            switch result {
+            case .success:
+                self?.getNewUserProfile()
+            case .failure:
+                // TODO: show error message and retry
+                break
+            }
+        }
     }
     
     func verifyEmailAvailability(_ items: (email: String?, confirmation: String?)) {
@@ -88,22 +114,25 @@ extension SignUpInteractor: SignUpViewDelegate {
         }
     }
     
-    private func validateSignUpItem(_ item: SignUpItem) -> Result<ValidatedSignUp> {
+    private func validateSignUpItem(_ item: SignUpViewState) -> Result<ValidatedSignUp> {
         do {
             let firstNameResult = try EmptyFieldValidator().validate(item.firstName).resolve()
             let lastNameResult = try EmptyFieldValidator().validate(item.lastName).resolve()
+            let phoneNumberResult = try PhoneValidator().validate(item.phone).resolve()
             let emailResult = try EmailValidator().validate(item.email).resolve()
             let passwordResult = try PasswordValidator().validate(item.password).resolve()
+            let passwordConfirmationResult = try MatchingFieldValidator(fieldToMatch: passwordResult).validate(item.confirmPassword).resolve()
             
-            // ensure password and email fields match
+            // ensure email fields match
             _ = try MatchingFieldValidator(fieldToMatch: emailResult).validate(item.confirmEmail).resolve()
-            _ = try MatchingFieldValidator(fieldToMatch: passwordResult).validate(item.confirmPassword).resolve()
             
             let validatedSignUp = ValidatedSignUp(
                 firstName: firstNameResult,
                 lastName: lastNameResult,
                 email: emailResult,
-                password: passwordResult
+                mobile: phoneNumberResult,
+                password: passwordResult,
+                passwordConfirmation: passwordConfirmationResult
             )
             return Result.success(validatedSignUp)
             
@@ -111,8 +140,23 @@ extension SignUpInteractor: SignUpViewDelegate {
             return Result.failure(error)
         }
     }
+    
+    private func getNewUserProfile() {
+        profileService.getProfile(theme: theme) { [weak self] result in
+            guard let self = self else { return }
+            
+            do {
+                let profile = try result.resolve()
+                self.viewController?.onboardingDelegate?.onboardingScreen(didFetchUserProfile: profile)
+                self.viewController?.onboardingDelegate?.onboardingScreenComplete()
+            } catch {
+                // TODO: handle error. maybe retry?
+            }
+        }
+    }
 }
 
+// MARK: - Keyboard Management
 extension SignUpInteractor {
     @objc private func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo,

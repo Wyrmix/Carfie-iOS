@@ -13,6 +13,7 @@ import UIKit
 /// - facebook: facebook account login
 /// - google: google account login
 public enum AuthProviderType: String {
+    case carfie
     case facebook
     case google
 }
@@ -59,4 +60,10 @@ protocol AuthProvider {
     ///
     /// - Parameter completion: called upon completion of retrieval attempt
     func getAccessToken(completion: @escaping (String?) -> Void)
+}
+
+extension AuthProvider {
+    var revoker: CredentialRevoker? {
+        return nil
+    }
 }

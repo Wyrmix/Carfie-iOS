@@ -23,13 +23,23 @@ enum AppTheme {
         }
     }
     
-    /// The main hero image used for eachj app flavor.
+    /// The main hero image used for each app flavor.
     var logoImage: UIImage? {
         switch self {
         case .driver:
             return UIImage(named: "driverLogo")
         case .rider:
             return UIImage(named: "riderLogo")
+        }
+    }
+    
+    /// Main tint color for each app flavor.
+    var tintColor: UIColor {
+        switch self {
+        case .driver:
+            return .carfieTeal
+        case .rider:
+            return .carfieFuscia
         }
     }
 }
