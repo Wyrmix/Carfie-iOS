@@ -37,8 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setAppearance()
         self.google()
         self.IQKeyboard()
-        self.siri()
-        self.registerPush(forApp: application)
         self.stripe()
         Router.configure()
         
@@ -231,15 +229,6 @@ extension AppDelegate {
         IQKeyboardManager.shared.enable = false
     }
     
-    private func siri() {
-        
-        if INPreferences.siriAuthorizationStatus() != .authorized {
-            INPreferences.requestSiriAuthorization { (status) in
-                print("Is Siri Authorized  -",status == .authorized)
-            }
-        }
-    }
-    
     //MARK:- Stripe
     
     private func stripe(){
@@ -252,20 +241,6 @@ extension AppDelegate {
 // MARK:- Reachability
 
 extension AppDelegate {
-    
-    // MARK:- Register Push
-    private func registerPush(forApp application : UIApplication){
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options:[.alert, .sound]) { (granted, error) in
-            
-            if granted {
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
-            }
-        }
-    }
-    
     // MARK:- Offline Booking on No Internet Connection
     
     func startReachabilityChecking() {
