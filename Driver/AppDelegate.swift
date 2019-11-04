@@ -91,8 +91,6 @@ extension AppDelegate: RootContainerInteractorDelegate {
 // MARK: - Location Updates
 extension AppDelegate {
     func registerForLocationUpdates() {
-        
-        
         DistanceFilteredLocationProvider.shared.registerForLocationUpdates(self) { location in
             BackGroundTask.backGroundInstance.userStoredDetail.latitude = location.coordinate.latitude
             BackGroundTask.backGroundInstance.userStoredDetail.lontitude = location.coordinate.longitude

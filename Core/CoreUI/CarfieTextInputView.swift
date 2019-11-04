@@ -47,6 +47,12 @@ class CarfieTextInputView: UIView {
         }
     }
     
+    var autocorrectionType: UITextAutocorrectionType {
+        didSet {
+            textField.autocorrectionType = autocorrectionType
+        }
+    }
+    
     var text: String? {
         return textField.text
     }
@@ -82,12 +88,14 @@ class CarfieTextInputView: UIView {
          placeholder: String? = nil,
          isSecureTextEntry: Bool = false,
          keyboardType: UIKeyboardType = .default,
+         autocorrectionType: UITextAutocorrectionType = .default,
          validator: Validator? = nil)
     {
         self.title = title
         self.placeholder = placeholder
         self.isSecureTextEntry = isSecureTextEntry
         self.keyboardType = keyboardType
+        self.autocorrectionType = autocorrectionType
         self.validator = validator
         self.textField = CarfieTextField()
         

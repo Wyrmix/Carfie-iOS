@@ -35,11 +35,11 @@ class SignUpView: UIView {
     
     // MARK: Input Fields
     
-    private let firstNameTextInputView = CarfieTextInputView(title: "First Name", placeholder: "ex John", validator: EmptyFieldValidator())
-    private let lastNameTextInputView = CarfieTextInputView(title: "Last Name", placeholder: "ex Smith", validator: EmptyFieldValidator())
+    private let firstNameTextInputView = CarfieTextInputView(title: "First Name", placeholder: "ex John", autocorrectionType: .no, validator: EmptyFieldValidator())
+    private let lastNameTextInputView = CarfieTextInputView(title: "Last Name", placeholder: "ex Smith", autocorrectionType: .no, validator: EmptyFieldValidator())
     private let phoneNumberTextInputView = CarfieTextInputView(title: "Phone Number", placeholder: "ex 6518754689", keyboardType: .phonePad, validator: PhoneValidator())
-    private let emailTextInputView = CarfieTextInputView(title: "Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress, validator: EmailValidator())
-    private let confirmEmailTextInputView = CarfieTextInputView(title: "Confirm Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress)
+    private let emailTextInputView = CarfieTextInputView(title: "Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress, autocorrectionType: .no, validator: EmailValidator())
+    private let confirmEmailTextInputView = CarfieTextInputView(title: "Confirm Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress, autocorrectionType: .no)
     private let passwordTextInputView = CarfieTextInputView(title: "Password", placeholder: "ex Password1234", isSecureTextEntry: true, validator: PasswordValidator())
     private let confirmPasswordTextInputView = CarfieTextInputView(title: "Confirm Password", placeholder: "ex Password1234", isSecureTextEntry: true)
     
