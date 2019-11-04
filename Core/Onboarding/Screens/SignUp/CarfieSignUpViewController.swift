@@ -32,16 +32,19 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
         return scrollView
     }()
     
-    // TODO: fix truncation on iPhone SE
-    private let privacyPolicyButton: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 2
-        label.font = .carfieBody
-        label.text = "By signing up you agree to our privacy policy"
-        label.textColor = .white
-        label.textAlignment = .center
-        return label
+    private let privacyPolicyButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let attributedTitle = NSAttributedString(
+            string: "By signing up you agree to our privacy policy",
+            attributes: [
+                NSAttributedString.Key.underlineStyle: 1.0,
+                NSAttributedString.Key.font: UIFont.carfieBody,
+                NSAttributedString.Key.foregroundColor: UIColor.white,
+            ]
+        )
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        return button
     }()
     
     private let signUpView: SignUpView
@@ -81,6 +84,8 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
     // MARK: View Setup
     
     private func setupViews() {
+        privacyPolicyButton.addTarget(self, action: #selector(privacyPolicyButonTouchUpInside(_:)), for: .touchUpInside)
+        
         signUpView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(signUpScrollView)
@@ -112,6 +117,12 @@ class CarfieSignUpViewController: UIViewController, OnboardingScreen {
         gradient.frame = view.bounds
         gradient.colors = theme.onboardingGradientColors
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    // MARK: Selectors
+    
+    @objc private func privacyPolicyButonTouchUpInside(_ sender: Any) {
+        interactor.showPrivacyPolicy()
     }
 }
 

@@ -49,6 +49,14 @@ class SignUpInteractor {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    func showPrivacyPolicy() {
+        guard let viewController = viewController,
+              let url = Bundle.main.url(forResource: "privacy_policy", withExtension: "pdf") else { return }
+
+        let webView = WebViewViewController.viewController(url: url)
+        viewController.present(webView, animated: true)
+    }
 }
 
 // MARK: - SignUpViewDelegate
@@ -148,6 +156,7 @@ extension SignUpInteractor: SignUpViewDelegate {
     }
 }
 
+// MARK: - Keyboard Management
 extension SignUpInteractor {
     @objc private func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
