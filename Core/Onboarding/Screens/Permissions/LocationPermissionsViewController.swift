@@ -69,7 +69,7 @@ class LocationPermissionsViewController: UIViewController, OnboardingScreen {
     init(theme: AppTheme, interactor: LocationPermissionsInteractor) {
         self.theme = theme
         self.interactor = interactor
-        self.soundsGoodButton = CarfieButton(theme: theme)
+        self.soundsGoodButton = CarfieButton()
         
         super.init(nibName: nil, bundle: nil)
         
