@@ -19,6 +19,13 @@ class LocationPermissionsInteractor {
     }
     
     func requestLocationPermissions() {
+        // Location permissions can persist between app installs, so we'll do a precheck and bypass
+        // requesting if the user has already responded to the prompt before.
+        guard CLLocationManager.authorizationStatus() == .notDetermined else {
+            requestPushNotificationPermissions()
+            return
+        }
+        
         // set delegate right before requesting so we don't get any false positives (e.g. the delegate callback that occurs on CLLocationManager creation.)
         locationProvider.delegate = self
         locationProvider.requestLocationPermissions()
