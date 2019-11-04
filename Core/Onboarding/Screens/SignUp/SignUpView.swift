@@ -67,6 +67,7 @@ class SignUpView: UIView {
         
         [lastNameTextInputView, firstNameTextInputView, phoneNumberTextInputView, emailTextInputView, confirmEmailTextInputView, passwordTextInputView, confirmPasswordTextInputView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.errorMessageLabel.textColor = theme.tintColor
             $0.delegate = self
         }
         
