@@ -32,7 +32,7 @@ struct WelcomeCarouselData {
             boldText: "Complete 2 rides to and from Jingle ball for a $1000 sign up bonus",
             bottomLabelText: nil,
             showActionButton: true,
-            actionButtonLink: nil
+            actionButtonLink: "https://go.carfie.com/signup"
         ),
         WelcomeCarouselCellViewState(
             theme: .driver,
@@ -42,7 +42,7 @@ struct WelcomeCarouselData {
             boldText: "Complete 150 rides in 90 days for a $500 bonus",
             bottomLabelText: nil,
             showActionButton: true,
-            actionButtonLink: nil
+            actionButtonLink: "https://go.carfie.com/signup"
         ),
     ]
     
@@ -67,7 +67,7 @@ struct WelcomeCarouselData {
             boldText: "10% off your first ride and a chance to win $1000",
             bottomLabelText: nil,
             showActionButton: true,
-            actionButtonLink: nil
+            actionButtonLink: "https://go.carfie.com/signup"
         ),
         WelcomeCarouselCellViewState(
             theme: .rider,
@@ -77,7 +77,7 @@ struct WelcomeCarouselData {
             boldText: "For a chance to win $1000",
             bottomLabelText: nil,
             showActionButton: true,
-            actionButtonLink: nil
+            actionButtonLink: "https://go.carfie.com/signup"
         ),
     ]
 }

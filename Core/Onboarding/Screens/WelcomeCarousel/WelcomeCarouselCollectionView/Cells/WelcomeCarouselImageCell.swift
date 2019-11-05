@@ -12,6 +12,8 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
     
     static let reuseIdentifier = "ImageWelcomeCell"
     
+    weak var delegate: WelcomeCellDelegate?
+    
     // MARK: UI components
     
     private var topLabel: UILabel = {
@@ -43,7 +45,10 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         return stackView
     }()
     
-    private var actionButton = CarfieButton(theme: nil, style: .smallPrimary)
+    var actionButton = CarfieButton(theme: nil, style: .smallPrimary)
+    
+    /// String representation of the URL to be launched when the action button is pressed.
+    private var actionButtonLink: String?
     
     // MARK: Inits
     
@@ -87,6 +92,8 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
     /// Configure the cell's UI components.
     /// - Parameter viewState: ViewState object that represents the configuration for the cell.
     func configure(with viewState: WelcomeCarouselCellViewState) {
+        actionButtonLink = viewState.actionButtonLink
+        
         // Order of operations is important here. It will determine the order the items appear
         // in the cell StackView.
         setupTopLabel(with: viewState.topLabelText)
@@ -126,5 +133,14 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         ])
         
         cellStackView.addArrangedSubview(actionButton)
+        
+        actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), for: .touchUpInside)
+    }
+    
+    // MARK: Selectors
+    
+    @objc private func actionButtonTouchUpInside(_ sender: Any) {
+        guard let url = actionButtonLink else { return }
+        delegate?.showDetailWebView(url: url)
     }
 }

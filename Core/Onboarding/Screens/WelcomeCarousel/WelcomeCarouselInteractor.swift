@@ -29,3 +29,10 @@ class WelcomeCarouselInteractor {
         }
     }
 }
+
+extension WelcomeCarouselInteractor: WelcomeCellDelegate {
+    func showDetailWebView(url: String) {
+        guard let viewController = viewController else { return }
+        SafariIntent(url: url)?.execute(via: viewController)
+    }
+}

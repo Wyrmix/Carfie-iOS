@@ -77,6 +77,7 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         self.signInButton = CarfieButton(theme: theme)
         
         super.init(nibName: nil, bundle: nil)
+        
         view.backgroundColor = .white
         self.interactor.viewController = self
         setupViews()
@@ -207,6 +208,8 @@ extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionV
         }
         
         welcomeCell.configure(with: carouselItems[indexPath.row])
+        welcomeCell.delegate = interactor
+        
         return welcomeCell
     }
     

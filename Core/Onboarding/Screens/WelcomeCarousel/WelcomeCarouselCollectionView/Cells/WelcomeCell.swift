@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol WelcomeCellDelegate: class {
+    func showDetailWebView(url: String)
+}
+
 protocol WelcomeCell: class {
+    /*weak*/ var delegate: WelcomeCellDelegate? { get set }
     func configure(with viewState: WelcomeCarouselCellViewState)
 }
