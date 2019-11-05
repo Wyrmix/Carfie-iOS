@@ -45,7 +45,7 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         return stackView
     }()
     
-    var actionButton = CarfieButton(theme: nil, style: .smallPrimary)
+    private var actionButton = CarfieButton(style: .smallPrimary)
     
     /// String representation of the URL to be launched when the action button is pressed.
     private var actionButtonLink: String?
@@ -100,7 +100,7 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         setupImageView(with: viewState.image)
         boldLabel.text = viewState.boldText
         cellStackView.addArrangedSubview(boldLabel)
-        setupActionButton(isVisible: viewState.showActionButton, withTheme: viewState.theme)
+        setupActionButton(isVisible: viewState.showActionButton)
     }
     
     // MARK: Private view configuration
@@ -121,10 +121,9 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         cellStackView.addArrangedSubview(topLabel)
     }
     
-    private func setupActionButton(isVisible: Bool, withTheme theme: AppTheme) {
+    private func setupActionButton(isVisible: Bool) {
         guard isVisible else { return }
         
-        actionButton.applyNewTheme(theme)
         actionButton.setTitle("Details", for: .normal)
         
         NSLayoutConstraint.activate([
