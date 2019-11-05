@@ -15,4 +15,9 @@ protocol WelcomeCellDelegate: class {
 protocol WelcomeCell: class {
     /*weak*/ var delegate: WelcomeCellDelegate? { get set }
     func configure(with viewState: WelcomeCarouselCellViewState)
+    func playAnimation()
+}
+
+extension WelcomeCell {
+    func playAnimation() {}
 }

@@ -215,6 +215,9 @@ extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionV
         for cell in carouselView.visibleCells {
             guard let index = carouselView.indexPath(for: cell)?.row else { return }
             pageIndicator.currentPage = index
+            
+            guard let welcomeCell = cell as? WelcomeCell else { continue }
+            welcomeCell.playAnimation()
         }
     }
 }

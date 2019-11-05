@@ -6,6 +6,7 @@
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
+import Lottie
 import UIKit
 
 class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
@@ -28,6 +29,8 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
+    private var animationView: AnimationView?
     
     private var boldLabel: UILabel = {
         let label = UILabel()
@@ -65,8 +68,14 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        // This isn't realy ideal. prepareForReuse() should not be removing and nil'ing subviews. It kind of
+        // defeats the purpose of cell reuse. This is the result of trying to hard to generize this cell and
+        // not having the time to refactor.
+        animationView = nil
         cellStackView.arrangedSubviews.forEach {
             cellStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
         }
     }
     
@@ -87,7 +96,7 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         ])
     }
     
-    // MARK: Public view conmfiguration
+    // MARK: Public view configuration
     
     /// Configure the cell's UI components.
     /// - Parameter viewState: ViewState object that represents the configuration for the cell.
@@ -98,9 +107,14 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         // in the cell StackView.
         setupTopLabel(with: viewState.topLabelText)
         setupImageView(with: viewState.image)
+        setupAnimationView(with: viewState.animationName)
         boldLabel.text = viewState.boldText
         cellStackView.addArrangedSubview(boldLabel)
         setupActionButton(isVisible: viewState.showActionButton)
+    }
+    
+    func playAnimation() {
+        animationView?.play()
     }
     
     // MARK: Private view configuration
@@ -112,6 +126,22 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         cellStackView.addArrangedSubview(imageView)
+    }
+    
+    private func setupAnimationView(with animation: String?) {
+        // Only want to run this once so we don't add multiple animation views
+        // to the stack view.
+        guard let animation = animation, animationView == nil else { return }
+        
+        animationView = AnimationView(name: animation)
+        animationView?.translatesAutoresizingMaskIntoConstraints = false
+        animationView?.contentMode = .scaleAspectFit
+        animationView?.heightAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
+        animationView?.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        
+        guard let animationView = self.animationView else { return }
+        
+        cellStackView.addArrangedSubview(animationView)
     }
     
     private func setupTopLabel(with text: String?) {
