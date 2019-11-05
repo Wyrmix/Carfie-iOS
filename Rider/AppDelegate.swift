@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         FirebaseApp.configure()
         setAppearance()
+        CarfieAppearance.configureTheme(.rider)
         self.google()
         self.IQKeyboard()
         self.stripe()

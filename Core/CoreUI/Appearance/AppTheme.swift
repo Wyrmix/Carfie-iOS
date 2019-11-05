@@ -37,7 +37,17 @@ enum AppTheme {
     var tintColor: UIColor {
         switch self {
         case .driver:
-            return .carfieTeal
+            return .carfieOrange
+        case .rider:
+            return .carfieFuscia
+        }
+    }
+    
+    /// Primary color for all Carfie butons.
+    var primaryButtonColor: UIColor {
+        switch self {
+        case .driver:
+            return .carfieOrange
         case .rider:
             return .carfieFuscia
         }

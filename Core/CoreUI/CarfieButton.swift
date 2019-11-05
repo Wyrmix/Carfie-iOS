@@ -32,14 +32,11 @@ enum ButtonStyle {
 /// a semi-bold title.
 class CarfieButton: UIButton {
     
-    private let theme: AppTheme?
     private let style: ButtonStyle
     
-    init(theme: AppTheme?, style: ButtonStyle = .primary) {
-        self.theme = theme
+    init(style: ButtonStyle = .primary) {
         self.style = style
         super.init(frame: .zero)
-        
         setup()
     }
     
@@ -58,30 +55,10 @@ class CarfieButton: UIButton {
         setTitleColor(.white, for: .normal)
         titleLabel?.font = style.font
         
-        applyTheme(theme)
-        
         layer.shadowRadius = 6
         layer.shadowOffset = CGSize(width: 0, height: 3)
         layer.shadowOpacity = 0.16
         layer.shadowColor = UIColor.black.cgColor
         layer.masksToBounds = false
-    }
-    
-    /// Apply a new app theme to the button. Useful for situations where the theme cannot be
-    /// injected during initialization.
-    /// - Parameter theme: the app theme (Driver or Rider)
-    func applyNewTheme(_ theme: AppTheme) {
-        applyTheme(theme)
-    }
-    
-    private func applyTheme(_ theme: AppTheme?) {
-        switch theme {
-        case .driver:
-            backgroundColor = .carfieOrange
-        case .rider:
-            backgroundColor = .carfieFuscia
-        default:
-            backgroundColor = .carfieTeal
-        }
     }
 }

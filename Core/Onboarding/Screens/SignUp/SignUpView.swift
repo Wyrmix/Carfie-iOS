@@ -47,7 +47,7 @@ class SignUpView: UIView {
     
     init(theme: AppTheme) {
         self.theme = theme
-        self.signUpButton = CarfieButton(theme: theme)
+        self.signUpButton = CarfieButton()
         super.init(frame: .zero)
         setup()
     }

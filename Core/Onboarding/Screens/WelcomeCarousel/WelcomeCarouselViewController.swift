@@ -61,8 +61,8 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         return indicator
     }()
     
-    private let signUpButton: CarfieButton
-    private let signInButton: CarfieButton
+    private let signUpButton = CarfieButton()
+    private let signInButton = CarfieButton()
     
     // MARK: Collection View Properties
     
@@ -73,8 +73,6 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
     init(theme: AppTheme, interactor: WelcomeCarouselInteractor) {
         self.theme = theme
         self.interactor = interactor
-        self.signUpButton = CarfieButton(theme: theme)
-        self.signInButton = CarfieButton(theme: theme)
         
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .white
