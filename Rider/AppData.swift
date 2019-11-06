@@ -8,9 +8,12 @@
 
 import UIKit
 
-let AppName = "Espy"
+let AppName = "Carfie"
 var deviceTokenString = Constants.string.noDevice
+
+/// This is a required parameter for sign up. It appears to be used no other place.
 let appSecretKey = "HXX00MQv8IQncJqlk8MmJGLPcPRxtdPXNcSxznUy"
+
 let appClientId = 2
 let defaultMapLocation = LocationCoordinate(latitude: 13.009245, longitude: 80.212929)
 let baseUrl = "https://sapi.carfie.com/"
