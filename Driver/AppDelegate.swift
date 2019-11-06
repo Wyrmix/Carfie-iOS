@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CarfieAppearance.configureTheme(.driver)
         self.setgoogleMap()
         setGoogleSignIn()
-        stripe()
         
         Router.configure()
         
@@ -141,12 +140,6 @@ extension AppDelegate {
         }
 
         authController.configureGoogleSignIn(with: clientId)
-    }
-    
-    //MARK:- Stripe
-    
-    private func stripe() {
-        STPPaymentConfiguration.shared().publishableKey = User.main.stripeKey ?? stripePublishableKey
     }
     
     // MARK:- Check Update
