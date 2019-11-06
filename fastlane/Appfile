@@ -1,6 +1,9 @@
 # app_identifier("[[APP_IDENTIFIER]]") # The bundle identifier of your app
 # apple_id("[[APPLE_ID]]") # Your Apple email address
 
+# To select a team for iTunes Connect use
+itc_team_name "S'py Global Inc."
+itc_team_id "119468623"
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
