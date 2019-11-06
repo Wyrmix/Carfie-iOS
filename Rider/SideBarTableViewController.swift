@@ -167,7 +167,7 @@ extension SideBarTableViewController {
         case (0,7):
             (self.drawerController?.getViewController(for: .none)?.children.first as? HomeViewController)?.share(items: [baseUrl])
         case (0,8):
-            Common.open(url: driverUrl)
+            Common.open(url: baseUrl)
         case (0,9):
             self.logout()
             
