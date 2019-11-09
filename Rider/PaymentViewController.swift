@@ -114,7 +114,8 @@ extension PaymentViewController {
     // Payment Button Action
     
     @IBAction private func buttonPaymentAction() {
-          self.push(id: Storyboard.Ids.AddCardViewController, animation: true)
+        present(AddPaymentViewController.viewController(for: .rider), animated: true)
+//          self.push(id: Storyboard.Ids.AddCardViewController, animation: true)
         
 //        let theme = STPTheme.default()
 //        theme.primaryForegroundColor = .primary
