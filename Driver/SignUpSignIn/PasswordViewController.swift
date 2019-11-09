@@ -200,9 +200,13 @@ extension PasswordViewController : PostViewProtocol {
     }
     
     func getLogin(api: Base, data: LoginModel?) {
-        print("login sucess: \(String(describing: data?.access_token))")
-        //UserDefaults.standard.set(data?.access_token, forKey: "access_token")
-        User.main.accessToken = data?.access_token
+
+        guard let accessToken = data?.access_token else {
+            self.onError(api: api, message: ErrorMessage.list.serverError.localize(), statusCode: 0)
+            return
+        }
+        
+        User.main.accessToken = accessToken
         var authRepository = DefaultAuthRepository()
         authRepository.auth = CarfieAuth(accessToken: accessToken)
         storeInUserDefaults()
