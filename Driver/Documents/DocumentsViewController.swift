@@ -82,6 +82,8 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
             $0.delegate = interactor
         }
         
+        uploadButton.addTarget(self, action: #selector(uploadButtonTouchUpInside(_:)), for: .touchUpInside)
+        
         let topDocumentStackView = UIStackView(arrangedSubviews: [documentViews[0], documentViews[1]])
         topDocumentStackView.distribution = .fillEqually
         topDocumentStackView.spacing = 48
@@ -145,6 +147,12 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
         for (index, item) in viewModel.documentItems.enumerated() {
             documentViews[index].configure(with: item)
         }
+    }
+    
+    // MARK: Selectors
+    
+    @objc private func uploadButtonTouchUpInside(_ sender: Any?) {
+        interactor.uploadDocuments()
     }
 }
 

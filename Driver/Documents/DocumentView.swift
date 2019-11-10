@@ -24,7 +24,7 @@ class DocumentView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
-        label.font = .carfieHeading
+        label.font = .carfieHeadingBold
         label.textAlignment = .center
         label.numberOfLines = 2
         return label

@@ -24,9 +24,7 @@ class UserFacingErrorIntent: ErrorIntent {
     let alertController: UIAlertController
     
     init(title: String, message: String, action: ((UIAlertAction) -> Void)? = nil) {
-        alertController = UIAlertController()
-        alertController.title = title
-        alertController.message = message
+        alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: action))
     }
 }
@@ -35,9 +33,7 @@ class UserFacingErrorRetryIntent: ErrorIntent {
     let alertController: UIAlertController
     
     init(title: String, message: String, action: ((UIAlertAction) -> Void)? = nil, retry: ((UIAlertAction) -> Void)?) {
-        alertController = UIAlertController()
-        alertController.title = title
-        alertController.message = message
+        alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: action))
         alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: retry))
     }
