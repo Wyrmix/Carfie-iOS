@@ -111,7 +111,7 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            documentsStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 8),
+            documentsStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
             documentsStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             documentsStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             documentsStackView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
@@ -144,6 +144,27 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
     func presentDocuments(from viewModel: DocumentsViewModel) {
         for (index, item) in viewModel.documentItems.enumerated() {
             documentViews[index].configure(with: item)
+        }
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+extension DocumentsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true) { [ weak self] in
+            guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+                self?.interactor.updateDocumentWithImage(nil)
+                return
+            }
+            
+            self?.interactor.updateDocumentWithImage(image)
+        }
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true) { [weak self] in
+            self?.interactor.updateDocumentWithImage(nil)
         }
     }
 }
