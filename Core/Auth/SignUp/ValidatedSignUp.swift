@@ -19,7 +19,7 @@ struct ValidatedSignUp: Codable {
     
     // TECH-DEBT: These values are necessary for a successful sign up, but never seem to get used.
     // For now I'm hardcoding the values the app has been using.
-    let deviceId: String = "no device"
+    let deviceId: String = UUID().uuidString // this should eventually be made something idetifiable and unique
     let deviceToken: String = "no device"
     let deviceType: String = "ios"
     let loginBy: String = "manual"

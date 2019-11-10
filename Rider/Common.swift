@@ -68,7 +68,7 @@ class Common {
         
         if let stripeKey = profile.stripePublishableKey {
             User.main.stripeKey = stripeKey
-            STPPaymentConfiguration.shared().publishableKey = User.main.stripeKey ?? stripePublishableKey
+            STPPaymentConfiguration.shared().publishableKey = stripeKey
         }
     }
     
@@ -91,7 +91,7 @@ class Common {
         }
         if let stripeKey = profile?.stripe_publishable_key {
             User.main.stripeKey = stripeKey
-            STPPaymentConfiguration.shared().publishableKey = User.main.stripeKey ?? stripePublishableKey
+            STPPaymentConfiguration.shared().publishableKey = stripeKey
         }
     }
 

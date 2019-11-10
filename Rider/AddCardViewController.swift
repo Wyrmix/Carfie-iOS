@@ -32,8 +32,8 @@ class AddCardViewController: UIViewController {
 extension AddCardViewController {
     
     func initialLoads() {
-        
-        STPPaymentConfiguration.shared().publishableKey = User.main.stripeKey ?? stripePublishableKey//need to add on drive code
+        guard let publishableKey = User.main.stripeKey else { return }
+        STPPaymentConfiguration.shared().publishableKey = publishableKey
         self.creditCardView.cardHolderString =  String.removeNil(User.main.firstName)+" "+String.removeNil(User.main.lastName)
         self.creditCardView.defaultCardColor = .primary
         self.createTextField()

@@ -75,6 +75,7 @@ class WelcomeCarouselViewController: UIViewController, OnboardingScreen {
         self.interactor = interactor
         
         super.init(nibName: nil, bundle: nil)
+        
         view.backgroundColor = .white
         self.interactor.viewController = self
         setupViews()
@@ -205,6 +206,8 @@ extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionV
         }
         
         welcomeCell.configure(with: carouselItems[indexPath.row])
+        welcomeCell.delegate = interactor
+        
         return welcomeCell
     }
     
@@ -212,6 +215,9 @@ extension WelcomeCarouselViewController: UICollectionViewDelegate, UICollectionV
         for cell in carouselView.visibleCells {
             guard let index = carouselView.indexPath(for: cell)?.row else { return }
             pageIndicator.currentPage = index
+            
+            guard let welcomeCell = cell as? WelcomeCell else { continue }
+            welcomeCell.playAnimation()
         }
     }
 }

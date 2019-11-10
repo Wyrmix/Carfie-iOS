@@ -6,11 +6,14 @@
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
+import Lottie
 import UIKit
 
 class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
     
     static let reuseIdentifier = "ImageWelcomeCell"
+    
+    weak var delegate: WelcomeCellDelegate?
     
     // MARK: UI components
     
@@ -26,6 +29,8 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
+    private var animationView: AnimationView?
     
     private var boldLabel: UILabel = {
         let label = UILabel()
@@ -45,6 +50,9 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
     
     private var actionButton = CarfieButton(style: .smallPrimary)
     
+    /// String representation of the URL to be launched when the action button is pressed.
+    private var actionButtonLink: String?
+    
     // MARK: Inits
     
     override init(frame: CGRect) {
@@ -60,8 +68,14 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        // This isn't realy ideal. prepareForReuse() should not be removing and nil'ing subviews. It kind of
+        // defeats the purpose of cell reuse. This is the result of trying to hard to generize this cell and
+        // not having the time to refactor.
+        animationView = nil
         cellStackView.arrangedSubviews.forEach {
             cellStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
         }
     }
     
@@ -82,18 +96,25 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         ])
     }
     
-    // MARK: Public view conmfiguration
+    // MARK: Public view configuration
     
     /// Configure the cell's UI components.
     /// - Parameter viewState: ViewState object that represents the configuration for the cell.
     func configure(with viewState: WelcomeCarouselCellViewState) {
+        actionButtonLink = viewState.actionButtonLink
+        
         // Order of operations is important here. It will determine the order the items appear
         // in the cell StackView.
         setupTopLabel(with: viewState.topLabelText)
         setupImageView(with: viewState.image)
+        setupAnimationView(with: viewState.animationName)
         boldLabel.text = viewState.boldText
         cellStackView.addArrangedSubview(boldLabel)
         setupActionButton(isVisible: viewState.showActionButton)
+    }
+    
+    func playAnimation() {
+        animationView?.play()
     }
     
     // MARK: Private view configuration
@@ -105,6 +126,22 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         cellStackView.addArrangedSubview(imageView)
+    }
+    
+    private func setupAnimationView(with animation: String?) {
+        // Only want to run this once so we don't add multiple animation views
+        // to the stack view.
+        guard let animation = animation, animationView == nil else { return }
+        
+        animationView = AnimationView(name: animation)
+        animationView?.translatesAutoresizingMaskIntoConstraints = false
+        animationView?.contentMode = .scaleAspectFit
+        animationView?.heightAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
+        animationView?.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        
+        guard let animationView = self.animationView else { return }
+        
+        cellStackView.addArrangedSubview(animationView)
     }
     
     private func setupTopLabel(with text: String?) {
@@ -125,5 +162,14 @@ class WelcomeCarouselImageCell: UICollectionViewCell, WelcomeCell {
         ])
         
         cellStackView.addArrangedSubview(actionButton)
+        
+        actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), for: .touchUpInside)
+    }
+    
+    // MARK: Selectors
+    
+    @objc private func actionButtonTouchUpInside(_ sender: Any) {
+        guard let url = actionButtonLink else { return }
+        delegate?.showDetailWebView(url: url)
     }
 }

@@ -8,12 +8,13 @@
 
 import UIKit
 
-let AppName = "Espy Provider"
+let AppName = "Carfie Driver"
 var deviceTokenString = Constants.string.noDevice
 var deviceId = Constants.string.noDevice
-let appSecretKey = "XlDsMnfy7mELIcwRpv7oSQx3muQubFxBhGwdiWsU"
+let appSecretKey = "HXX00MQv8IQncJqlk8MmJGLPcPRxtdPXNcSxznUy" // this isn't currently used in the driver app, but leaving it here in case we need it in the future
 let appClientId = 2
 let helpPhoneNumber = "1098"
 let defaultMapLocation = LocationCoordinate(latitude: 13.009245, longitude: 80.212929)
-let baseUrl = "https://espyinnovation.com/" //"http://schedule.deliveryventure.com/" //
-let stripePublishableKey = "pk_test_6aGGVeGZSDspCq2kZwuObPAR"
+
+/// Base API url for the app. This should eventually get refactored into the networking layer.
+let baseUrl = "https://sapi.carfie.com/"

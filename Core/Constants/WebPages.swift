@@ -9,5 +9,5 @@
 import Foundation
 
 struct WebPage {
-    static let carfieHomePage = "https://espyinnovation.com"
+    static let carfieHomePage = "https://carfie.com"
 }

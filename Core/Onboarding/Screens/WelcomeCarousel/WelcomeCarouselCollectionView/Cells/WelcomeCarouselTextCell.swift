@@ -12,6 +12,8 @@ class WelcomeCarouselTextCell: UICollectionViewCell, WelcomeCell {
     
     static let reuseIdentifier = "TextWelcomeCell"
     
+    weak var delegate: WelcomeCellDelegate?
+    
     // MARK: UI Components
     
     private var boldLabel: UILabel = {

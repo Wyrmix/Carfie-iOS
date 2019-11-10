@@ -38,7 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CarfieAppearance.configureTheme(.rider)
         self.google()
         self.IQKeyboard()
-        self.stripe()
         Router.configure()
         
         // This needs to be called to load User data which is used to determine Auth state. This is very bad.
@@ -228,14 +227,6 @@ extension AppDelegate {
     
     private func IQKeyboard() {
         IQKeyboardManager.shared.enable = false
-    }
-    
-    //MARK:- Stripe
-    
-    private func stripe(){
-        
-        STPPaymentConfiguration.shared().publishableKey = stripePublishableKey
-        
     }
 }
 
