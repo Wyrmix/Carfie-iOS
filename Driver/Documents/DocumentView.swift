@@ -8,21 +8,38 @@
 
 import UIKit
 
+protocol DocumentViewDelegate: class {
+    func uploadButtonPressed(for id: Int)
+}
+
 class DocumentView: UIView {
+    
+    weak var delegate: DocumentViewDelegate?
+    
+    private var id: Int?
+    
+    // MARK: UI Components
     
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
+        label.font = .carfieHeading
         label.textAlignment = .center
+        label.numberOfLines = 2
         return label
     }()
     
     private let uploadButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        button.setImage(UIImage(named: "SquareUploadArrow"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
+    
+    // MARK: Inits
     
     init() {
         super.init(frame: .zero)
@@ -33,9 +50,12 @@ class DocumentView: UIView {
         fatalError("init?(coder:) has not been implemented")
     }
     
+    // MARK: View Setup
+    
     private func setup() {
         backgroundColor = .clear
         
+        uploadButton.addTarget(self, action: #selector(uploadButtonTouchUpInside(_:)), for: .touchUpInside)
         uploadButton.backgroundColor = .white
         uploadButton.layer.cornerRadius = 12
         
@@ -57,6 +77,25 @@ class DocumentView: UIView {
             uploadButton.widthAnchor.constraint(equalTo: widthAnchor),
             uploadButton.heightAnchor.constraint(equalTo: uploadButton.widthAnchor),
             uploadButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            uploadButton.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
+    }
+    
+    func configure(with item: DocumentItem) {
+        id = item.id
+        titleLabel.text = item.title
+        
+        if item.isUploaded {
+            uploadButton.setImage(UIImage(named: "GreenCircleCheckmark"), for: .normal)
+        } else {
+            uploadButton.setImage(UIImage(named: "SquareUploadArrow"), for: .normal)
+        }
+    }
+    
+    // MARK: Selectors
+    
+    @objc private func uploadButtonTouchUpInside(_ selector: Any?) {
+        guard let id = id else { return }
+        delegate?.uploadButtonPressed(for: id)
     }
 }

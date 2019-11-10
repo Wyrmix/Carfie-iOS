@@ -12,6 +12,8 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
     static func viewController() -> DocumentsViewController {
         let interactor = DocumentsInteractor()
         let viewController = DocumentsViewController(interactor: interactor)
+        interactor.viewController = viewController
+        interactor.start()
         return viewController
     }
     
@@ -76,6 +78,10 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
         addGradientLayer()
         view.backgroundColor = .white
         
+        documentViews.forEach {
+            $0.delegate = interactor
+        }
+        
         let topDocumentStackView = UIStackView(arrangedSubviews: [documentViews[0], documentViews[1]])
         topDocumentStackView.distribution = .fillEqually
         topDocumentStackView.spacing = 48
@@ -90,28 +96,39 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
         documentsStackView.distribution = .fillEqually
         documentsStackView.spacing = 16
         
-        view.addSubview(documentsStackView)
-        view.addSubview(directionsTitleLabel)
-        view.addSubview(directionsLabel)
-        view.addSubview(uploadButton)
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
+        scrollView.addSubview(documentsStackView)
+        scrollView.addSubview(directionsTitleLabel)
+        scrollView.addSubview(directionsLabel)
+        scrollView.addSubview(uploadButton)
         
         NSLayoutConstraint.activate([
-            documentsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            documentsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            documentsStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 8),
+            documentsStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            documentsStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
+            documentsStackView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
             
             directionsTitleLabel.topAnchor.constraint(equalTo: documentsStackView.bottomAnchor, constant: 16),
-            directionsTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            directionsTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            directionsTitleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            directionsTitleLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             
             directionsLabel.topAnchor.constraint(equalTo: directionsTitleLabel.bottomAnchor, constant: 16),
-            directionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            directionsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            directionsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            directionsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             
             uploadButton.topAnchor.constraint(equalTo: directionsLabel.bottomAnchor, constant: 16),
-            uploadButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            uploadButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            uploadButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            uploadButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             uploadButton.heightAnchor.constraint(equalToConstant: 44),
-            uploadButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            uploadButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
         ])
     }
     
@@ -120,5 +137,13 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
         gradient.frame = view.bounds
         gradient.colors = AppTheme.driver.onboardingGradientColors
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    // MARK: Presentation
+    
+    func presentDocuments(from viewModel: DocumentsViewModel) {
+        for (index, item) in viewModel.documentItems.enumerated() {
+            documentViews[index].configure(with: item)
+        }
     }
 }
