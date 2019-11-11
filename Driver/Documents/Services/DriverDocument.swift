@@ -19,6 +19,7 @@ enum DriverDocumentType: Int, Codable {
     // These are not currently used, but are still returned in the response
     // and thus need to be included to allow decoding.
     case driversLicense = 1
+    case bankPassbook = 2
     case joiningForm = 3
     case workPermit = 4
     case fitnessCertificate = 7
