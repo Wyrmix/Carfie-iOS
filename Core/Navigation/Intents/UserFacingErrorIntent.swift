@@ -11,12 +11,12 @@ import UIKit
 protocol ErrorIntent {
     var alertController: UIAlertController { get }
     
-    func execute(via presenter: UIViewController)
+    func execute(via presenter: UIViewController?)
 }
 
 extension ErrorIntent {
-    func execute(via presenter: UIViewController) {
-        presenter.present(alertController, animated: true)
+    func execute(via presenter: UIViewController?) {
+        presenter?.present(alertController, animated: true)
     }
 }
 
@@ -24,9 +24,7 @@ class UserFacingErrorIntent: ErrorIntent {
     let alertController: UIAlertController
     
     init(title: String, message: String, action: ((UIAlertAction) -> Void)? = nil) {
-        alertController = UIAlertController()
-        alertController.title = title
-        alertController.message = message
+        alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: action))
     }
 }
@@ -35,9 +33,7 @@ class UserFacingErrorRetryIntent: ErrorIntent {
     let alertController: UIAlertController
     
     init(title: String, message: String, action: ((UIAlertAction) -> Void)? = nil, retry: ((UIAlertAction) -> Void)?) {
-        alertController = UIAlertController()
-        alertController.title = title
-        alertController.message = message
+        alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: action))
         alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: retry))
     }

@@ -35,9 +35,9 @@ class AddCardViewController: UIViewController {
 extension AddCardViewController {
     
     func initialLoads() {
-        
-        self.creditCardView.cardHolderString = String.removeNil(User.main.firstName)+" "+String.removeNil(User.main.lastName)
-        self.creditCardView.defaultCardColor = .primary
+//        
+//        self.creditCardView.cardHolderString = String.removeNil(User.main.firstName)+" "+String.removeNil(User.main.lastName)
+//        self.creditCardView.defaultCardColor = .primary
         self.createTextField()
         self.navigationController?.isNavigationBarHidden = false
          self.navigationItem.leftBarButtonItem = UIBarButtonItem(image:  #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backBarButtonAction))
