@@ -73,9 +73,7 @@ extension AppDelegate {
     private func configureRootInteractor() {
         rootContainerInteractor.delegate = self
         
-        let welcomeConfiguration = WelcomeConfiguration()
-        
-        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers) { profile in
+        let onboardingInteractor = OnboardingInteractor(configuration: WelcomeConfiguration()) { profile in
             Common.storeUserData(from: profile)
             storeInUserDefaults()
         }
@@ -83,8 +81,8 @@ extension AppDelegate {
         onboardingInteractor.delegate = rootContainerInteractor
         rootContainerInteractor.configureOnboardingNavigationController(OnboardingNavigationController.navigationController(for: onboardingInteractor))
         
-        let loginViewController = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.LaunchViewController)
-        rootContainerInteractor.configureLoginViewController(loginViewController)
+//        let loginViewController = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.LaunchViewController)
+//        rootContainerInteractor.configureLoginViewController(loginViewController)
         
         let mainViewController = Common.setDrawerController()
         rootContainerInteractor.configureChildViewController(mainViewController)

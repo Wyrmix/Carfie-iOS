@@ -16,4 +16,6 @@ struct WelcomeConfiguration {
         CarfieSignUpViewController.viewController(theme: WelcomeConfiguration.theme),
         LocationPermissionsViewController.viewController(theme: WelcomeConfiguration.theme),
     ]
+    
+    let loginViewController = LoginViewController.viewController(for: WelcomeConfiguration.theme)
 }
