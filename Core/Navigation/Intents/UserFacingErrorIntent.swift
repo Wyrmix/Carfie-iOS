@@ -11,12 +11,12 @@ import UIKit
 protocol ErrorIntent {
     var alertController: UIAlertController { get }
     
-    func execute(via presenter: UIViewController)
+    func execute(via presenter: UIViewController?)
 }
 
 extension ErrorIntent {
-    func execute(via presenter: UIViewController) {
-        presenter.present(alertController, animated: true)
+    func execute(via presenter: UIViewController?) {
+        presenter?.present(alertController, animated: true)
     }
 }
 

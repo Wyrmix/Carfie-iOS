@@ -58,9 +58,7 @@ class DocumentsInteractor {
     
     func uploadDocuments() {
         guard viewModel.documentItems.allSatisfy({ $0.image != nil }) else {
-            if let presenter = viewController {
-                UserFacingErrorIntent(title: "All documents are required", message: "Please add an image for each document type").execute(via: presenter)
-            }
+            UserFacingErrorIntent(title: "All documents are required", message: "Please add an image for each document type").execute(via: viewController)
             return
         }
         
@@ -68,17 +66,17 @@ class DocumentsInteractor {
         var images: [String: Data] = [:]
         for item in viewModel.documentItems {
             guard let imageData = item.image?.pngData() else { continue }
-            parameters.updateValue(item.id, forKey: "id[\(item.id)]")
-            images.updateValue(imageData, forKey: "document[\(item.id)]")
+            parameters.updateValue(item.type.rawValue, forKey: "id[\(item.type.rawValue)]")
+            images.updateValue(imageData, forKey: "document[\(item.type.rawValue)]")
         }
         
-        documentUploadService.uploadImages(images, parameters: parameters) { result in
+        documentUploadService.uploadImages(images, parameters: parameters) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success:
-                print("yay it worked")
-            case .failure(let error):
-                // TODO: show alert
-                print("oh no: \(error)")
+                self.viewController?.onboardingDelegate?.onboardingScreenComplete()
+            case .failure:
+                UserFacingErrorIntent(title: "Something went wrong", message: "Please try again.").execute(via: self.viewController)
             }
         }
     }
@@ -86,9 +84,9 @@ class DocumentsInteractor {
 
 // MARK: - DocumentViewDelegate
 extension DocumentsInteractor: DocumentViewDelegate {
-    func uploadButtonPressed(for id: Int) {
+    func uploadButtonPressed(for type: DriverDocumentType) {
         guard let presenter = viewController,
-              let index = viewModel.documentItems.firstIndex(where: { $0.id == id }) else { return }
+              let index = viewModel.documentItems.firstIndex(where: { $0.type == type }) else { return }
         
         indexBeingModified = index
         

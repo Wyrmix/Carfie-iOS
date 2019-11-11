@@ -8,10 +8,18 @@
 
 import Foundation
 
+enum DriverDocumentType: Int, Codable {
+    case driversLicenseFront = 1
+    case driversLicenseBack = 2
+    case vehicleRegistration = 5
+    case insurance = 6
+}
+
 struct DriverDocumentList: Codable {
     let documents: [DriverDocument]
 }
 
 struct DriverDocument: Codable {
+    let id: DriverDocumentType
     let name: String
 }

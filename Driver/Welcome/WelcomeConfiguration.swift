@@ -13,8 +13,8 @@ struct WelcomeConfiguration {
     
     let viewControllers: [UIViewController & OnboardingScreen] = [
         WelcomeCarouselViewController.viewController(theme: WelcomeConfiguration.theme),
-//        CarfieSignUpViewController.viewController(theme: WelcomeConfiguration.theme),
-//        LocationPermissionsViewController.viewController(theme: WelcomeConfiguration.theme),
+        CarfieSignUpViewController.viewController(theme: WelcomeConfiguration.theme),
+        LocationPermissionsViewController.viewController(theme: WelcomeConfiguration.theme),
         DocumentsViewController.viewController(),
     ]
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 struct DocumentItem {
-    let id: Int
+    let type: DriverDocumentType
     let title: String
     
     var isUploaded: Bool

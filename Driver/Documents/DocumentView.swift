@@ -9,14 +9,14 @@
 import UIKit
 
 protocol DocumentViewDelegate: class {
-    func uploadButtonPressed(for id: Int)
+    func uploadButtonPressed(for type: DriverDocumentType)
 }
 
 class DocumentView: UIView {
     
     weak var delegate: DocumentViewDelegate?
     
-    private var id: Int?
+    private var type: DriverDocumentType?
     
     // MARK: UI Components
     
@@ -82,7 +82,7 @@ class DocumentView: UIView {
     }
     
     func configure(with item: DocumentItem) {
-        id = item.id
+        type = item.type
         titleLabel.text = item.title
         
         if item.isUploaded {
@@ -95,7 +95,7 @@ class DocumentView: UIView {
     // MARK: Selectors
     
     @objc private func uploadButtonTouchUpInside(_ selector: Any?) {
-        guard let id = id else { return }
-        delegate?.uploadButtonPressed(for: id)
+        guard let type = type else { return }
+        delegate?.uploadButtonPressed(for: type)
     }
 }

@@ -10,9 +10,9 @@ import Foundation
 
 struct DocumentsViewModel {
     var documentItems: [DocumentItem] = [
-        DocumentItem(id: 1, title: "Driver's License Front", isUploaded: false, image: nil),
-        DocumentItem(id: 2, title: "Driver's License Back", isUploaded: false, image: nil),
-        DocumentItem(id: 3, title: "Vehicle Resgistration", isUploaded: false, image: nil),
-        DocumentItem(id: 4, title: "Car Insurance", isUploaded: false, image: nil),
+        DocumentItem(type: .driversLicenseFront, title: "Driver's License Front", isUploaded: false, image: nil),
+        DocumentItem(type: .driversLicenseBack, title: "Driver's License Back", isUploaded: false, image: nil),
+        DocumentItem(type: .vehicleRegistration, title: "Vehicle Resgistration", isUploaded: false, image: nil),
+        DocumentItem(type: .insurance, title: "Car Insurance", isUploaded: false, image: nil),
     ]
 }
