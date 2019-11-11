@@ -40,7 +40,7 @@ platform :ios do
     build_app(scheme: "Rider",
               workspace: "Carfie.xcworkspace",
               include_bitcode: false)
-    upload_to_testflight(username: "flarestream@gmail.com")
+    upload_to_testflight(username: "gocarfie@gmail.com")
   end
 
   desc "Build and deploy Driver to TestFlight"
@@ -48,6 +48,6 @@ platform :ios do
     build_app(scheme: "Driver",
               workspace: "Carfie.xcworkspace",
               include_bitcode: false)
-    upload_to_testflight(username: "flarestream@gmail.com")
+    upload_to_testflight(username: "gocarfie@gmail.com")
   end
 end
