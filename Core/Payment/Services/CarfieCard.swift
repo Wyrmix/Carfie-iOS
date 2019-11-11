@@ -10,4 +10,8 @@ import Foundation
 
 struct CarfieCard: Codable {
     let stripeToken: String
+    
+    enum CodingKeys: String, CodingKey {
+        case stripeToken = "stripe_token"
+    }
 }

@@ -8,6 +8,14 @@
 
 import Foundation
 
+enum CardAction: String, Codable {
+    case cardAdded = "Card Added"
+}
+
 struct AddCardResponse: Codable {
+    let cardAction: CardAction
     
+    enum CodingKeys: String, CodingKey {
+        case cardAction = "message"
+    }
 }
