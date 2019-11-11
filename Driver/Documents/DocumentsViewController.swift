@@ -1,8 +1,8 @@
 //
 //  DocumentsViewController.swift
-//  Carfie
+//  Driver
 //
-//  Created by Christopher.Olsen on 11/5/19.
+//  Created by Christopher Olsen on 11/5/19.
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
@@ -52,8 +52,8 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
         return label
     }()
     
-    private let uploadButton: CarfieButton = {
-        let button = CarfieButton()
+    private let uploadButton: AnimatedCarfieButton = {
+        let button = AnimatedCarfieButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Done", for: .normal)
         return button
@@ -146,6 +146,14 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
     func presentDocuments(from viewModel: DocumentsViewModel) {
         for (index, item) in viewModel.documentItems.enumerated() {
             documentViews[index].configure(with: item)
+        }
+    }
+    
+    func showUploadActivity(_ shouldAnimate: Bool) {
+        if shouldAnimate {
+            uploadButton.startAnimating()
+        } else {
+            uploadButton.stopAnimating()
         }
     }
     

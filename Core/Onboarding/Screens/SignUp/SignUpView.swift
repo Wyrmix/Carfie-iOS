@@ -31,7 +31,7 @@ class SignUpView: UIView {
         return label
     }()
     
-    private let signUpButton: CarfieButton
+    private let signUpButton: AnimatedCarfieButton
     
     // MARK: Input Fields
     
@@ -47,7 +47,7 @@ class SignUpView: UIView {
     
     init(theme: AppTheme) {
         self.theme = theme
-        self.signUpButton = CarfieButton()
+        self.signUpButton = AnimatedCarfieButton()
         super.init(frame: .zero)
         setup()
     }
@@ -140,6 +140,14 @@ class SignUpView: UIView {
     
     func present(_ emailInUseMessage: String) {
         emailTextInputView.errorMessageLabel.text = emailInUseMessage
+    }
+    
+    func animateButton(_ shouldAnimate: Bool) {
+        if shouldAnimate {
+            signUpButton.startAnimating()
+        } else {
+            signUpButton.stopAnimating()
+        }
     }
 }
 

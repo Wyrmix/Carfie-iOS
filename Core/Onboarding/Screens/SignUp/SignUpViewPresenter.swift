@@ -17,4 +17,8 @@ final class SignUpViewPresenter {
     func present(emailInUseMessage: String) {
         signUpView.present(emailInUseMessage)
     }
+    
+    func animateButton(_ shouldAnimate: Bool) {
+        signUpView.animateButton(shouldAnimate)
+    }
 }

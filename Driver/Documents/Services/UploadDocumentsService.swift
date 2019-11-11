@@ -24,6 +24,9 @@ class UploadDocumentsService: UploadImageDataService {
     }
     
     func uploadImages(_ imageData: [String: Data], parameters: [String: Any], completion: @escaping (Result<DriverDocumentList>) -> Void) {
+        // Pretty much everything in this functions was lifted from the legacy webservice and thus I'm not really sure how much of it is necessary
+        // but it does work. 
+        
         guard let url = URL(string: baseUrl + "/api/provider/profile/documents/store") else {
             fatalError("Invalid URL. Something is wrong with the baseUrl if you got here.")
         }

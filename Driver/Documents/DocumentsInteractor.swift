@@ -1,8 +1,8 @@
 //
 //  DocumentsInteractor.swift
-//  Carfie
+//  Driver
 //
-//  Created by Christopher.Olsen on 11/5/19.
+//  Created by Christopher Olsen on 11/5/19.
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
@@ -70,12 +70,14 @@ class DocumentsInteractor {
             images.updateValue(imageData, forKey: "document[\(item.type.rawValue)]")
         }
         
+        viewController?.showUploadActivity(true)
         documentUploadService.uploadImages(images, parameters: parameters) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success:
                 self.viewController?.onboardingDelegate?.onboardingScreenComplete()
             case .failure:
+                self.viewController?.showUploadActivity(false)
                 UserFacingErrorIntent(title: "Something went wrong", message: "Please try again.").execute(via: self.viewController)
             }
         }
