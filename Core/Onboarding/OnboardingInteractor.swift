@@ -10,11 +10,14 @@ import UIKit
 
 /// Delegate for communicating between the OnboardingInteractor and individual onboarding screens.
 protocol OnboardingScreenDelegate: class {
-    /// Indicates that the user has completed all necessary steps for an onboarding screen
+    /// Indicates that the user has completed all necessary steps for an onboarding screen.
     func onboardingScreenComplete()
     
     /// Indicates that the user wants to login with an existing account (effectively bypassing onboarding).
     func launchLogin()
+    
+    /// Indicates that the user wants to return to the previous screen.
+    func returnToWelcome()
     
     func onboardingScreen(didFetchUserProfile profile: CarfieProfile)
 }
@@ -47,7 +50,13 @@ final class OnboardingInteractor {
                 return
             }
             viewControllers[onboardingIndex].onboardingDelegate = self
-            onboardingNavigationController?.pushViewController(viewControllers[onboardingIndex], animated: true)
+            
+            // if set to zero then pop to root, otherwise show relevant controller
+            if onboardingIndex == 0 {
+                onboardingNavigationController?.popToRootViewController(animated: true)
+            } else {
+                onboardingNavigationController?.pushViewController(viewControllers[onboardingIndex], animated: true)
+            }
         }
     }
     
@@ -73,6 +82,10 @@ extension OnboardingInteractor: OnboardingScreenDelegate {
     
     func launchLogin() {
         delegate?.showLogin()
+    }
+    
+    func returnToWelcome() {
+        onboardingIndex = 0
     }
     
     func onboardingScreen(didFetchUserProfile profile: CarfieProfile) {
