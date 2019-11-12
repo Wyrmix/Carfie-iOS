@@ -27,20 +27,20 @@ class HelpViewController: UIViewController {
         return imageView
     }()
 
-    var callButton: UIButton = {
-        var button = UIButton()
+    var callButton: CarfieButton = {
+        var button = CarfieButton()
         button.setImage(UIImage(named: "phone"), for: .normal)
         return button
     }()
 
-    var messageButton: UIButton = {
-        var button = UIButton()
+    var messageButton: CarfieButton = {
+        var button = CarfieButton()
         button.setImage(UIImage(named: "envelope"), for: .normal)
         return button
     }()
 
-    var homePageButton: UIButton = {
-        var button = UIButton()
+    var homePageButton: CarfieButton = {
+        var button = CarfieButton()
         button.setImage(UIImage(named: "web"), for: .normal)
         return button
     }()
@@ -48,15 +48,13 @@ class HelpViewController: UIViewController {
     var helpDescriptionLabel: UILabel = {
         var label = UILabel()
         label.text = "Our team will contact you soon!"
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = .carfieBody
         return label
     }()
 
-    var privacyPolicyButton: UIButton = {
-        var button = UIButton()
+    var privacyPolicyButton: CarfieSecondaryButton = {
+        var button = CarfieSecondaryButton()
         button.setTitle("Privacy Policy", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.setTitleColor(.carfieBlue, for: .normal)
         return button
     }()
 
@@ -103,27 +101,14 @@ class HelpViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-
-        navigationController?.isNavigationBarHidden = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popOrDismiss))
         navigationItem.title = "Help"
-
         addButtonTargets()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        [callButton, messageButton, homePageButton].forEach {
-            $0.backgroundColor = .carfieBlue
-            $0.layer.masksToBounds = true
-            $0.layer.cornerRadius = $0.bounds.width / 2
-        }
+        navigationController?.navigationBar.backItem?.title = ""
     }
 
     private func addButtonTargets() {

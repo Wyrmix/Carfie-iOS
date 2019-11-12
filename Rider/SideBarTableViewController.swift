@@ -74,7 +74,6 @@ class SideBarTableViewController: UITableViewController {
 extension SideBarTableViewController {
     
     private func initialLoads() {
-        
         // self.drawerController?.fadeColor = UIColor
         self.drawerController?.shadowOpacity = 0.2
         let fadeWidth = self.view.frame.width*(0.2)
