@@ -24,7 +24,8 @@ class OnboardingInteractorSpec: QuickSpec {
             ]
             
             beforeEach {
-                subject = OnboardingInteractor(onboardingViewControllers: viewControllers, postLoginHandler: nil)
+                let configuration = MockWelcomeConfiguration(viewControllers: viewControllers)
+                subject = OnboardingInteractor(configuration: configuration)
             }
             
             context("init") {

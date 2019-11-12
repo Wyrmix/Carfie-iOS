@@ -16,7 +16,7 @@ class RootContainerInteractorSpec: QuickSpec {
             var subject: RootContainerInteractor!
             
             beforeEach {
-                subject = RootContainerInteractor()
+                subject = RootContainerInteractor(welcomeConfiguration: MockWelcomeConfiguration())
                 subject.configureRootViewController(RootViewController())
             }
             
@@ -31,7 +31,6 @@ class RootContainerInteractorSpec: QuickSpec {
             context("on logout") {
                 it("should unload the child view controller if one exists") {
                     subject.configureChildViewController(UIViewController())
-                    subject.configureOnboardingNavigationController(UINavigationController())
                     NotificationCenter.default.post(name: .UserDidLogout, object: nil)
                     expect(subject.rootViewController!.children.first).to(beNil())
                 }
@@ -40,7 +39,7 @@ class RootContainerInteractorSpec: QuickSpec {
             context("on login dismissal") {
                 it("should load the childViewController as a child of the rootViewController") {
                     subject.configureChildViewController(UIViewController())
-                    subject.dismissLoginExperience()
+                    subject.dismissOnboardingExperience()
                     expect(subject.rootViewController!.children.first!).toNot(beNil())
                 }
             }
