@@ -50,10 +50,8 @@ class DocumentsInteractor {
             return
         }
         
-        let resizedImage = image.resize(for: CGSize(width: 500, height: 500))
-        
         viewModel.documentItems[index].isUploaded = true
-        viewModel.documentItems[index].image = resizedImage
+        viewModel.documentItems[index].image = image
     }
     
     func uploadDocuments() {
@@ -65,7 +63,8 @@ class DocumentsInteractor {
         var parameters: [String: Int] = [:]
         var images: [String: Data] = [:]
         for item in viewModel.documentItems {
-            guard let imageData = item.image?.pngData() else { continue }
+            guard let image = item.image,
+                  let imageData = ImageResizer().resize(forUpload: image) else { continue }
             parameters.updateValue(item.type.rawValue, forKey: "id[\(item.type.rawValue)]")
             images.updateValue(imageData, forKey: "document[\(item.type.rawValue)]")
         }

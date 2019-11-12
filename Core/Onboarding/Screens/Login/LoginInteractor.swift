@@ -20,13 +20,12 @@ class LoginInteractor {
         self.theme = theme
         self.authController = DefaultAuthController.shared(theme)
         self.profileService = profileService
-        
-        self.authController.loginDelegate = self
     }
     
     func login(email: String?, password: String?) {
         guard let email = email, let password = password else { return }
         
+        authController.loginDelegate = self
         viewController?.animateNetworkActivity(true)
         authController.loginWithCarfie(Login(email: email, username: email, password: password))
     }
