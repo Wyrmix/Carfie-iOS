@@ -35,6 +35,10 @@ protocol AuthController {
     /// - Parameter completion: called after successful retrieval of the token from the underlying provider
     ///                         with the access token represented as a String.
     func getAccessToken(completion: ((String?) -> Void)?)
+    
+    /// Initiate login with Carfie.
+    /// - Parameter login: user's login data
+    func loginWithCarfie(_ login: Login)
 
     /// Initiate login with a 3rd party provider. This will transfer the UI flow to the provider.
     /// This will eventually call the login delegate.
@@ -216,6 +220,11 @@ extension DefaultAuthController: AuthController {
             completion?(token)
         }
     }
+    
+    func loginWithCarfie(_ login: Login) {
+        setCurrentAuthProvider(to: .carfie)
+        carfieAuthProvider.login(with: login)
+    }
 
     func login(with authProviderType: AuthProviderType, andPresenter viewController: UIViewController) {
         setCurrentAuthProvider(to: authProviderType)
@@ -264,13 +273,13 @@ extension DefaultAuthController: AuthProviderDelegate {
         case .success(let provider):
             setCurrentAuthProvider(to: provider)
             authRepository.auth = CarfieAuth(accessToken: token)
+            NotificationCenter.default.post(name: .UserDidLogin, object: self)
         case .cancel, .failure:
             _currentAuthProvider = nil
             authRepository.auth = CarfieAuth(accessToken: nil)
         }
 
         loginDelegate?.authController(self, loginDidCompleteWith: result)
-        NotificationCenter.default.post(name: .UserDidLogin, object: self)
     }
 
     func completeLogout(with result: AuthResult) {

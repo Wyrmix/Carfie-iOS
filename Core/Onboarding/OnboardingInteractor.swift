@@ -25,7 +25,7 @@ protocol OnboardingScreenDelegate: class {
 /// Delegate for communicating between the OnboardingInteractor and the login screen.
 protocol LoginScreenDelegate: class {
     /// Login completed successfully.
-    func loginComplete()
+    func loginComplete(with profile: CarfieProfile)
     
     /// User cancelled the login action.
     func loginCancelled()
@@ -78,10 +78,10 @@ final class OnboardingInteractor {
     /// - Parameter onboardingViewControllers: A complete array of all view controllers needed for onboarding.
     /// - Parameter loginViewController: view controller to display for login.
     /// - Parameter postLoginHandler: completion block that is called after login/sign up is successful.
-    init(configuration: WelcomeConfiguration, postLoginHandler: ((CarfieProfile) -> Void)?) {
+    init(configuration: WelcomeConfiguration) {
         self.viewControllers = configuration.viewControllers
         self.loginViewController = configuration.loginViewController
-        self.postLoginHandler = postLoginHandler
+        self.postLoginHandler = configuration.postLoginHandler
         self.viewControllers.first?.onboardingDelegate = self
         
         loginViewController.interactor.delegate = self
@@ -101,7 +101,6 @@ extension OnboardingInteractor: OnboardingScreenDelegate {
     
     func launchLogin() {
         onboardingNavigationController?.pushViewController(loginViewController, animated: true)
-//        delegate?.showLogin()
     }
     
     func returnToWelcome() {
@@ -115,8 +114,9 @@ extension OnboardingInteractor: OnboardingScreenDelegate {
 
 // MARK: - LoginScreenDelegate
 extension OnboardingInteractor: LoginScreenDelegate {
-    func loginComplete() {
-        
+    func loginComplete(with profile: CarfieProfile) {
+        postLoginHandler?(profile)
+        onboardingComplete()
     }
     
     func loginCancelled() {

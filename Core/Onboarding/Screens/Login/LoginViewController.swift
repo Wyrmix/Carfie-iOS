@@ -10,7 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     static func viewController(for theme: AppTheme) -> LoginViewController {
-        let interactor = LoginInteractor()
+        let interactor = LoginInteractor(theme: theme)
         let viewController = LoginViewController(theme: theme, interactor: interactor)
         interactor.viewController = viewController
         return viewController
@@ -134,10 +134,18 @@ class LoginViewController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
     
+    func animateNetworkActivity(_ shouldAnimate: Bool) {
+        if shouldAnimate {
+            signInButton.startAnimating()
+        } else {
+            signInButton.stopAnimating()
+        }
+    }
+    
     // MARK: Selectors
     
     @objc private func signInButtonTouchUpInside(_ sender: Any?) {
-        interactor.login()
+        interactor.login(email: emailTextInputView.text, password: passwordTextInputView.text)
     }
     
     @objc private func cancelButtonTouchUpInside(_ sender: Any?) {
