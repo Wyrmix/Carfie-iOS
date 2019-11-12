@@ -9,14 +9,18 @@
 import UIKit
 
 struct DriverWelcomeConfiguration: WelcomeConfiguration {
-    let viewControllers: [UIViewController & OnboardingScreen] = [
-        WelcomeCarouselViewController.viewController(theme: .driver),
-        CarfieSignUpViewController.viewController(theme: .driver),
-        LocationPermissionsViewController.viewController(theme: .driver),
-        DocumentsViewController.viewController(),
-    ]
+    var viewControllers: [UIViewController & OnboardingScreen] {
+        return [
+            WelcomeCarouselViewController.viewController(theme: .driver),
+            CarfieSignUpViewController.viewController(theme: .driver),
+            LocationPermissionsViewController.viewController(theme: .driver),
+            DocumentsViewController.viewController(),
+        ]
+    }
     
-    let loginViewController = LoginViewController.viewController(for: .driver)
+    var loginViewController: LoginViewController {
+        return LoginViewController.viewController(for: .driver)
+    }
     
     let postLoginHandler: ((CarfieProfile) -> Void)?
 }

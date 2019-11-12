@@ -9,13 +9,17 @@
 import UIKit
 
 struct RiderWelcomeConfiguration: WelcomeConfiguration {
-    let viewControllers: [UIViewController & OnboardingScreen] = [
-        WelcomeCarouselViewController.viewController(theme: .rider),
-        CarfieSignUpViewController.viewController(theme: .rider),
-        LocationPermissionsViewController.viewController(theme: .rider),
-    ]
+    var viewControllers: [UIViewController & OnboardingScreen] {
+        return [
+            WelcomeCarouselViewController.viewController(theme: .rider),
+            CarfieSignUpViewController.viewController(theme: .rider),
+            LocationPermissionsViewController.viewController(theme: .rider),
+        ]
+    }
     
-    let loginViewController = LoginViewController.viewController(for: .rider)
+    var loginViewController: LoginViewController {
+        return LoginViewController.viewController(for: .rider)
+    }
     
     let postLoginHandler: ((CarfieProfile) -> Void)?
 }
