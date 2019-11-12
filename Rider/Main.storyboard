@@ -103,6 +103,7 @@
                         <outlet property="labelEmail" destination="gCY-Vs-0wd" id="ae2-lF-9Jf"/>
                         <outlet property="labelName" destination="dmA-0A-i6O" id="3Gr-V8-mx5"/>
                         <outlet property="profileImageCenterContraint" destination="KRk-cg-FHm" id="oin-9l-tvH"/>
+                        <outlet property="sideBarHeaderView" destination="jPB-ic-AjE" id="TA4-Gu-LSQ"/>
                         <outlet property="viewShadow" destination="ev1-eM-gOG" id="DS4-7y-5L9"/>
                     </connections>
                 </tableViewController>
@@ -2228,7 +2229,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back-icon" width="25" height="25"/>
+        <image name="back-icon" width="15" height="15"/>
         <image name="camera" width="128" height="128"/>
         <image name="close" width="32" height="32"/>
         <image name="coupon-page_BG" width="471" height="471"/>

@@ -10,9 +10,30 @@ import UIKit
 
 class SideBarTableViewController: UITableViewController {
     
+    @IBOutlet weak var sideBarHeaderView: UIView! {
+        didSet {
+            sideBarHeaderView.backgroundColor = AppTheme.rider.primaryColor
+        }
+    }
+    
     @IBOutlet private var imageViewProfile : UIImageView!
-    @IBOutlet private var labelName : UILabel!
-    @IBOutlet private var labelEmail : UILabel!
+    
+    @IBOutlet private var labelName: UILabel! {
+        didSet {
+            labelName.textAlignment = .left
+            labelName.font = .carfieBodyBold
+            labelName.textColor = .white
+        }
+    }
+    
+    @IBOutlet private var labelEmail: UILabel! {
+        didSet {
+            labelEmail.textAlignment = .left
+            labelEmail.font = .carfieMicrocopy
+            labelEmail.textColor = .white
+        }
+    }
+    
     @IBOutlet private var viewShadow : UIView!
     @IBOutlet private weak var profileImageCenterContraint : NSLayoutConstraint!
     
@@ -74,10 +95,10 @@ class SideBarTableViewController: UITableViewController {
 extension SideBarTableViewController {
     
     private func initialLoads() {
-        // self.drawerController?.fadeColor = UIColor
+        tableView.backgroundColor = AppTheme.rider.tintColor
+
         self.drawerController?.shadowOpacity = 0.2
         let fadeWidth = self.view.frame.width*(0.2)
-        //self.profileImageCenterContraint.constant = 0//-(fadeWidth/3)
         self.drawerController?.drawerWidth = Float(self.view.frame.width - fadeWidth)
         self.viewShadow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.imageViewAction)))
     }
@@ -89,15 +110,6 @@ extension SideBarTableViewController {
         //self.viewShadow.addShadow()
         self.imageViewProfile.makeRoundedCorner()
         
-    }
-    
-    
-    // MARK:- Set Designs
-    
-    private func setDesigns () {
-        
-        Common.setFont(to: labelName)
-        Common.setFont(to: labelEmail, size : 12)
     }
     
     
@@ -114,7 +126,6 @@ extension SideBarTableViewController {
         }
         self.labelName.text = String.removeNil(User.main.firstName)+" "+String.removeNil(User.main.lastName)
         self.labelEmail.text = User.main.email
-        self.setDesigns()
     }
     
     
@@ -219,7 +230,7 @@ extension SideBarTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let tableCell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        tableCell.textLabel?.textColor = .secondary
+        tableCell.textLabel?.textColor = AppTheme.rider.tintColor
         tableCell.textLabel?.text = sideBarList[indexPath.row].localize().capitalizingFirstLetter()
         tableCell.textLabel?.textAlignment = .left
         Common.setFont(to: tableCell.textLabel!, isTitle: true)

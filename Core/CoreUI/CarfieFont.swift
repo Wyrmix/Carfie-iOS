@@ -19,6 +19,9 @@ extension UIFont {
     /// Font size: 20, weight: bold
     static let carfieHeadingBold = UIFont.systemFont(ofSize: 20, weight: .bold)
     
+    /// Font size: 16, weight: bold
+    static let carfieBodyBold = UIFont.systemFont(ofSize: 16, weight: .semibold)
+    
     /// Font size: 16, weight: light
     static let carfieBody = UIFont.systemFont(ofSize: 16, weight: .light)
     
