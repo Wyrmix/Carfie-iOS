@@ -74,6 +74,11 @@ class DocumentsInteractor {
             guard let self = self else { return }
             switch result {
             case .success:
+                // if we're not in onboarding just dismiss.
+                guard self.viewController?.onboardingDelegate != nil else {
+                    self.viewController?.dismiss(animated: true)
+                    return
+                }
                 self.viewController?.onboardingDelegate?.onboardingScreenComplete()
             case .failure:
                 self.viewController?.showUploadActivity(false)

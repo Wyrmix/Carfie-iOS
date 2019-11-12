@@ -1,4 +1,6 @@
 name: Carfie
+attributes:
+  ORGANIZATIONNAME: Carfie
 options:
   bundleIdPrefix: com.espy
   deploymentTarget:

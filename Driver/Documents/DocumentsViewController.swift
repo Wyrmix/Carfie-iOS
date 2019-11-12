@@ -65,6 +65,7 @@ class DocumentsViewController: UIViewController, OnboardingScreen {
         self.interactor = interactor
         
         super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .fullScreen
         setupViews()
     }
     
