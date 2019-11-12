@@ -52,6 +52,10 @@ protocol AuthProvider {
     ///
     /// - Parameter viewController: the login flow's presenting view controller
     func login(withPresentingViewController viewController: UIViewController)
+    
+    /// Login using a Login object. Used for Carfie login
+    /// - Parameter login: login data
+    func login(with login: Login)
 
     /// Logout with an AuthProvider
     func logout()
@@ -62,8 +66,12 @@ protocol AuthProvider {
     func getAccessToken(completion: @escaping (String?) -> Void)
 }
 
+// Default implementations
 extension AuthProvider {
     var revoker: CredentialRevoker? {
         return nil
     }
+    
+    func login(with login: Login) {}
+    func login(withPresentingViewController viewController: UIViewController) {}
 }

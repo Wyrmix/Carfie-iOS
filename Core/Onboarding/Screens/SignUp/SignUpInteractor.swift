@@ -91,6 +91,10 @@ extension SignUpInteractor: SignUpViewDelegate {
         }
     }
     
+    func cancelSignUp() {
+        viewController?.onboardingDelegate?.returnToWelcome()
+    }
+    
     func verifyEmailAvailability(_ items: (email: String?, confirmation: String?)) {
         do {
             let emailResult = try EmailValidator().validate(items.email).resolve()

@@ -10,13 +10,25 @@ import UIKit
 
 /// Delegate for communicating between the OnboardingInteractor and individual onboarding screens.
 protocol OnboardingScreenDelegate: class {
-    /// Indicates that the user has completed all necessary steps for an onboarding screen
+    /// Indicates that the user has completed all necessary steps for an onboarding screen.
     func onboardingScreenComplete()
     
     /// Indicates that the user wants to login with an existing account (effectively bypassing onboarding).
     func launchLogin()
     
+    /// Indicates that the user wants to return to the previous screen.
+    func returnToWelcome()
+    
     func onboardingScreen(didFetchUserProfile profile: CarfieProfile)
+}
+
+/// Delegate for communicating between the OnboardingInteractor and the login screen.
+protocol LoginScreenDelegate: class {
+    /// Login completed successfully.
+    func loginComplete(with profile: CarfieProfile)
+    
+    /// User cancelled the login action.
+    func loginCancelled()
 }
 
 /// An onboarding screen.
@@ -35,6 +47,11 @@ final class OnboardingInteractor {
     /// All view controllers for the Onboarding stack.
     let viewControllers: [UIViewController & OnboardingScreen]
     
+    /// The view controller for login, exists parallel to the onboarding stack
+    let loginViewController: LoginViewController
+    
+    /// Closure to be called after login is complete. This exists to plumb things back into the individual app targets. Hopefully
+    /// this can eventually be removed once tech debt around the User object is addressed.
     let postLoginHandler: ((CarfieProfile) -> Void)?
     
     /// Index of the currently presented onboarding view controller. Starts at 0 and ends
@@ -47,16 +64,27 @@ final class OnboardingInteractor {
                 return
             }
             viewControllers[onboardingIndex].onboardingDelegate = self
-            onboardingNavigationController?.pushViewController(viewControllers[onboardingIndex], animated: true)
+            
+            // if set to zero then pop to root, otherwise show relevant controller
+            if onboardingIndex == 0 {
+                onboardingNavigationController?.popToRootViewController(animated: true)
+            } else {
+                onboardingNavigationController?.pushViewController(viewControllers[onboardingIndex], animated: true)
+            }
         }
     }
     
     /// Create a new instance of a OnboardingInteractor.
     /// - Parameter onboardingViewControllers: A complete array of all view controllers needed for onboarding.
-    init(onboardingViewControllers: [UIViewController & OnboardingScreen], postLoginHandler: ((CarfieProfile) -> Void)?) {
-        self.viewControllers = onboardingViewControllers
-        self.postLoginHandler = postLoginHandler
+    /// - Parameter loginViewController: view controller to display for login.
+    /// - Parameter postLoginHandler: completion block that is called after login/sign up is successful.
+    init(configuration: WelcomeConfiguration) {
+        self.viewControllers = configuration.viewControllers
+        self.loginViewController = configuration.loginViewController
+        self.postLoginHandler = configuration.postLoginHandler
         self.viewControllers.first?.onboardingDelegate = self
+        
+        loginViewController.interactor.delegate = self
     }
     
     private func onboardingComplete() {
@@ -72,10 +100,26 @@ extension OnboardingInteractor: OnboardingScreenDelegate {
     }
     
     func launchLogin() {
-        delegate?.showLogin()
+        onboardingNavigationController?.pushViewController(loginViewController, animated: true)
+    }
+    
+    func returnToWelcome() {
+        onboardingIndex = 0
     }
     
     func onboardingScreen(didFetchUserProfile profile: CarfieProfile) {
         postLoginHandler?(profile)
+    }
+}
+
+// MARK: - LoginScreenDelegate
+extension OnboardingInteractor: LoginScreenDelegate {
+    func loginComplete(with profile: CarfieProfile) {
+        postLoginHandler?(profile)
+        onboardingComplete()
+    }
+    
+    func loginCancelled() {
+        onboardingIndex = 0
     }
 }
