@@ -347,34 +347,12 @@ extension HomepageViewController {
     func getPendingDocuments(from viewcontrollerId : String) {
         
         let vc = Router.main.instantiateViewController(withIdentifier: viewcontrollerId)
-        if type(of: vc) == DocumentsTableViewController.self {
-            (vc as! DocumentsTableViewController).isGettingDocuments = true
-            self.removeCardVC()
-            if self.documentController == nil {
-                self.documentController = UINavigationController(rootViewController: vc)
-                present(self.documentController!, animated: true, completion: nil)
-            }
-            
-        } else if type(of: vc) == AddCardViewController.self {
+        if type(of: vc) == AddCardViewController.self {
             (vc as! AddCardViewController).isGettingDocuments = true
-            self.removeDocumentsVC()
             if self.addCardVC == nil {
                 self.addCardVC = UINavigationController(rootViewController: vc)
                 present(self.addCardVC!, animated: true, completion: nil)
             }
         }
-      
-//        func pushVC() {
-//            self.documentController = UINavigationController(rootViewController: vc)
-//            present(self.documentController!, animated: true, completion: nil)
-//        }
-//
-//        if documentController != nil {
-//            self.documentController?.pushViewController(vc, animated: true)
-//        }else {
-//            pushVC()
-//        }
-        
     }
-    
 }

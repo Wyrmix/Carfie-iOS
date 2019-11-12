@@ -37,6 +37,8 @@ class HomepageViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var labelPickupValue: UILabel!
     @IBOutlet var labelPickUp: UILabel!
     
+    private var interactor: DriverHomeInteractor?
+    
      var rideAcceptViewNib : RideAcceptView?
      var arrviedView : rideArrivedView?
      var userOfflineView : offlineView?
@@ -70,7 +72,6 @@ class HomepageViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    var documentController : UINavigationController? // Document View Controller
     var addCardVC : UINavigationController?
     
     private var accountStatus : AccountStatus = .none {
@@ -79,17 +80,9 @@ class HomepageViewController: UIViewController, UITextFieldDelegate {
                 if self.accountStatus == .pendingCard{
                     self.getPendingDocuments(from: Storyboard.Ids.AddCardViewController)
                 }else if self.accountStatus == .pendingDocument {
-                    self.getPendingDocuments(from: Storyboard.Ids.DocumentsTableViewController)
+                    self.interactor?.showAddDocuments()
                 } else {
-//                    if let topVC = UIApplication.topViewController(), type(of: topVC) == UINavigationController.self {
-//                        topVC.dismiss(animated: true , completion: nil)
-//                    }
-//                    if self.documentController == nil {
-//                        self.getPendingDocuments(from: Storyboard.Ids.DocumentsTableViewController)
-//                        self.perform(#selector(self.check), with: self, afterDelay: 10)
-//                    }
-                     self.removeDocumentsVC()
-                     self.removeCardVC()
+                    self.dismiss(animated: true)
                 }
                 self.userOfflineView?.viewAutoScrollNotVerified.isHidden = (self.accountStatus == .approved)
             }
@@ -134,6 +127,10 @@ class HomepageViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        interactor = DriverHomeInteractor()
+        interactor?.viewController = self
+        
         self.loader.isHidden = false
         setGooglemap()
         self.initialLoad()
@@ -198,12 +195,6 @@ extension HomepageViewController {
         setActionForGoogleMapRetraction()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
-    }
-    
-    func removeDocumentsVC() {
-        self.documentController?.dismiss(animated: true, completion: {
-            self.documentController = nil
-        })
     }
     
     func removeCardVC() {
