@@ -103,6 +103,7 @@
                         <outlet property="labelEmail" destination="gCY-Vs-0wd" id="ae2-lF-9Jf"/>
                         <outlet property="labelName" destination="dmA-0A-i6O" id="3Gr-V8-mx5"/>
                         <outlet property="profileImageCenterContraint" destination="KRk-cg-FHm" id="oin-9l-tvH"/>
+                        <outlet property="sideBarHeaderView" destination="jPB-ic-AjE" id="TA4-Gu-LSQ"/>
                         <outlet property="viewShadow" destination="ev1-eM-gOG" id="DS4-7y-5L9"/>
                     </connections>
                 </tableViewController>
@@ -1142,41 +1143,6 @@
                                     <outlet property="imageViewIcon" destination="Zht-Bv-UmQ" id="Muw-YF-CRi"/>
                                     <outlet property="labelAddress" destination="fOC-cm-UT9" id="279-ay-ymF"/>
                                     <outlet property="labelTitle" destination="Egr-fj-vxd" id="NnH-ym-oKC"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LanguageSelection" rowHeight="40" id="aTp-Qk-Pew" customClass="LanguageSelection" customModule="Rider" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="154.5" width="320" height="40"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aTp-Qk-Pew" id="dP1-3m-uhs">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VSb-am-PZt">
-                                            <rect key="frame" x="16" y="10" width="20" height="20"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="WSY-b9-uvw"/>
-                                                <constraint firstAttribute="width" constant="20" id="hm8-bu-cNb"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEV-qC-0kU">
-                                            <rect key="frame" x="44" y="10.5" width="268" height="19.5"/>
-                                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="VSb-am-PZt" firstAttribute="centerY" secondItem="dP1-3m-uhs" secondAttribute="centerY" id="0FE-Hd-Phd"/>
-                                        <constraint firstItem="VSb-am-PZt" firstAttribute="leading" secondItem="dP1-3m-uhs" secondAttribute="leadingMargin" id="7sS-Dr-HG9"/>
-                                        <constraint firstItem="zEV-qC-0kU" firstAttribute="leading" secondItem="VSb-am-PZt" secondAttribute="trailing" constant="8" id="99e-JC-YGO"/>
-                                        <constraint firstAttribute="trailing" secondItem="zEV-qC-0kU" secondAttribute="trailing" constant="8" id="Iia-ST-ax7"/>
-                                        <constraint firstItem="zEV-qC-0kU" firstAttribute="centerY" secondItem="dP1-3m-uhs" secondAttribute="centerY" id="LgO-PN-Maw"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="imageViewIcon" destination="VSb-am-PZt" id="EDC-DK-NdZ"/>
-                                    <outlet property="labelTitle" destination="zEV-qC-0kU" id="LJO-B5-MLe"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -2228,7 +2194,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back-icon" width="25" height="25"/>
+        <image name="back-icon" width="15" height="15"/>
         <image name="camera" width="128" height="128"/>
         <image name="close" width="32" height="32"/>
         <image name="coupon-page_BG" width="471" height="471"/>

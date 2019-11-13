@@ -77,6 +77,8 @@ extension AppDelegate {
     private func configureRootInteractor() {
         rootContainerInteractor = RootContainerInteractor(welcomeConfiguration: RiderWelcomeConfiguration(postLoginHandler: { profile in
             Common.storeUserData(from: profile)
+            // Tech-Debt: Only Carfie login exists currently. This login will need to be addressed eventually.
+            User.main.loginType = LoginType.manual.rawValue
             storeInUserDefaults()
         }))
         rootContainerInteractor.delegate = self
@@ -110,28 +112,12 @@ extension AppDelegate {
     
     // MARK:- Appearance
     private func setAppearance() {
-        if let languageStr = UserDefaults.standard.value(forKey: Keys.list.language) as? String, let language = Language(rawValue: languageStr) {
-            setLocalization(language: language)
-        }else {
-            setLocalization(language: .english)
-        }
+        setLocalization(language: .english)
         
         // disable Dark Mode in iOS 13
         if #available(iOS 13, *) {
             window?.overrideUserInterfaceStyle = .light
         }
-        
-        UINavigationBar.appearance().barTintColor = .white
-        UINavigationBar.appearance().tintColor = .darkGray
-        var attributes = [NSAttributedString.Key : Any]()
-        attributes.updateValue(UIColor.black, forKey: .foregroundColor)
-        attributes.updateValue(UIFont(name: FontCustom.Bold.rawValue, size: 16.0)!, forKey : NSAttributedString.Key.font)
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        attributes.updateValue(UIFont(name:FontCustom.Medium.rawValue, size: 18.0)!, forKey : NSAttributedString.Key.font)
-        UINavigationBar.appearance().largeTitleTextAttributes = attributes
-        UIPageControl.appearance().pageIndicatorTintColor = .lightGray
-        UIPageControl.appearance().currentPageIndicatorTintColor = .primary
-        UIPageControl.appearance().backgroundColor = .clear
     }
     
     // MARK:- Check Update

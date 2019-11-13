@@ -49,7 +49,7 @@ extension CouponCollectionViewController {
         }
         self.collectionView?.register(UINib(nibName: XIB.Names.CouponCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: XIB.Names.CouponCollectionViewCell)
         self.navigationController?.isNavigationBarHidden = false
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
+        navigationController?.navigationBar.backItem?.title = ""
         self.navigationItem.title = Constants.string.coupon.localize()
         self.presenter?.get(api: .promocodes, parameters: nil)
         
@@ -67,7 +67,7 @@ extension CouponCollectionViewController {
                 Common.setFont(to: label, isTitle: true)
                 label.center = UIApplication.shared.keyWindow?.center ?? .zero
                 label.backgroundColor = .clear
-                label.textColorId = 2
+                label.textColor = AppTheme.rider.primaryColor
                 label.textAlignment = .center
                 label.text = Constants.string.noCoupons.localize()
                 return label

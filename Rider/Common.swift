@@ -12,12 +12,6 @@ import KWDrawerController
 import Stripe
 
 class Common {
-    class func getBackButton()->UIBarButtonItem{
-        let backItem = UIBarButtonItem()
-        backItem.title = "Back"
-        return backItem// This will show in the next view controller being pushed
-    }
-    
     class func getCurrentCode()->String?{
         return (Locale.current as NSLocale).object(forKey:  NSLocale.Key.countryCode) as? String
     }

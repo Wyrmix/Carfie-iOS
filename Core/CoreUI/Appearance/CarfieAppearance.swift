@@ -13,6 +13,13 @@ import UIKit
 /// Configures the app target's UIAppearance settings.
 struct CarfieAppearance {
     static func configureTheme(_ theme: AppTheme) {
+        // Navigation Bars
+        UINavigationBar.appearance().barTintColor = .white
+        UINavigationBar.appearance().tintColor = theme.tintColor
+        UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
+        
+        // Buttons
         CarfieButton.appearance().backgroundColor = theme.primaryButtonColor
         CarfieSecondaryButton.appearance().setTitleColor(theme.tintColor, for: .normal)
         
