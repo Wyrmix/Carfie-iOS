@@ -77,6 +77,8 @@ extension AppDelegate {
     private func configureRootInteractor() {
         rootContainerInteractor = RootContainerInteractor(welcomeConfiguration: RiderWelcomeConfiguration(postLoginHandler: { profile in
             Common.storeUserData(from: profile)
+            // Tech-Debt: Only Carfie login exists currently. This login will need to be addressed eventually.
+            User.main.loginType = LoginType.manual.rawValue
             storeInUserDefaults()
         }))
         rootContainerInteractor.delegate = self

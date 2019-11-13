@@ -152,7 +152,7 @@ struct Constants {
     let profileUpdated = "Profile updated successfully"
     let otp = "OTP"
     let at = "at"
-    let favourites = "Favourites"
+    let favourites = "Favorites"
     let changeLanguage = "Change Language"
     let noFavouritesFound = "No favourite address available"
     let cannotMakeCallAtThisMoment = "Cannot make call at this moment"

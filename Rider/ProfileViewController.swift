@@ -44,6 +44,7 @@ class ProfileViewController: UITableViewController {
         super.viewDidLoad()
         initialLoads()
         navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = ""
     }
 
     override func viewWillLayoutSubviews() {
@@ -63,7 +64,6 @@ extension ProfileViewController {
         self.imageViewProfile.isUserInteractionEnabled = true
         [self.imageViewEdit, self.viewImageChange].forEach({$0?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.changeImage)))}) 
         self.buttonSave.addTarget(self, action: #selector(self.buttonSaveAction), for: .touchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
         self.navigationItem.title = Constants.string.profile.localize()
         self.localize()
         self.setDesign()

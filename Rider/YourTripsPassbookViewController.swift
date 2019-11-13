@@ -46,31 +46,20 @@ class YourTripsPassbookViewController: UIViewController {
         self.animateUnderLine()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = ""
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        switchViewAction()
-//    }
-
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        self.navigationController?.isNavigationBarHidden = true
-//    }
-    
 }
 
 extension YourTripsPassbookViewController {
     
     private func initalLoads() {
+        underLineView.backgroundColor = AppTheme.rider.primaryColor
         self.registerCell()
         self.switchViewAction()
         self.navigationController?.isNavigationBarHidden = false
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
         self.navigationItem.title = (isYourTripsSelected ? Constants.string.yourTrips : Constants.string.passbook).localize()
         self.localize()
         self.getFromApi()
@@ -138,7 +127,7 @@ extension YourTripsPassbookViewController {
                 Common.setFont(to: label, isTitle: true)
                 label.center = UIApplication.shared.keyWindow?.center ?? .zero
                 label.backgroundColor = .clear
-                label.textColorId = 2
+                label.textColor = AppTheme.rider.primaryColor
                 label.textAlignment = .center
                 label.text = {
                     
@@ -186,7 +175,7 @@ extension YourTripsPassbookViewController {
         let cancelButton =  PopupDialogButton(title: Constants.string.no.localize(), action: {
             alert.dismiss()
         })
-        cancelButton.titleColor = .primary
+        cancelButton.titleColor = AppTheme.rider.primaryColor
         let sureButton = PopupDialogButton(title: Constants.string.yes.localize()) {
            self.loader.isHidden = false
            let request = Request()
