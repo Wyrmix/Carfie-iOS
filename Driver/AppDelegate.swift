@@ -19,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private let authController = DefaultAuthController.shared(.driver)
-    private let rootContainerInteractor = RootContainerInteractor()
+    
+    /// The root interactor for the app. Coordinates presenting and navgigating through the onboarding,
+    /// login, and main view controllers of the app.
+    /// Force unwrapped for convenience. IF this property doesn't exist the app won't work anyway.
+    private var rootContainerInteractor: RootContainerInteractor!
     private var shouldShowLogin = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -48,24 +52,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - Root ViewController configuration and login
 extension AppDelegate {
     private func configureRootInteractor() {
-        rootContainerInteractor.delegate = self
-        
-        let welcomeConfiguration = WelcomeConfiguration()
-        
-        let onboardingInteractor = OnboardingInteractor(onboardingViewControllers: welcomeConfiguration.viewControllers) { profile in
+        rootContainerInteractor = RootContainerInteractor(welcomeConfiguration: DriverWelcomeConfiguration(postLoginHandler: { profile in
             Common.storeUserData(from: profile)
             storeInUserDefaults()
-        }
-        
-        onboardingInteractor.delegate = rootContainerInteractor
-        rootContainerInteractor.configureOnboardingNavigationController(OnboardingNavigationController.navigationController(for: onboardingInteractor))
-        
-        let loginViewController = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.LaunchViewController)
-        rootContainerInteractor.configureLoginViewController(loginViewController)
+        }))
+        rootContainerInteractor.delegate = self
         
         let mainViewController = Common.setDrawerController()
         rootContainerInteractor.configureChildViewController(mainViewController)
-        
         rootContainerInteractor.configureRootViewController(RootViewController())
     }
 }
@@ -84,7 +78,7 @@ extension AppDelegate: RootContainerInteractorDelegate {
     }
     
     func onboardingDidComplete() {
-        rootContainerInteractor.dismissLoginExperience()
+        rootContainerInteractor.dismissOnboardingExperience()
     }
 }
 

@@ -1,4 +1,6 @@
 name: Carfie
+attributes:
+  ORGANIZATIONNAME: Carfie
 options:
   bundleIdPrefix: com.espy
   deploymentTarget:
@@ -20,7 +22,7 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Rider/Rider.entitlements
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: V46XQZ3Q67
-        CURRENT_PROJECT_VERSION: 12
+        CURRENT_PROJECT_VERSION: 13
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"
@@ -49,7 +51,7 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Driver/Driver.entitlements
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: V46XQZ3Q67
-        CURRENT_PROJECT_VERSION: 12
+        CURRENT_PROJECT_VERSION: 13
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"

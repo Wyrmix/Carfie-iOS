@@ -14,7 +14,7 @@ final class ImagePickerLauncherIntent {
     init(libraryCompletion: @escaping (UIAlertAction) -> Void, cameraCompletion: @escaping (UIAlertAction) -> Void) {
         alertController = UIAlertController(title: "Select source", message: nil, preferredStyle: .actionSheet)
         alertController.view.tintColor = .carfieBlue
-        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: libraryCompletion)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: cameraCompletion)
         let libraryAction = UIAlertAction(title: "Photo library", style: .default, handler: libraryCompletion)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         

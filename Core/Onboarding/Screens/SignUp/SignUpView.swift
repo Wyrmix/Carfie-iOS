@@ -10,6 +10,7 @@ import UIKit
 
 protocol SignUpViewDelegate: class {
     func signUpRequested(with item: SignUpViewState)
+    func cancelSignUp()
     func textFieldDidBeginEditing(_ textInputView: CarfieTextInputView)
     func textFieldDidEndEditing(_ textInputView: CarfieTextInputView)
     func verifyEmailAvailability(_ items: (email: String?, confirmation: String?))
@@ -31,7 +32,17 @@ class SignUpView: UIView {
         return label
     }()
     
-    private let signUpButton: CarfieButton
+    private let signUpButton: AnimatedCarfieButton = {
+        let button = AnimatedCarfieButton()
+        button.setTitle("Sign Up", for: .normal)
+        return button
+    }()
+    
+    private let cancelButton: CarfieSecondaryButton = {
+        let button = CarfieSecondaryButton()
+        button.setTitle("Cancel", for: .normal)
+        return button
+    }()
     
     // MARK: Input Fields
     
@@ -47,7 +58,6 @@ class SignUpView: UIView {
     
     init(theme: AppTheme) {
         self.theme = theme
-        self.signUpButton = CarfieButton()
         super.init(frame: .zero)
         setup()
     }
@@ -61,9 +71,8 @@ class SignUpView: UIView {
     private func setup() {
         backgroundColor = .white
         
-        signUpButton.setTitle("Sign Up", for: .normal)
-        signUpButton.translatesAutoresizingMaskIntoConstraints = false
         signUpButton.addTarget(self, action: #selector(signUpButtonTouchUpInside(_:)), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelButtonTouchUpInside(_:)), for: .touchUpInside)
         
         [lastNameTextInputView, firstNameTextInputView, phoneNumberTextInputView, emailTextInputView, confirmEmailTextInputView, passwordTextInputView, confirmPasswordTextInputView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -91,6 +100,7 @@ class SignUpView: UIView {
             emailFieldStackView,
             passwordFieldStackView,
             signUpButton,
+            cancelButton,
         ])
         
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -117,6 +127,8 @@ class SignUpView: UIView {
             
             signUpButton.widthAnchor.constraint(equalToConstant: 170),
             signUpButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            cancelButton.heightAnchor.constraint(equalToConstant: 44),
         ])
     }
     
@@ -136,10 +148,22 @@ class SignUpView: UIView {
         delegate?.signUpRequested(with: item)
     }
     
+    @objc private func cancelButtonTouchUpInside(_ sender: Any?) {
+        delegate?.cancelSignUp()
+    }
+    
     // MARK: Presenters
     
     func present(_ emailInUseMessage: String) {
         emailTextInputView.errorMessageLabel.text = emailInUseMessage
+    }
+    
+    func animateButton(_ shouldAnimate: Bool) {
+        if shouldAnimate {
+            signUpButton.startAnimating()
+        } else {
+            signUpButton.stopAnimating()
+        }
     }
 }
 

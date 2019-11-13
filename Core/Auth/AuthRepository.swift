@@ -15,8 +15,6 @@ struct DefaultAuthRepository: AuthRepository {
     let key = "com.carfie.rider.auth"
     
     /// Current auth object that will contain the user's Carfie API access token if they are logged in.
-    /// This is a cached value if it has previsously been accessed Otherwise it will retrieve the value
-    /// from UserDefaults.
     var auth: CarfieAuth {
         get {
             return retrieveFromDisk()

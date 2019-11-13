@@ -79,15 +79,20 @@ extension SignUpInteractor: SignUpViewDelegate {
             return
         }
         
+        signUpViewPresenter?.animateButton(true)
         authController.signUp(with: validatedSignUp) { [weak self] result in
             switch result {
             case .success:
                 self?.getNewUserProfile()
             case .failure:
                 // TODO: show error message and retry
-                break
+                self?.signUpViewPresenter?.animateButton(false)
             }
         }
+    }
+    
+    func cancelSignUp() {
+        viewController?.onboardingDelegate?.returnToWelcome()
     }
     
     func verifyEmailAvailability(_ items: (email: String?, confirmation: String?)) {
@@ -151,6 +156,7 @@ extension SignUpInteractor: SignUpViewDelegate {
                 self.viewController?.onboardingDelegate?.onboardingScreenComplete()
             } catch {
                 // TODO: handle error. maybe retry?
+                self.signUpViewPresenter?.animateButton(false)
             }
         }
     }
