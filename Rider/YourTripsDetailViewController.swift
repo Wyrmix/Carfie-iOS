@@ -63,10 +63,6 @@ class YourTripsDetailViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.viewButtons.isHidden = false
-//        if isUpcomingTrips {
-//        } else {
-//            self.viewLocation.removeFromSuperview()
-//        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,8 +83,7 @@ extension YourTripsDetailViewController {
     
     // MARK:- Initial Loads
     private func initialLoads() {
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
+        navigationController?.navigationBar.backItem?.title = ""
         self.buttonCancelRide.isHidden = !isUpcomingTrips
         self.buttonCancelRide.addTarget(self, action: #selector(self.buttonCancelRideAction(sender:)), for: .touchUpInside)
         self.buttonViewReciptAndCall.addTarget(self, action: #selector(self.buttonCallAndReciptAction(sender:)), for: .touchUpInside)
@@ -107,7 +102,6 @@ extension YourTripsDetailViewController {
         self.viewButtons.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.viewButtons.bottomAnchor.constraint(equalTo: UIApplication.shared.keyWindow!.bottomAnchor, constant: -16).isActive = true 
         self.viewButtons.centerXAnchor.constraint(equalTo: UIApplication.shared.keyWindow!.centerXAnchor, constant: 0).isActive = true
-        //UIApplication.shared.keyWindow?.addSubview(self.stackViewButtons)
     }
     
     
