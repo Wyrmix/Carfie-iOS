@@ -22,8 +22,21 @@ class AddPaymentInteractor {
     }
     
     func addPayment(_ cardParameters: STPCardParams) {
+        viewController?.animateSaveButton(true)
         paymentController.addCard(cardParameters, theme: theme) { [weak self] result in
-
+            self?.viewController?.animateSaveButton(false)
+            
+            switch result {
+            case .success:
+                self?.viewController?.dismiss(animated: true)
+            case .failure:
+                UserFacingErrorIntent(title: "Something went wrong", message: "Please try again.").execute(via: self?.viewController)
+            }
         }
+    }
+    
+    func dismiss() {
+        // check for lock
+        viewController?.dismiss(animated: true)
     }
 }

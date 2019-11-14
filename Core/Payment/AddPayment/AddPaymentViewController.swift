@@ -38,8 +38,8 @@ class AddPaymentViewController: UIViewController {
         return field
     }()
     
-    private let addPaymentButton: CarfieButton = {
-        let button = CarfieButton()
+    private let addPaymentButton: AnimatedCarfieButton = {
+        let button = AnimatedCarfieButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(addPaymentButtonTouchUpInside(_:)), for: .touchUpInside)
         button.setTitle("Add Payment", for: .normal)
@@ -91,6 +91,16 @@ class AddPaymentViewController: UIViewController {
     }
     
     @objc private func cancelButtonTouchUpInside(_ sender: Any?) {
-        dismiss(animated: true)
+        interactor.dismiss()
+    }
+    
+    // MARK: Presenters
+    
+    func animateSaveButton(_ animate: Bool) {
+        if animate {
+            addPaymentButton.startAnimating()
+        } else {
+            addPaymentButton.stopAnimating()
+        }
     }
 }

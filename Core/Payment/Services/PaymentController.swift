@@ -14,6 +14,7 @@ enum PaymentControllerError: Error {
 }
 
 protocol PaymentController {
+    func getCards(theme: AppTheme, completion: @escaping (Result<GetCardsResponse>) -> Void)
     func addCard(_ card: STPCardParams, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void)
 }
 
@@ -23,6 +24,12 @@ final class StripePaymentController: PaymentController {
     
     init(paymentService: PaymentService = StripePaymentService()) {
         self.paymentService = paymentService
+    }
+    
+    func getCards(theme: AppTheme, completion: @escaping (Result<GetCardsResponse>) -> Void) {
+        paymentService.getCards(theme: theme) { result in
+            completion(result)
+        }
     }
     
     func addCard(_ card: STPCardParams, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void) {
@@ -37,7 +44,7 @@ final class StripePaymentController: PaymentController {
                 return
             }
             
-            let card = CarfieCard(stripeToken: token)
+            let card = CarfieCardToken(stripeToken: token)
             
             // No weak self because we want this to complete even if the user moves away before
             // this request completes.

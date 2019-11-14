@@ -9,7 +9,8 @@
 import Foundation
 
 protocol PaymentService {
-    func addCard(_ card: CarfieCard, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void)
+    func getCards(theme: AppTheme, completion: @escaping (Result<GetCardsResponse>) -> Void)
+    func addCard(_ cardToken: CarfieCardToken, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void)
 }
 
 class StripePaymentService: PaymentService {
@@ -19,8 +20,15 @@ class StripePaymentService: PaymentService {
         self.service = service
     }
     
-    func addCard(_ card: CarfieCard, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void) {
-        let request = AddCardRequest(theme: theme, card: card)
+    func getCards(theme: AppTheme, completion: @escaping (Result<GetCardsResponse>) -> Void) {
+        let request = GetCardsRequest(theme: theme)
+        service.request(request) { result in
+            completion(result)
+        }
+    }
+    
+    func addCard(_ cardToken: CarfieCardToken, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void) {
+        let request = AddCardRequest(theme: theme, cardToken: cardToken)
         service.request(request) { result in
             completion(result)
         }

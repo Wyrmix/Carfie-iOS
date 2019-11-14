@@ -1,15 +1,15 @@
 //
-//  AddCardRequest.swift
+//  GetCardsRequest.swift
 //  Carfie
 //
-//  Created by Christopher Olsen on 11/8/19.
+//  Created by Christopher Olsen on 11/13/19.
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
 import Foundation
 
-struct AddCardRequest: NetworkRequest {
-    typealias Response = AddCardResponse
+struct GetCardsRequest: NetworkRequest {
+    typealias Response = GetCardsResponse
     
     var path: String {
         switch theme {
@@ -24,21 +24,13 @@ struct AddCardRequest: NetworkRequest {
         return .request
     }
     
-    let method: HTTPMethod = .POST
+    let method: HTTPMethod = .GET
     let parameters: Parameters = [:]
     let isAuthorizedRequest: Bool = true
-    let body: Data?
     
     private let theme: AppTheme
     
-    init(theme: AppTheme, cardToken: CarfieCardToken) {
+    init(theme: AppTheme) {
         self.theme = theme
-        
-        do {
-            body = try JSONEncoder().encode(cardToken)
-        } catch {
-            assertionFailure("Card object failed to encode")
-            body = nil
-        }
     }
 }

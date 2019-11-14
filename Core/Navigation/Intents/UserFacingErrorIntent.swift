@@ -46,7 +46,7 @@ class UserFacingDestructiveErrorIntent: ErrorIntent {
         alertController = UIAlertController()
         alertController.title = title
         alertController.message = message
-        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: action))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: action))
         alertController.addAction(UIAlertAction(title: destructiveTitle, style: .destructive, handler: destructiveAction))
     }
 }
