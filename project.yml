@@ -2,7 +2,7 @@ name: Carfie
 attributes:
   ORGANIZATIONNAME: Carfie
 options:
-  bundleIdPrefix: com.espy
+  bundleIdPrefix: com.carfie
   deploymentTarget:
     iOS: "11.0"
   groupSortPosition: top
@@ -17,19 +17,19 @@ targets:
     type: application
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.espy.user
+        PRODUCT_BUNDLE_IDENTIFIER: com.carfie.rider
         TARGETED_DEVICE_FAMILY: "1" #iPhone
         CODE_SIGN_ENTITLEMENTS: Rider/Rider.entitlements
         CODE_SIGN_STYLE: Manual
-        DEVELOPMENT_TEAM: V46XQZ3Q67
+        DEVELOPMENT_TEAM: MVJFXK77H6
         CURRENT_PROJECT_VERSION: 14
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"
-          PROVISIONING_PROFILE_SPECIFIER: "Carfie Dev"
+          PROVISIONING_PROFILE_SPECIFIER: "Carfie Rider Dev"
         Release:
           CODE_SIGN_IDENTITY: "iPhone Distribution"
-          PROVISIONING_PROFILE_SPECIFIER: "Espy User Dist"
+          PROVISIONING_PROFILE_SPECIFIER: "Carfie Rider Distribution"
     postBuildScripts:
       - path: fabric-run.sh
         name: Fabric Run
@@ -46,11 +46,11 @@ targets:
     type: application
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.espy.provider
+        PRODUCT_BUNDLE_IDENTIFIER: com.carfie.driver
         TARGETED_DEVICE_FAMILY: "1" #iPhone
         CODE_SIGN_ENTITLEMENTS: Driver/Driver.entitlements
         CODE_SIGN_STYLE: Manual
-        DEVELOPMENT_TEAM: V46XQZ3Q67
+        DEVELOPMENT_TEAM: MVJFXK77H6
         CURRENT_PROJECT_VERSION: 14
       configs:
         Debug:
@@ -58,7 +58,7 @@ targets:
           PROVISIONING_PROFILE_SPECIFIER: "Carfie Driver Dev"
         Release:
           CODE_SIGN_IDENTITY: "iPhone Distribution"
-          PROVISIONING_PROFILE_SPECIFIER: "Espy Provider Dist"
+          PROVISIONING_PROFILE_SPECIFIER: "Carfie Driver Distribution"
     postBuildScripts:
       - path: fabric-run.sh
         name: Fabric Run
@@ -84,6 +84,9 @@ targets:
       - target: Driver
 
   CoreTests:
+    settings:
+      base:
+        DEVELOPMENT_TEAM: MVJFXK77H6
     scheme:
       testTargets:
         - CoreTests
