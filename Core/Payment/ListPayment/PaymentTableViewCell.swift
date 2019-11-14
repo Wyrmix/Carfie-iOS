@@ -23,7 +23,7 @@ class PaymentTableViewCell: UITableViewCell {
     private let paymentLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .carfieBody
+        label.font = .carfieBodyBold
         return label
     }()
     
@@ -41,13 +41,13 @@ class PaymentTableViewCell: UITableViewCell {
     // MARK: View Setup
     
     private func setup() {    
-        addSubview(paymentImageView)
-        addSubview(paymentLabel)
+        contentView.addSubview(paymentImageView)
+        contentView.addSubview(paymentLabel)
         
         NSLayoutConstraint.activate([
             paymentImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            paymentImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            paymentImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+            paymentImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            paymentImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             paymentImageView.widthAnchor.constraint(equalTo: paymentImageView.heightAnchor),
             
             paymentLabel.leadingAnchor.constraint(equalTo: paymentImageView.trailingAnchor, constant: 16),

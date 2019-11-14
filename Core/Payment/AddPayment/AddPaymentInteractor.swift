@@ -9,9 +9,14 @@
 import Foundation
 import Stripe
 
+protocol AddCardDelegate: class {
+    func cardAdded()
+}
+
 class AddPaymentInteractor {
     
     weak var viewController: AddPaymentViewController?
+    weak var delegate: AddCardDelegate?
     
     private let theme: AppTheme
     private let paymentController: PaymentController
@@ -28,6 +33,7 @@ class AddPaymentInteractor {
             
             switch result {
             case .success:
+                self?.delegate?.cardAdded()
                 self?.viewController?.dismiss(animated: true)
             case .failure:
                 UserFacingErrorIntent(title: "Something went wrong", message: "Please try again.").execute(via: self?.viewController)

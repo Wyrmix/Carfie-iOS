@@ -38,6 +38,17 @@ class ListPaymentViewController: UIViewController {
         return button
     }()
     
+    private let noPaymentMethodsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.textAlignment = .center
+        label.font = .carfieHeadingBold
+        label.text = "You have no payment methods"
+        label.numberOfLines = 0
+        return label
+    }()
+    
     private var paymentItems: [PaymentTableViewCellViewModel] = []
     
     // MARK: Inits
@@ -67,6 +78,9 @@ class ListPaymentViewController: UIViewController {
         view.addSubview(addPaymentButton)
         addPaymentButton.addTarget(self, action: #selector(addPaymentMethodTouchUpInside(_:)), for: .touchUpInside)
         
+        view.addSubview(noPaymentMethodsLabel)
+        noPaymentMethodsLabel.textColor = theme.tintColor
+        
         NSLayoutConstraint.activate([
             paymentTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             paymentTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -77,6 +91,10 @@ class ListPaymentViewController: UIViewController {
             addPaymentButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             addPaymentButton.heightAnchor.constraint(equalToConstant: 44),
             addPaymentButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            
+            noPaymentMethodsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noPaymentMethodsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            noPaymentMethodsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }
     
@@ -102,6 +120,7 @@ class ListPaymentViewController: UIViewController {
 
 extension ListPaymentViewController: UITableViewDelegate, UITableViewDataSource {
     func presentPaymentItems(_ paymentItems: [PaymentTableViewCellViewModel]) {
+        noPaymentMethodsLabel.isHidden = paymentItems.isEmpty ? false : true
         self.paymentItems = paymentItems
         paymentTableView.reloadData()
     }
@@ -124,12 +143,12 @@ extension ListPaymentViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return 60
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "delete") { (action, view, handler) in
-            self.interactor.askToDeletePaymentMethod(indexPath: indexPath)
+            self.interactor.askToDeletePaymentMethod(indexPath: indexPath, with: handler)
         }
         
         return UISwipeActionsConfiguration(actions: [deleteAction])

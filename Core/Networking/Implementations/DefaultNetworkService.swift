@@ -77,6 +77,9 @@ class DefaultNetworkService: NetworkService {
         do {
             switch request.task {
             case .request:
+                // This XML header needs to be added because most of the service endpoint perform a redirect if the request
+                // does not appear to be an AJAX call. 
+                urlRequest.setValue("XMLHttpRequest", forHTTPHeaderField: "x-requested-with")
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             case .requestParameters(let bodyParameters, let urlParameters):
                 try configureParameters(bodyParameters: bodyParameters, urlParameters: urlParameters, request: &urlRequest)

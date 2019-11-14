@@ -16,6 +16,7 @@ enum PaymentControllerError: Error {
 protocol PaymentController {
     func getCards(theme: AppTheme, completion: @escaping (Result<GetCardsResponse>) -> Void)
     func addCard(_ card: STPCardParams, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void)
+    func deleteCard(_ card: CarfieCard, theme: AppTheme, completion: @escaping (Result<DeleteCardResponse>) -> Void)
 }
 
 final class StripePaymentController: PaymentController {
@@ -51,6 +52,12 @@ final class StripePaymentController: PaymentController {
             self.paymentService.addCard(card, theme: theme) { result in
                 completion(result)
             }
+        }
+    }
+    
+    func deleteCard(_ card: CarfieCard, theme: AppTheme, completion: @escaping (Result<DeleteCardResponse>) -> Void) {
+        paymentService.deleteCard(card, theme: theme) { result in
+            completion(result)
         }
     }
 }

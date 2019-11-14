@@ -11,6 +11,7 @@ import Foundation
 protocol PaymentService {
     func getCards(theme: AppTheme, completion: @escaping (Result<GetCardsResponse>) -> Void)
     func addCard(_ cardToken: CarfieCardToken, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void)
+    func deleteCard(_ card: CarfieCard, theme: AppTheme, completion: @escaping (Result<DeleteCardResponse>) -> Void)
 }
 
 class StripePaymentService: PaymentService {
@@ -29,6 +30,13 @@ class StripePaymentService: PaymentService {
     
     func addCard(_ cardToken: CarfieCardToken, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void) {
         let request = AddCardRequest(theme: theme, cardToken: cardToken)
+        service.request(request) { result in
+            completion(result)
+        }
+    }
+    
+    func deleteCard(_ card: CarfieCard, theme: AppTheme, completion: @escaping (Result<DeleteCardResponse>) -> Void) {
+        let request = DeleteCardRequest(theme: theme, card: card)
         service.request(request) { result in
             completion(result)
         }

@@ -14,6 +14,8 @@ class ListPaymentInteractor {
     
     private var viewModel: ListPaymentViewModel
     
+    private var cards: [CarfieCard]?
+    
     private let theme: AppTheme
     private let paymentController: PaymentController
     
@@ -29,16 +31,20 @@ class ListPaymentInteractor {
             
             do {
                 let response = try result.resolve()
-                let paymentItems = response.cardList.map({ PaymentTableViewCellViewModel(lastFourCardDigits: $0.lastFour) })
+                self.cards = response
+                let paymentItems = response.map({ PaymentTableViewCellViewModel(lastFourCardDigits: $0.lastFour) })
                 self.viewModel.paymentItems = paymentItems
                 self.viewController?.presentPaymentItems(self.viewModel.paymentItems)
             } catch {
-                UserFacingErrorIntent(title: "Something went wrong", message: "There was a problem retrieving your payment methods.").execute(via: self.viewController)
+                UserFacingErrorIntent(
+                    title: "Something went wrong",
+                    message: "There was a problem retrieving your payment methods."
+                ).execute(via: self.viewController)
             }
         }
     }
     
-    func askToDeletePaymentMethod(indexPath: IndexPath) {
+    func askToDeletePaymentMethod(indexPath: IndexPath, with completion: @escaping (Bool) -> Void) {
         guard viewModel.paymentItems.count >= indexPath.row else {
             assertionFailure("Array index out of bounds.")
             return
@@ -48,17 +54,43 @@ class ListPaymentInteractor {
             title: "Are you sure you want to delete this card?",
             message: viewModel.paymentItems[indexPath.row].text,
             destructiveTitle: "Delete",
+            action: { _ in
+                completion(false)
+            },
             destructiveAction: { _ in
-                self.deletePaymentMethod()
+                self.deletePaymentMethod(indexPath.row)
         }).execute(via: viewController)
     }
     
-    private func deletePaymentMethod() {
+    private func deletePaymentMethod(_ index: Int) {
+        guard let cardToDelete = cards?[index] else { return }
         
+        // TODO: Animate row removal
+        // optimistically remove card from the view
+        viewModel.paymentItems.remove(at: index)
+        viewController?.presentPaymentItems(self.viewModel.paymentItems)
+        
+        paymentController.deleteCard(cardToDelete, theme: theme) { [weak self] result in
+            switch result {
+            case .success:
+                self?.getPaymentMethods()
+            case .failure:
+                UserFacingErrorIntent(
+                    title: "Something went wrong",
+                    message: "There was a problem deleting your payment method. Please try again"
+                ).execute(via: self?.viewController)
+            }
+        }
     }
     
     func addPaymentMethod() {
-        let addPaymentViewController = AddPaymentViewController.viewController(for: theme)
+        let addPaymentViewController = AddPaymentViewController.viewController(for: theme, and: self)
         viewController?.present(addPaymentViewController, animated: true)
+    }
+}
+
+extension ListPaymentInteractor: AddCardDelegate {
+    func cardAdded() {
+        getPaymentMethods()
     }
 }

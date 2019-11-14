@@ -10,10 +10,11 @@ import Stripe
 import UIKit
 
 class AddPaymentViewController: UIViewController {
-    static func viewController(for theme: AppTheme) -> AddPaymentViewController {
+    static func viewController(for theme: AppTheme, and delegate: AddCardDelegate? = nil) -> AddPaymentViewController {
         let interactor = AddPaymentInteractor(theme: theme)
         let viewController = AddPaymentViewController(interactor: interactor)
         interactor.viewController = viewController
+        interactor.delegate = delegate
         return viewController
     }
     
