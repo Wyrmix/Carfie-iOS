@@ -92,5 +92,10 @@ class ListPaymentInteractor {
 extension ListPaymentInteractor: AddCardDelegate {
     func cardAdded() {
         getPaymentMethods()
+        viewController?.dismiss(animated: true)
+    }
+    
+    func requestDismissal() {
+        viewController?.dismiss(animated: true)
     }
 }

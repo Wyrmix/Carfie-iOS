@@ -11,6 +11,7 @@ import Stripe
 
 enum PaymentControllerError: Error {
     case invalidToken
+    case notADebitCard
 }
 
 protocol PaymentController {
@@ -40,12 +41,20 @@ final class StripePaymentController: PaymentController {
                 return
             }
             
-            guard let token = token?.tokenId else {
+            guard let token = token else {
                 completion(.failure(PaymentControllerError.invalidToken))
                 return
             }
             
-            let card = CarfieCardToken(stripeToken: token)
+            // Drivers can only use debit cards.
+            if theme == .driver {
+                guard token.card?.funding == STPCardFundingType.debit else {
+                    completion(.failure(PaymentControllerError.notADebitCard))
+                    return
+                }
+            }
+            
+            let card = CarfieCardToken(stripeToken: token.tokenId)
             
             // No weak self because we want this to complete even if the user moves away before
             // this request completes.

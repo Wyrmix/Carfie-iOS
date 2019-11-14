@@ -15,6 +15,7 @@ class AddPaymentViewController: UIViewController {
         let viewController = AddPaymentViewController(interactor: interactor)
         interactor.viewController = viewController
         interactor.delegate = delegate
+        interactor.start()
         return viewController
     }
     
@@ -47,6 +48,18 @@ class AddPaymentViewController: UIViewController {
         return button
     }()
     
+    /// Label for describing the purpose and the restrictions related to adding new payment methods.
+    /// Currently this is only used for the Driver app.
+    private let paymentDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = .carfieSmallBody
+        label.textColor = .carfieDarkGray
+        return label
+    }()
+    
     // MARK: Inits
     
     init(interactor: AddPaymentInteractor) {
@@ -67,6 +80,7 @@ class AddPaymentViewController: UIViewController {
         
         view.addSubview(navigationBar)
         view.addSubview(creditCardEntryField)
+        view.addSubview(paymentDescriptionLabel)
         view.addSubview(addPaymentButton)
         
         NSLayoutConstraint.activate([
@@ -78,7 +92,11 @@ class AddPaymentViewController: UIViewController {
             creditCardEntryField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             creditCardEntryField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            addPaymentButton.topAnchor.constraint(equalTo: creditCardEntryField.bottomAnchor, constant: 16),
+            paymentDescriptionLabel.topAnchor.constraint(equalTo: creditCardEntryField.bottomAnchor, constant: 16),
+            paymentDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            paymentDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            addPaymentButton.topAnchor.constraint(equalTo: paymentDescriptionLabel.bottomAnchor, constant: 16),
             addPaymentButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             addPaymentButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             addPaymentButton.heightAnchor.constraint(equalToConstant: 44),
@@ -103,5 +121,9 @@ class AddPaymentViewController: UIViewController {
         } else {
             addPaymentButton.stopAnimating()
         }
+    }
+    
+    func updateDescriptionLabelText(_ text: String) {
+        paymentDescriptionLabel.text = text
     }
 }
