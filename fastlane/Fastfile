@@ -31,23 +31,28 @@ platform :ios do
 
   desc "Build and deploy all app targets"
   lane :beta do
+    increment_build_number(xcodeproj: "Carfie.xcodeproj")
     beta_rider
     beta_driver
   end
 
   desc "Build and deploy Rider to TestFlight"
   lane :beta_rider do
-    build_app(scheme: "Rider",
-              workspace: "Carfie.xcworkspace",
-              include_bitcode: false)
-    upload_to_testflight(username: "flarestream@gmail.com")
+    build_app(
+        scheme: "Rider",
+        workspace: "Carfie.xcworkspace",
+        include_bitcode: false
+    )
+    upload_to_testflight()
   end
 
   desc "Build and deploy Driver to TestFlight"
   lane :beta_driver do
-    build_app(scheme: "Driver",
-              workspace: "Carfie.xcworkspace",
-              include_bitcode: false)
-    upload_to_testflight(username: "flarestream@gmail.com")
+    build_app(
+      scheme: "Driver",
+      workspace: "Carfie.xcworkspace",
+      include_bitcode: false
+    )
+    upload_to_testflight()
   end
 end

@@ -1,5 +1,5 @@
-# app_identifier("[[APP_IDENTIFIER]]") # The bundle identifier of your app
-# apple_id("[[APPLE_ID]]") # Your Apple email address
+# app_identifier("[[APP_IDENTIFIER]]")
+apple_id("gocarfie@gmail.com")
 
 # To select a team for iTunes Connect use
 itc_team_name "Carfie Inc"
