@@ -299,7 +299,7 @@ extension RideNowView {
     // MARK:- Set Progress View
     private func setProgressView() {
         
-        self.progressView.progressTintColor = .secondary
+        self.progressView.progressTintColor = AppTheme.rider.primaryColor
         self.resetProgressView()
         self.progressView.progressViewStyle = .bar
         
