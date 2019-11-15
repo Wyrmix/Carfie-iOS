@@ -9,10 +9,11 @@
 import UIKit
 
 class ListPaymentViewController: UIViewController {
-    static func viewController(for theme: AppTheme) -> ListPaymentViewController {
+    static func viewController(for theme: AppTheme, and delegate: ListPaymentDelegate? = nil) -> ListPaymentViewController {
         let interactor = ListPaymentInteractor(theme: theme)
         let viewController = ListPaymentViewController(theme: theme, interactor: interactor)
         interactor.viewController = viewController
+        interactor.delegate = delegate
         interactor.getPaymentMethods()
         return viewController
     }
@@ -139,7 +140,8 @@ extension ListPaymentViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: false)
+        interactor.selectPaymentMethod(indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

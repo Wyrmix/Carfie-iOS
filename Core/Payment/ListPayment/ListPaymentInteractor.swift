@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol ListPaymentDelegate: class {
+    func paymentSelected(_ payment: CarfieCard)
+    func paymentDeleted(_ payment: CarfieCard)
+}
+
 class ListPaymentInteractor {
     
     weak var viewController: ListPaymentViewController?
+    weak var delegate: ListPaymentDelegate?
     
     private var viewModel: ListPaymentViewModel
     
@@ -74,6 +80,7 @@ class ListPaymentInteractor {
             switch result {
             case .success:
                 self?.getPaymentMethods()
+                self?.delegate?.paymentDeleted(cardToDelete)
             case .failure:
                 UserFacingErrorIntent(
                     title: "Something went wrong",
@@ -86,6 +93,11 @@ class ListPaymentInteractor {
     func addPaymentMethod() {
         let addPaymentViewController = AddPaymentViewController.viewController(for: theme, and: self)
         viewController?.present(addPaymentViewController, animated: true)
+    }
+    
+    func selectPaymentMethod(_ index: Int) {
+        guard let card = cards?[index] else { return }
+        delegate?.paymentSelected(card)
     }
 }
 

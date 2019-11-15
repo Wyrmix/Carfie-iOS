@@ -27,6 +27,12 @@ class UserFacingErrorIntent: ErrorIntent {
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: action))
     }
+    
+    init(title: String, message: String, wihCancelActionAnd action: @escaping ((UIAlertAction) -> Void)) {
+        alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: action))
+    }
 }
 
 class UserFacingErrorRetryIntent: ErrorIntent {
