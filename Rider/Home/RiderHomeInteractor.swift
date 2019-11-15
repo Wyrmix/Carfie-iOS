@@ -1,5 +1,5 @@
 //
-//  RdierHomeInteractor.swift
+//  RiderHomeInteractor.swift
 //  Rider
 //
 //  Created by Christopher Olsen on 11/15/19.
