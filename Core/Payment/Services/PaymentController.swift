@@ -9,6 +9,10 @@
 import Foundation
 import Stripe
 
+enum StripeCurrency: String {
+    case usDollars = "usd"
+}
+
 enum PaymentControllerError: Error {
     case invalidToken
     case notADebitCard
@@ -35,6 +39,11 @@ final class StripePaymentController: PaymentController {
     }
     
     func addCard(_ card: STPCardParams, theme: AppTheme, completion: @escaping (Result<AddCardResponse>) -> Void) {
+        if theme == .driver {
+            // This is necessary for the driver because they must use a debit card which requires currency type to be set
+            card.currency = StripeCurrency.usDollars.rawValue
+        }
+        
         STPAPIClient.shared().createToken(withCard: card) { (token, error) in
             guard error == nil else {
                 completion(.failure(error!))
