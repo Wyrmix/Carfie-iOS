@@ -108,18 +108,7 @@ extension PaymentViewController {
     // Payment Button Action
     
     @IBAction private func buttonPaymentAction() {
-          self.push(id: Storyboard.Ids.AddCardViewController, animation: true)
-        
-//        let theme = STPTheme.default()
-//        theme.primaryForegroundColor = .primary
-//        
-//        let config = STPPaymentConfiguration()
-//        config.requiredBillingAddressFields = .none
-//        
-//        let cardController = STPAddCardViewController(configuration: config, theme: theme)
-//        cardController.delegate = self
-//        cardController.navigationItem.title = cardController.navigationItem.title?.localize()
-//        self.navigationController?.pushViewController(cardController, animated: true)
+        present(AddPaymentViewController.viewController(for: .driver), animated: true)
     }
     
     // MARK:- Swipe Action
@@ -237,32 +226,6 @@ extension PaymentViewController : PostViewProtocol {
         }
     }
 }
-
-//// MARK:- STPAddCardViewControllerDelegate
-//
-//extension PaymentViewController : STPAddCardViewControllerDelegate {
-//
-//    func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
-//
-//        print("Stripe Token :: -> ",token);
-//        addCardViewController.popOrDismiss(animation: true)
-//
-//    }
-//
-//
-//    func addCardViewControllerDidCancel(_ addCardViewController: STPAddCardViewController) {
-//
-//        DispatchQueue.main.async {
-//
-//           addCardViewController.popOrDismiss(animation: true)
-//
-//        }
-//
-//    }
-//}
-//
-//
-//
 
 class PaymentCell : UITableViewCell {
     

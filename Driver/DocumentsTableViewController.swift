@@ -190,14 +190,7 @@ extension DocumentsTableViewController : PostViewProtocol {
                 UIApplication.shared.keyWindow?.make(toast: Constants.string.documentsUploadedSuccessfully.localize(), duration: 1, completion: {
                     if !self.isGettingDocuments {
                         self.navigationController?.popToRootViewController(animated: true)
-//                        if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.AddCardViewController) as? AddCardViewController {
-//                            vc.isGettingDocuments = true
-//                            self.navigationController?.pushViewController(vc, animated: true)
-//                        }
                     }
-//                    else {
-//                        self.navigationController?.popToRootViewController(animated: true)
-//                    }
                 })
             }
         }

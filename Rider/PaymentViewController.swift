@@ -115,18 +115,6 @@ extension PaymentViewController {
     
     @IBAction private func buttonPaymentAction() {
         present(AddPaymentViewController.viewController(for: .rider), animated: true)
-//          self.push(id: Storyboard.Ids.AddCardViewController, animation: true)
-        
-//        let theme = STPTheme.default()
-//        theme.primaryForegroundColor = .primary
-//        
-//        let config = STPPaymentConfiguration()
-//        config.requiredBillingAddressFields = .none
-//        
-//        let cardController = STPAddCardViewController(configuration: config, theme: theme)
-//        cardController.delegate = self
-//        cardController.navigationItem.title = cardController.navigationItem.title?.localize()
-//        self.navigationController?.pushViewController(cardController, animated: true)
     }
     
     // MARK:- Swipe Action

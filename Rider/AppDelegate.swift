@@ -85,9 +85,6 @@ extension AppDelegate {
         
         let mainViewController = Common.setDrawerController()
         rootContainerInteractor.configureChildViewController(mainViewController)
-        
-//        let navigationController = UINavigationController(rootViewController: ListPaymentViewController.viewController(for: .rider))
-//        rootContainerInteractor.configureChildViewController(navigationController)
         rootContainerInteractor.configureRootViewController(RootViewController())
     }
 }
