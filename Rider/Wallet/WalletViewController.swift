@@ -24,6 +24,8 @@ class WalletViewController: UIViewController {
     
     private var selectedCardEntity : CardEntity?
     
+    private var interactor: WalletInteractor?
+    
     private var isWalletEnabled : Bool = false {
         didSet{
             self.buttonAddAmount.isEnabled = isWalletEnabled
@@ -46,11 +48,9 @@ class WalletViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        interactor = WalletInteractor()
+        interactor?.viewController = self
+        interactor?.start()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,20 +59,11 @@ class WalletViewController: UIViewController {
         self.isWalletAvailable = User.main.isCardAllowed
         self.initalLoads()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-       // IQKeyboardManager.sharedManager().enable = false
-    }
-    
 }
-
-//NSDictionary *params = @{@"amount":_enterAmtTxtfiedl.text, @"card_id":strCardID};
 
 extension WalletViewController {
     
     private func initalLoads() {
-        
         self.setWalletBalance()
         self.presenter?.get(api: .getProfile, parameters: nil)
         self.view.dismissKeyBoardonTap()
@@ -88,7 +79,6 @@ extension WalletViewController {
         self.buttonChange.addTarget(self, action: #selector(self.buttonChangeCardAction), for: .touchUpInside)
         self.isWalletEnabled = false
         KeyboardAvoiding.avoidingView = self.view
-        self.presenter?.get(api: .getCards, parameters: nil)
     }
     
     // MARK:- Set Designs
@@ -111,9 +101,18 @@ extension WalletViewController {
         textFieldAmount.text = "\(sender.tag)"
     }
     
-    private func setCardDetails() {
-        if let lastFour = self.selectedCardEntity?.last_four {
-           self.labelCard.text = "XXXX-XXXX-XXXX-"+lastFour
+    func setCard(_ card: CardEntity?) {
+        selectedCardEntity = card
+        
+        guard let card = card else {
+            isWalletEnabled = false
+            labelCard.text = nil
+            return
+        }
+        
+        isWalletEnabled = true
+        if let lastFour = card.last_four {
+           labelCard.text = "XXXX-XXXX-XXXX-\(lastFour)"
         }
     }
     
@@ -137,19 +136,7 @@ extension WalletViewController {
     // MARK:- Change Card Action
     
     @IBAction private func buttonChangeCardAction() {
-        
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.PaymentViewController) as? PaymentViewController{
-            vc.isChangingPayment = true
-            vc.isShowCash = false
-            vc.onclickPayment = { type, cardEntity in
-                self.selectedCardEntity = cardEntity
-                self.setCardDetails()
-                vc.navigationController?.dismiss(animated: true, completion: nil)
-            }
-            let navigation = UINavigationController(rootViewController: vc)
-            self.present(navigation, animated: true, completion: nil)
-        }
-        
+        interactor?.changeCard()
     }
     
     
@@ -188,20 +175,7 @@ extension WalletViewController : RiderPostViewProtocol {
     func getProfile(api: Base, data: Profile?) {
         Common.storeUserData(from: data)
         storeInUserDefaults()
-        self.setWalletBalance()
-    }
-    
-    func getCardEnities(api: Base, data: [CardEntity]) {
-        self.selectedCardEntity = data.first
-        DispatchQueue.main.async {
-            self.setCardDetails()
-            self.isWalletEnabled = !data.isEmpty
-            if data.isEmpty && User.main.isCardAllowed {
-                showAlert(message: Constants.string.addCard.localize(), okHandler: {
-                   self.push(id: Storyboard.Ids.AddCardViewController, animation: true)
-                }, cancelHandler: nil, fromView: self)
-            }
-        }
+        self.setWalletBalance() 
     }
    
     func getWalletEntity(api: Base, data: WalletEntity?) {

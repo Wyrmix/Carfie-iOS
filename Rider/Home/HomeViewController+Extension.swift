@@ -40,32 +40,6 @@ extension HomeViewController {
                 self.sourceMarker.snippet = service?.pricing?.time
                 self.mapViewHelper?.mapView?.selectedMarker = (service?.pricing?.time) == nil ? nil : self.sourceMarker
             }
-            //self.rideNowView?.imageViewCard.image = paymentType.image
-            //            self.rideNowView?.onClickRideNow = { service in
-            //                if service != nil {
-            //                    self.createRequest(for: service!, isScheduled: false, scheduleDate: nil, cardEntity: selectedPaymentDetail, paymentType: paymentType)
-            //                }
-            //            }
-            //            self.rideNowView?.onClickSchedule = { service in
-            //                self.schedulePickerView(on: { (date) in
-            //                    if service != nil {
-            //                        self.createRequest(for: service!, isScheduled: true, scheduleDate: date,cardEntity: selectedPaymentDetail, paymentType: paymentType)
-            //                    }
-            //                })
-            //            }
-            //            self.rideNowView?.onClickChangePayment = {
-            //                if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.PaymentViewController) as? PaymentViewController{
-            //                    vc.isChangingPayment = true
-            //                    vc.onclickPayment = { (paymentTypeEntity , cardEntity) in
-            //                        selectedPaymentDetail = cardEntity
-            //                        paymentType = paymentTypeEntity
-            //                        self.rideNowView?.imageViewCard.image = paymentType.image
-            //                        self.rideNowView?.labelCardNumber.text = cardEntity == nil ? Constants.string.cash.localize() : String.removeNil(cardEntity?.last_four)
-            //                    }
-            //                    let navigation = UINavigationController(rootViewController: vc)
-            //                    self.present(navigation, animated: true, completion: nil)
-            //                }
-            //            }
         }
         self.rideNowView?.setAddress(source: sourceLocation.coordinate, destination: destinationLocation.coordinate)
         self.rideNowView?.set(source: source)

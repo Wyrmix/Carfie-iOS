@@ -6,6 +6,8 @@
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
+import Foundation
+import Stripe
 import UIKit
 
 /// Configures the app target's UIAppearance settings.
@@ -20,5 +22,7 @@ struct CarfieAppearance {
         // Buttons
         CarfieButton.appearance().backgroundColor = theme.primaryButtonColor
         CarfieSecondaryButton.appearance().setTitleColor(theme.tintColor, for: .normal)
+        
+        STPPaymentCardTextField.appearance().tintColor = theme.tintColor
     }
 }

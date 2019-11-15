@@ -77,8 +77,8 @@ class HomepageViewController: UIViewController, UITextFieldDelegate {
     private var accountStatus : AccountStatus = .none {
         didSet {
             DispatchQueue.main.async { // If Showing document page and
-                if self.accountStatus == .pendingCard{
-                    self.getPendingDocuments(from: Storyboard.Ids.AddCardViewController)
+                if self.accountStatus == .pendingCard {
+                    self.interactor?.showAddPayment()
                 }else if self.accountStatus == .pendingDocument {
                     self.interactor?.showAddDocuments()
                 } else {
@@ -702,7 +702,7 @@ extension HomepageViewController {
 //        }
     }
     
-    private func logout() {
+    func logout() {
         
         let alert = UIAlertController(title: nil, message: Constants.string.logoutMessage.localize(), preferredStyle: .actionSheet)
         let logoutAction = UIAlertAction(title: Constants.string.logout.localize(), style: .destructive) { (_) in
