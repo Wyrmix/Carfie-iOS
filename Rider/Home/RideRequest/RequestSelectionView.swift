@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol RequestSelectionViewDelegate: class {
+    func paymentChangeRequested()
+    func requestRide(from service: Service?, with payment: CardEntity?, of type: PaymentType)
+    func scheduleRide(for service: Service?, with payment: CardEntity?, of type: PaymentType)
+}
+
 class RequestSelectionView: UIView {
     
    
@@ -26,9 +32,8 @@ class RequestSelectionView: UIView {
     @IBOutlet private weak var viewImageModalBg : UIView!
     @IBOutlet private weak var labelWalletBalance : UILabel!
     
-    var scheduleAction : ((Service)->())?
-    var rideNowAction : ((Service)->())?
-    var paymentChangeClick : ((_ completion : @escaping ((CardEntity?)->()))->Void)?
+    weak var delegate: RequestSelectionViewDelegate?
+    
     var onclickCoupon : ((_ couponList : [PromocodeEntity],_ selected : PromocodeEntity?, _ promo : ((PromocodeEntity?)->())?)->Void)?
     var selectedCoupon : PromocodeEntity? { // Selected Promocode
         didSet{
@@ -56,20 +61,31 @@ class RequestSelectionView: UIView {
             self.service?.pricing?.useWallet = isWalletChecked ? 1 : 0
         }
     }
-    private var selectedCard : CardEntity?
-    var paymentType : PaymentType = .NONE {
+    
+    private var selectedCard: CardEntity?
+    var paymentType: PaymentType = .NONE {
         didSet {
-            var paymentString : String = .Empty
-            if paymentType == .NONE {
-                paymentString = Constants.string.NA.localize()
-            } else {
-                paymentString = paymentType == .CASH ? PaymentType.CASH.rawValue.localize() : (self.selectedCard == nil ? PaymentType.CARD.rawValue.localize() : "\("XXXX-"+String.removeNil(self.selectedCard?.last_four))")
+            var paymentText: String
+            
+            switch paymentType {
+            case .NONE:
+                paymentText = "None selected"
+            case .CARD:
+                if let lastFour = selectedCard?.last_four {
+                    paymentText = "XXXX-\(lastFour)"
+                } else {
+                    paymentText = "None selected"
+                }
+            case .CASH:
+                // TECH-DEBT: remmove CASH option completely.
+                // This should no longer be allowed.
+                paymentText = "None selected"
             }
-            let text = "\(Constants.string.payment.localize()):\(paymentString)"
-            self.labelPaymentMode.text = text
-            self.labelPaymentMode.attributeColor = .secondary
-            self.labelPaymentMode.startLocation = ((text.count)-(paymentString.count))
-            self.labelPaymentMode.length = paymentString.count
+
+            let text = "Payment: \(paymentText)"
+            labelPaymentMode.text = text
+            labelPaymentMode.startLocation = (text.count) - (paymentText.count)
+            labelPaymentMode.length = paymentText.count
         }
     }
     
@@ -77,7 +93,7 @@ class RequestSelectionView: UIView {
         didSet {
             self.buttonCoupon.setTitle({
                 if !isPromocodeEnabled {
-                    return " \(Constants.string.NA.localize().uppercased()) "
+                    return " None "
                 }else {
                     return self.selectedCoupon != nil ? " \(String.removeNil(self.selectedCoupon?.promo_code)) " : " \(Constants.string.viewCoupons.localize()) "
                 }
@@ -86,7 +102,6 @@ class RequestSelectionView: UIView {
                 self.buttonCoupon.layoutIfNeeded()
             }
             self.buttonCoupon.isEnabled = isPromocodeEnabled
-            self.buttonCoupon.alpha = isPromocodeEnabled ? 1 : 0.7
         }
     }
     
@@ -94,12 +109,18 @@ class RequestSelectionView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.initialLoads()
+        initialLoads()
+        setup()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         self.viewImageModalBg.makeRoundedCorner()
+    }
+    
+    private func setup() {
+        labelPaymentMode.attributeColor = AppTheme.rider.tintColor
+        buttonCoupon.backgroundColor = AppTheme.rider.primaryButtonColor
     }
 }
 
@@ -118,10 +139,9 @@ extension RequestSelectionView {
         self.paymentType = .NONE
         if (User.main.isCardAllowed == false){
             self.buttonChangePayment.isHidden = true
-        }else {
-            self.buttonChangePayment.isHidden = !(User.main.isCashAllowed || User.main.isCardAllowed)
+        } else {
+            self.buttonChangePayment.isHidden = !User.main.isCardAllowed
         }
-//        self.buttonChangePayment.isHidden = !(User.main.isCashAllowed && User.main.isCardAllowed) // Change button enabled only if both payment modes are enabled
         self.buttonChangePayment.addTarget(self, action: #selector(self.buttonChangePaymentAction), for: .touchUpInside)
         self.buttonCoupon.addTarget(self, action: #selector(self.buttonCouponAction), for: .touchUpInside)
         self.isPromocodeEnabled = false
@@ -175,12 +195,12 @@ extension RequestSelectionView {
     
     @IBAction private func buttonScheduleAction(){
         self.service?.promocode = self.selectedCoupon
-        self.scheduleAction?(self.service!)
+        delegate?.scheduleRide(for: service, with: selectedCard, of: paymentType)
     }
     
     @IBAction private func buttonRideNowAction(){
         self.service?.promocode = self.selectedCoupon
-        self.rideNowAction?(self.service!)
+        delegate?.requestRide(from: service, with: selectedCard, of: paymentType)
     }
     
     @IBAction private func useWalletAction(){
@@ -194,9 +214,7 @@ extension RequestSelectionView {
             })
     }
     @IBAction private func buttonChangePaymentAction() {
-        self.paymentChangeClick?({ [weak self] selectedCard in
-            self?.selectedCard = selectedCard
-        })
+        delegate?.paymentChangeRequested()
     }
 }
 
@@ -212,3 +230,10 @@ extension RequestSelectionView : RiderPostViewProtocol {
     }
 }
 
+// MARK: - Presenters
+extension RequestSelectionView {
+    func configure(with viewModel: RideRequestViewModel) {
+        selectedCard = viewModel.card
+        paymentType = viewModel.paymentType
+    }
+}

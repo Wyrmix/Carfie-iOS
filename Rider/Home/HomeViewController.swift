@@ -38,6 +38,8 @@
         @IBOutlet weak var viewLocationButtons : UIStackView!
         
         @IBOutlet var constraint : NSLayoutConstraint!
+
+        var homeInteractor: RiderHomeInteractor?
         
         var providerLastLocation = LocationCoordinate()
         lazy var markerProviderLocation : GMSMarker = {  // Provider Location Marker
@@ -153,25 +155,20 @@
             super.viewDidLoad()
             self.initialLoads()
             self.localize()
+            
+            homeInteractor = RiderHomeInteractor()
+            homeInteractor?.viewController = self
         }
         
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
             self.viewWillAppearCustom()
-            //IQKeyboardManager.shared.enable = true
-        }
-        
-        override func didReceiveMemoryWarning() {
-            super.didReceiveMemoryWarning()
-            // Dispose of any resources that can be recreated.
         }
         
         override func viewWillLayoutSubviews() {
             super.viewWillLayoutSubviews()
             self.viewLayouts()
         }
-        
-        
     }
     
     // MARK:- Methods

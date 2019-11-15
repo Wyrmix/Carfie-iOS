@@ -20,10 +20,6 @@ extension HomeViewController {
     
     func showRideNowView(with source : [Service]) {
         guard let sourceLocation = self.sourceLocationDetail?.value, let destinationLocation = self.destinationLocationDetail else { return }
-        // print("\nselected--**",self.sourceLocationDetail?.value?.coordinate, self.destinationLocationDetail?.coordinate)
-        
-        //        var selectedPaymentDetail : CardEntity?
-        //        var paymentType : PaymentType = (User.main.isCashAllowed ? .CASH : User.main.isCardAllowed ? .CARD : .NONE)
         if self.rideNowView == nil {
             
             self.rideNowView = Bundle.main.loadNibNamed(XIB.Names.RideNowView, owner: self, options: [:])?.first as? RideNowView
@@ -55,56 +51,6 @@ extension HomeViewController {
         })
         self.rideNowView = nil
     }
-    
-    
-    /*   // MARK:- Show Service View
-     
-     func showServiceSelectionView(with source : [Service]) {
-     
-     
-     if self.serviceSelectionView == nil {
-     
-     self.serviceSelectionView = Bundle.main.loadNibNamed(XIB.Names.ServiceSelectionView, owner: self, options: [:])?.first as? ServiceSelectionView
-     self.serviceSelectionView?.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height-self.serviceSelectionView!.frame.height), size: CGSize(width: self.view.frame.width, height: self.serviceSelectionView!.frame.height))
-     self.serviceSelectionView?.buttonMore.addTarget(self, action: #selector(self.buttonMoreServiceAction(sender:)), for: .touchUpInside)
-     self.serviceSelectionView?.buttonService.addTarget(self, action: #selector(self.buttonMoreServiceAction(sender:)), for: .touchUpInside)
-     self.serviceSelectionView?.show(with: .bottom, completion: nil)
-     self.view.addSubview(self.serviceSelectionView!)
-     self.isOnBooking = true
-     if let source = self.sourceLocationDetail?.value?.coordinate, let destination = self.destinationLocationDetail?.coordinate {
-     self.serviceSelectionView?.setAddress(source: source, destination: destination)
-     }
-     self.serviceSelectionView?.onClickPricing = { selectedItem in
-     if let id = selectedItem?.id {
-     self.loader.isHidden = false
-     self.service = selectedItem
-     self.getEstimateFareFor(serviceId: id)
-     }
-     }
-     self.serviceSelectionView?.clipsToBounds = false
-     }
-     
-     self.serviceSelectionView?.set(source: source)
-     }
-     
-     // MARK:- Service View Button More and Service Action
-     
-     @IBAction private func buttonMoreServiceAction(sender : UIButton) {
-     
-     self.serviceSelectionView?.isServiceSelected = sender == self.serviceSelectionView?.buttonService
-     
-     }
-     
-     // MARK:- Remove Service View
-     
-     func removeServiceView() {
-     
-     self.isOnBooking = false
-     self.serviceSelectionView?.dismissView(onCompletion: {
-     self.serviceSelectionView = nil
-     })
-     
-     } */
     
     // MARK:- Temporarily Hide Service View
     
@@ -139,13 +85,12 @@ extension HomeViewController {
     // MARK:- Show Ride Now view
     
     func showEstimationView(with service : Service){
-        
         self.removeRideNow()
         self.isOnBooking = true
         if self.estimationFareView == nil {
             print("ViewAddressOuter ", #function)
-            var selectedPaymentDetail : CardEntity?
-            var paymentType : PaymentType = (User.main.isCashAllowed ? .CASH : User.main.isCardAllowed ? .CARD : .NONE)
+            var selectedPaymentDetail: CardEntity?
+            var paymentType: PaymentType = User.main.isCardAllowed ? .CARD : .NONE
             self.loader.isHidden = true
             let isWalletAvailable = User.main.wallet_balance != 0
             let heightPadding : CGFloat = (isWalletAvailable ? 0 : 40)
@@ -153,38 +98,31 @@ extension HomeViewController {
             self.estimationFareView?.frame = CGRect(x: 0, y: self.view.frame.height-(self.estimationFareView!.bounds.height-heightPadding), width: self.view.frame.width, height: self.estimationFareView!.frame.height-heightPadding)
             self.estimationFareView?.show(with: .bottom, completion: nil)
             self.view.addSubview(self.estimationFareView!)
-            self.estimationFareView?.scheduleAction = { [weak self] service in
-                self?.schedulePickerView(on: { (date) in
-                    self?.createRequest(for: service, isScheduled: true, scheduleDate: date,cardEntity: selectedPaymentDetail, paymentType: paymentType)
-                })
-            }
-            self.estimationFareView?.rideNowAction = { [weak self] service in
-                self?.createRequest(for: service, isScheduled: false, scheduleDate: nil, cardEntity: selectedPaymentDetail, paymentType: paymentType)
-            }
-            self.estimationFareView?.paymentChangeClick = { [weak self]  completion in
-                if let vc = self?.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.PaymentViewController) as? PaymentViewController {
-                    vc.isChangingPayment = true
-                    vc.paymentTypeStr = paymentType.rawValue
-                    vc.onclickPayment = { [weak self] (paymentTypeEntity , cardEntity) in
-                        guard let self = self else {return}
-                        selectedPaymentDetail = cardEntity
-                        paymentType = paymentTypeEntity
-                        completion(cardEntity)
-                        self.estimationFareView?.paymentType = paymentType
-                    }
-                    let navigation = UINavigationController(rootViewController: vc)
-                    self?.present(navigation, animated: true, completion: nil)
-                }
-            }
+
             self.estimationFareView?.onclickCoupon = { [weak self] (availableCoupons,selected, completion) in // available coupons, currently selected coupons, completion to send response
                 self?.showCouponView(coupons: availableCoupons, currentlySelected: selected, completion: { (couponEntity) in
                     completion?(couponEntity) // sending back the couponEntity
                     self?.removeCouponView()
                 })
             }
+            
+            estimationFareView?.delegate = homeInteractor
         }
         self.estimationFareView?.setValues(values: service)
     }
+    
+    // MARK: Interactor Presenters
+    
+    func presentChangedCard(_ card: CardEntity?) {
+        let viewModel = RideRequestViewModel(
+            paymentType: card == nil ? .NONE : .CARD,
+            card: card
+        )
+        
+        estimationFareView?.configure(with: viewModel)
+    }
+    
+    
     // MARK:- Remove RideNow View
     
     func removeEstimationFareView(){
@@ -781,7 +719,4 @@ extension HomeViewController {
             }
         })
     }
-    
-    
-    
 }
