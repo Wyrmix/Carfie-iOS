@@ -341,18 +341,4 @@ extension HomepageViewController {
             
         }
     }
-    
-    // MARK:- Present Viewcontroller for Pending Files
-    
-    func getPendingDocuments(from viewcontrollerId : String) {
-        
-        let vc = Router.main.instantiateViewController(withIdentifier: viewcontrollerId)
-        if type(of: vc) == AddCardViewController.self {
-            (vc as! AddCardViewController).isGettingDocuments = true
-            if self.addCardVC == nil {
-                self.addCardVC = UINavigationController(rootViewController: vc)
-                present(self.addCardVC!, animated: true, completion: nil)
-            }
-        }
-    }
 }
