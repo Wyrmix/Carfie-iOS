@@ -79,7 +79,6 @@ extension WalletViewController {
         self.buttonChange.addTarget(self, action: #selector(self.buttonChangeCardAction), for: .touchUpInside)
         self.isWalletEnabled = false
         KeyboardAvoiding.avoidingView = self.view
-//        self.presenter?.get(api: .getCards, parameters: nil)
     }
     
     // MARK:- Set Designs
@@ -177,19 +176,6 @@ extension WalletViewController : RiderPostViewProtocol {
         Common.storeUserData(from: data)
         storeInUserDefaults()
         self.setWalletBalance() 
-    }
-    
-    func getCardEnities(api: Base, data: [CardEntity]) {
-        self.selectedCardEntity = data.first
-        DispatchQueue.main.async {
-            self.setCard(data.first)
-            self.isWalletEnabled = !data.isEmpty
-            if data.isEmpty && User.main.isCardAllowed {
-                showAlert(message: Constants.string.addCard.localize(), okHandler: {
-                   self.push(id: Storyboard.Ids.AddCardViewController, animation: true)
-                }, cancelHandler: nil, fromView: self)
-            }
-        }
     }
    
     func getWalletEntity(api: Base, data: WalletEntity?) {
