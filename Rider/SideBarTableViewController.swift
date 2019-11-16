@@ -37,8 +37,6 @@ class SideBarTableViewController: UITableViewController {
     @IBOutlet private var viewShadow : UIView!
     @IBOutlet private weak var profileImageCenterContraint : NSLayoutConstraint!
     
-    // private let sideBarList = [Constants.string.payment,Constants.string.yourTrips,Constants.string.coupon,Constants.string.wallet,Constants.string.passbook,Constants.string.settings,Constants.string.help,Constants.string.share,Constants.string.inviteReferral,Constants.string.faqSupport,Constants.string.termsAndConditions,Constants.string.privacyPolicy,Constants.string.logout]
-    
     private let sideBarList = [Constants.string.payment,
                                Constants.string.yourTrips,
                                Constants.string.offer,
@@ -46,7 +44,6 @@ class SideBarTableViewController: UITableViewController {
                                Constants.string.passbook,
                                Constants.string.settings,
                                Constants.string.help,
-                               Constants.string.share,
                                Constants.string.becomeADriver,
                                Constants.string.logout]
     
@@ -64,30 +61,17 @@ class SideBarTableViewController: UITableViewController {
         self.initialLoads()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.localize()
         self.setValues()
         self.navigationController?.isNavigationBarHidden = true
-        //self.prefersStatusBarHidden = true
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.setLayers()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-       // self.prefersStatusBarHidden = false
-    }
-    
 }
 
 // MARK:- Methods
@@ -106,10 +90,7 @@ extension SideBarTableViewController {
     // MARK:- Set Designs
     
     private func setLayers(){
-        
-        //self.viewShadow.addShadow()
         self.imageViewProfile.makeRoundedCorner()
-        
     }
     
     
@@ -132,19 +113,15 @@ extension SideBarTableViewController {
     
     // MARK:- Localize
     private func localize(){
-        
         self.tableView.reloadData()
-        
     }
     
     // MARK:- ImageView Action
     
     @IBAction private func imageViewAction() {
-        
         let homeVC = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.ProfileViewController)
         (self.drawerController?.getViewController(for: .none) as? UINavigationController)?.pushViewController(homeVC, animated: true)
         self.drawerController?.closeSide()
-        
     }
     
     
@@ -152,7 +129,7 @@ extension SideBarTableViewController {
     
     private func select(at indexPath : IndexPath) {
         
-        switch (indexPath.section,indexPath.row) {
+        switch (indexPath.section, indexPath.row) {
             
         case (0,0):
             push(to: ListPaymentViewController.viewController(for: .rider))
@@ -175,16 +152,12 @@ extension SideBarTableViewController {
         case (0,6):
             push(to: HelpViewController.viewController())
         case (0,7):
-            (self.drawerController?.getViewController(for: .none)?.children.first as? HomeViewController)?.share(items: [baseUrl])
-        case (0,8):
             Common.open(url: baseUrl)
-        case (0,9):
-            self.logout()
-            
+        case (0,8):
+            self.logout()   
         default:
             break
         }
-        
     }
     
     private func push(to identifier : String) {

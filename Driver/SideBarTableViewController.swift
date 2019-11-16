@@ -15,7 +15,7 @@ class SideBarTableViewController: UITableViewController {
     @IBOutlet private var labelName : UILabel!
     @IBOutlet private var viewShadow : UIView!
     @IBOutlet var labelEmail: UILabel!
-    private let sideBarList = [Constants.string.yourTrips,Constants.string.Earnings,Constants.string.Summary,Constants.string.wallet,Constants.string.card, Constants.string.help,Constants.string.share,Constants.string.settings,Constants.string.logout]
+    private let sideBarList = [Constants.string.yourTrips,Constants.string.Earnings,Constants.string.Summary,Constants.string.wallet,Constants.string.card, Constants.string.help,Constants.string.settings,Constants.string.logout]
     
     private let cellId = "cellId"
     
@@ -24,12 +24,6 @@ class SideBarTableViewController: UITableViewController {
         super.viewDidLoad()
         self.initialLoads()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -42,7 +36,6 @@ class SideBarTableViewController: UITableViewController {
         super.viewWillLayoutSubviews()
         self.setDesigns()
     }
-    
 }
 
 // MARK:- Methods
@@ -203,27 +196,16 @@ extension SideBarTableViewController {
             baseVC?.pushViewController(ListPaymentViewController.viewController(for: .driver), animated: true)
             
         } else if indexPath.row == 5 {
-            baseVC?.pushViewController(HelpViewController.viewController(), animated: true)   
-        }else if  indexPath.row == 6 {//share
-            
-            ((self.drawerController?.getViewController(for: .none) as? UINavigationController)?.viewControllers.last as? HomepageViewController)?.share(items: [baseUrl])
-            
-        }else if indexPath.row == 7 {
+            baseVC?.pushViewController(HelpViewController.viewController(), animated: true)
+        }else if indexPath.row == 6 {
             let helpVC = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.SettingTableViewController)
             baseVC?.pushViewController(helpVC, animated: true)
         }else {
             self.logout()
-//            showAlert(message: Constants.string.logoutMessage, okHandler: {
-//                let logout = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.EmailViewController)
-//                baseVC?.pushViewController(logout, animated: true)
-//            }, fromView: self )
-            
         }
         
         self.drawerController?.closeSide()
-        
     }
-    
 }
 
 
