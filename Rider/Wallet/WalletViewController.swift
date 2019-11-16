@@ -72,10 +72,6 @@ extension WalletViewController {
         self.setDesign()
         self.textFieldAmount.placeholder = String.removeNil(User.main.currency)+" "+"\(0)"
         self.textFieldAmount.delegate = self
-        for (index,button) in buttonsAmount.enumerated() {
-            button.tag = (index*100)+99
-            button.setTitle(String.removeNil(String.removeNil(User.main.currency)+" \(button.tag)"), for: .normal)
-        }
         self.buttonChange.addTarget(self, action: #selector(self.buttonChangeCardAction), for: .touchUpInside)
         self.isWalletEnabled = false
         KeyboardAvoiding.avoidingView = self.view
@@ -96,9 +92,9 @@ extension WalletViewController {
         
     }
     
-    @IBAction private func buttonAmountAction(sender : UIButton) {
-        
-        textFieldAmount.text = "\(sender.tag)"
+    @IBAction private func buttonAmountAction(sender: UIButton) {
+        guard let index = buttonsAmount.firstIndex(of: sender) else { return }
+        interactor?.getWalletDefaultForButton(index: index)
     }
     
     func setCard(_ card: CardEntity?) {
@@ -114,6 +110,21 @@ extension WalletViewController {
         if let lastFour = card.last_four {
            labelCard.text = "XXXX-XXXX-XXXX-\(lastFour)"
         }
+    }
+    
+    func presentWalletDefaults(_ values: [Int]) {
+        guard values.count == buttonsAmount.count else {
+            assertionFailure("Wallet default values cannot be reconciled with count of default buttons.")
+            return
+        }
+        
+        for (index, button) in buttonsAmount.enumerated() {
+            button.setTitle("$ \(values[index])", for: .normal)
+        }
+    }
+    
+    func presentAddToWalletValue(_ value: Int) {
+        textFieldAmount.text = "\(value)"
     }
     
     

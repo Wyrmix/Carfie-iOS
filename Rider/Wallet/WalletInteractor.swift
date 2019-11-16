@@ -11,14 +11,26 @@ import UIKit
 class WalletInteractor {
     weak var viewController: WalletViewController?
     
+    var viewState: WalletViewState
+    
     private let paymentController: PaymentController
     
     init(paymentController: PaymentController = StripePaymentController()) {
         self.paymentController = paymentController
+        self.viewState = WalletViewState()
     }
     
     func start() {
         getCards()
+        getWalletDefaults()
+    }
+    
+    func getWalletDefaults() {
+        viewController?.presentWalletDefaults(viewState.walletDefaultValues)
+    }
+    
+    func getWalletDefaultForButton(index: Int) {
+        viewController?.presentAddToWalletValue(viewState.walletDefaultValues[index])
     }
     
     func getCards() {
