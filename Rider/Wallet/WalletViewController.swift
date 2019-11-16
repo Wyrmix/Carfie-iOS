@@ -51,11 +51,15 @@ class WalletViewController: UIViewController {
         interactor = WalletInteractor()
         interactor?.viewController = self
         interactor?.start()
+        
+        title = "Wallet"
+        addButtonTargets()
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
+        
         self.isWalletAvailable = User.main.isCardAllowed
         self.initalLoads()
     }
@@ -63,33 +67,29 @@ class WalletViewController: UIViewController {
 
 extension WalletViewController {
     
-    private func initalLoads() {
-        self.setWalletBalance()
-        self.presenter?.get(api: .getProfile, parameters: nil)
-        self.view.dismissKeyBoardonTap()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
-        self.navigationItem.title = Constants.string.wallet.localize()
-        self.setDesign()
-        self.textFieldAmount.placeholder = String.removeNil(User.main.currency)+" "+"\(0)"
-        self.textFieldAmount.delegate = self
-        self.buttonChange.addTarget(self, action: #selector(self.buttonChangeCardAction), for: .touchUpInside)
-        self.isWalletEnabled = false
-        KeyboardAvoiding.avoidingView = self.view
+    private func addButtonTargets() {
+        buttonChange.addTarget(self, action: #selector(self.buttonChangeCardAction), for: .touchUpInside)
     }
     
-    // MARK:- Set Designs
+    private func setupViews() {
+        KeyboardAvoiding.avoidingView = self.view
+        view.dismissKeyBoardonTap()
+        
+        textFieldAmount.placeholder = "$ 0"
+        textFieldAmount.delegate = self
+
+        buttonChange.setTitle("Change", for: .normal)
+        labelAddMoney.text = "Add money"
+        labelWallet.text = "Your wallet amount is"
+        buttonAddAmount.setTitle("ADD AMOUNT", for: .normal)
+    }
     
-    private func setDesign() {
-        
-        Common.setFont(to: labelBalance, isTitle: true)
-        Common.setFont(to: textFieldAmount)
-        Common.setFont(to: labelCard)
-        Common.setFont(to: buttonChange)
-        buttonChange.setTitle(Constants.string.change.localize(), for: .normal)
-        labelAddMoney.text = Constants.string.addAmount.localize()
-        labelWallet.text = Constants.string.yourWalletAmnt.localize()
-        buttonAddAmount.setTitle(Constants.string.ADDAMT, for: .normal)
-        
+    private func initalLoads() {
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = ""
+        self.setWalletBalance()
+        self.presenter?.get(api: .getProfile, parameters: nil)
+        self.isWalletEnabled = false
     }
     
     @IBAction private func buttonAmountAction(sender: UIButton) {
@@ -156,19 +156,12 @@ extension WalletViewController {
             self.labelBalance.text = String.removeNil(User.main.currency)+" \(User.main.wallet_balance ?? 0)"
         }
     }
-    
-    
 }
 
 
 extension WalletViewController : UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-     //   print(IQKeyboardManager.sharedManager().keyboardDistanceFromTextField)
     }
 }
 
@@ -199,6 +192,4 @@ extension WalletViewController : RiderPostViewProtocol {
             UIApplication.shared.keyWindow?.makeToast(data?.message)
         }
     }
-    
 }
-
