@@ -106,7 +106,7 @@ extension SignUpInteractor: SignUpViewDelegate {
     }
     
     private func verifyEmailAvailability(_ email: String) {
-        let request = VerifyEmailRequest(email: email)
+        let request = VerifyEmailRequest(theme: theme, email: email)
         networkService.request(request) { [weak self] result in
             guard let self = self else { return }
             

@@ -11,7 +11,15 @@ import Foundation
 struct VerifyEmailRequest: NetworkRequest {
     typealias Response = VerifyEmail
     
-    let path = "/api/provider/verify"
+    var path: String {
+        switch theme {
+        case .driver:
+            return "/api/provider/verify"
+        case .rider:
+            return "/api/user/verify"
+        }
+    }
+    
     let method: HTTPMethod = .POST
     
     var task: HTTPTask {
@@ -27,9 +35,11 @@ struct VerifyEmailRequest: NetworkRequest {
         ]
     }
     
+    private let theme: AppTheme
     private let email: String
     
-    init(email: String) {
+    init(theme: AppTheme, email: String) {
+        self.theme = theme
         self.email = email
     }
 }
