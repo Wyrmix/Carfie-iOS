@@ -11,16 +11,48 @@ import IHKeyboardAvoiding
 
 class WalletViewController: UIViewController {
     
-    @IBOutlet private weak var labelBalance : Label!
-    @IBOutlet private weak var textFieldAmount : UITextField!
+    @IBOutlet private weak var labelBalance : Label! {
+        didSet {
+            labelBalance.textColor = AppTheme.rider.tintColor
+        }
+    }
+    
+    @IBOutlet private weak var textFieldAmount : UITextField! {
+        didSet {
+            textFieldAmount.placeholder = "$0"
+        }
+    }
+    
     @IBOutlet private weak var viewWallet : UIView!
-    @IBOutlet private weak var buttonAddAmount : UIButton!
-    @IBOutlet var labelWallet: UILabel!
-    @IBOutlet var labelAddMoney: UILabel!
+    
+    @IBOutlet private weak var buttonAddAmount : UIButton! {
+        didSet {
+            buttonAddAmount.setTitle("ADD AMOUNT", for: .normal)
+        }
+    }
+    
+    @IBOutlet var labelWallet: UILabel! {
+        didSet {
+            labelWallet.text = "Your wallet amount is"
+            labelWallet.textAlignment = .center
+        }
+    }
+    
+    @IBOutlet var labelAddMoney: UILabel! {
+        didSet {
+            labelAddMoney.text = "Add dollar value"
+        }
+    }
+    
     @IBOutlet private var buttonsAmount : [UIButton]!
     @IBOutlet private weak var viewCard : UIView!
     @IBOutlet private weak var labelCard: UILabel!
-    @IBOutlet private weak var buttonChange : UIButton!
+    
+    @IBOutlet private weak var buttonChange : UIButton! {
+        didSet {
+            buttonChange.setTitle("Change", for: .normal)
+        }
+    }
     
     private var selectedCardEntity : CardEntity?
     
@@ -29,7 +61,7 @@ class WalletViewController: UIViewController {
     private var isWalletEnabled : Bool = false {
         didSet{
             self.buttonAddAmount.isEnabled = isWalletEnabled
-            self.buttonAddAmount.backgroundColor = isWalletEnabled ? .primary : .lightGray
+            self.buttonAddAmount.backgroundColor = isWalletEnabled ? AppTheme.rider.primaryButtonColor : .lightGray
             self.viewCard.isHidden = !isWalletEnabled
         }
     }
@@ -74,14 +106,7 @@ extension WalletViewController {
     private func setupViews() {
         KeyboardAvoiding.avoidingView = self.view
         view.dismissKeyBoardonTap()
-        
-        textFieldAmount.placeholder = "$ 0"
         textFieldAmount.delegate = self
-
-        buttonChange.setTitle("Change", for: .normal)
-        labelAddMoney.text = "Add money"
-        labelWallet.text = "Your wallet amount is"
-        buttonAddAmount.setTitle("ADD AMOUNT", for: .normal)
     }
     
     private func initalLoads() {
@@ -153,7 +178,7 @@ extension WalletViewController {
     
     private func setWalletBalance() {
         DispatchQueue.main.async {
-            self.labelBalance.text = String.removeNil(User.main.currency)+" \(User.main.wallet_balance ?? 0)"
+            self.labelBalance.text = "$\(User.main.wallet_balance ?? 0)"
         }
     }
 }
