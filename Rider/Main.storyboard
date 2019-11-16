@@ -2157,41 +2157,6 @@
             </objects>
             <point key="canvasLocation" x="19" y="1064"/>
         </scene>
-        <!--Add Card View Controller-->
-        <scene sceneID="H3a-eo-Eed">
-            <objects>
-                <viewController storyboardIdentifier="AddCardViewController" id="uhV-gi-yjo" customClass="AddCardViewController" customModule="Rider" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="LS8-ph-FhK"/>
-                        <viewControllerLayoutGuide type="bottom" id="G55-we-69R"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="c38-ky-wxe">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aKX-ry-yvr" customClass="CreditCardFormView" customModule="Rider" customModuleProvider="target">
-                                <rect key="frame" x="10" y="20" width="300" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="EZg-ba-1SG"/>
-                                    <constraint firstAttribute="width" constant="300" id="iNU-79-n0T"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="aKX-ry-yvr" firstAttribute="centerX" secondItem="c38-ky-wxe" secondAttribute="centerX" id="VWW-aT-c6l"/>
-                            <constraint firstItem="aKX-ry-yvr" firstAttribute="top" secondItem="LS8-ph-FhK" secondAttribute="bottom" constant="20" id="fji-me-owc"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="3ae-3n-hNl"/>
-                    </view>
-                    <connections>
-                        <outlet property="creditCardView" destination="aKX-ry-yvr" id="90X-uU-M9m"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FuO-fZ-luj" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2100" y="1094"/>
-        </scene>
     </scenes>
     <resources>
         <image name="back-icon" width="15" height="15"/>

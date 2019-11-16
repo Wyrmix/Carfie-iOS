@@ -201,8 +201,6 @@ extension SideBarTableViewController {
             
         }else if indexPath.row == 4 {//Card
             baseVC?.pushViewController(ListPaymentViewController.viewController(for: .driver), animated: true)
-//            let paymentVC = Router.main.instantiateViewController(withIdentifier: Storyboard.Ids.PaymentViewController)
-//            baseVC?.pushViewController(paymentVC, animated: true)
             
         } else if indexPath.row == 5 {
             baseVC?.pushViewController(HelpViewController.viewController(), animated: true)   

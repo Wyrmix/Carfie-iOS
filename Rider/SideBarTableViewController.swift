@@ -156,7 +156,6 @@ extension SideBarTableViewController {
             
         case (0,0):
             push(to: ListPaymentViewController.viewController(for: .rider))
-//            self.push(to: Storyboard.Ids.PaymentViewController)
         case (0,1):
             fallthrough
         case (0,4):

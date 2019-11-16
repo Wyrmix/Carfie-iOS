@@ -22,6 +22,7 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Rider/Rider.entitlements
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: MVJFXK77H6
+        CURRENT_PROJECT_VERSION: 17
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"
@@ -50,6 +51,7 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Driver/Driver.entitlements
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: MVJFXK77H6
+        CURRENT_PROJECT_VERSION: 17
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"
