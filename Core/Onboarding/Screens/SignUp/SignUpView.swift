@@ -135,6 +135,8 @@ class SignUpView: UIView {
     // MARK: Selectors
     
     @objc private func signUpButtonTouchUpInside(_ sender: Any) {
+        endEditing(true)
+        
         let item = SignUpViewState(
             firstName: firstNameTextInputView.text,
             lastName: lastNameTextInputView.text,
@@ -189,23 +191,41 @@ extension SignUpView: CarfieTextInputViewDelegate {
         case emailTextInputView:
             confirmEmailTextInputView.makeTextFieldFirstResponser()
         case confirmEmailTextInputView:
-            textInputView.validator = MatchingFieldValidator(fieldToMatch: emailTextInputView.text)
-            delegate?.verifyEmailAvailability((email: emailTextInputView.text, confirmation: confirmEmailTextInputView.text))
             passwordTextInputView.makeTextFieldFirstResponser()
         case passwordTextInputView:
             confirmPasswordTextInputView.makeTextFieldFirstResponser()
         case confirmPasswordTextInputView:
-            textInputView.validator = MatchingFieldValidator(fieldToMatch: passwordTextInputView.text)
             confirmPasswordTextInputView.resignFirstResponder()
         default:
             textInputView.resignFirstResponder()
         }
         
+        validateTextView(textInputView)
+        
+        return true
+    }
+    
+    func validateAllFields() {
+        [lastNameTextInputView, firstNameTextInputView, phoneNumberTextInputView, emailTextInputView, confirmEmailTextInputView, passwordTextInputView, confirmPasswordTextInputView].forEach {
+            validateTextView($0)
+        }
+    }
+    
+    private func validateTextView(_ textInputView: CarfieTextInputView) {
+        // Setup validators for views that need more complex validation.
+        switch textInputView {
+        case confirmEmailTextInputView:
+            textInputView.validator = MatchingFieldValidator(fieldToMatch: emailTextInputView.text)
+            delegate?.verifyEmailAvailability((email: emailTextInputView.text, confirmation: confirmEmailTextInputView.text))
+        case confirmPasswordTextInputView:
+            textInputView.validator = MatchingFieldValidator(fieldToMatch: passwordTextInputView.text)
+        default:
+            // All other input views already have a validator setup.
+            break
+        }
         // We don't care about the result here. This is just to provide immediate feedback to
         // the user about their input. Actual confirmation of validation will occur when the
         // "Sign Up" button is pressed.
         _ = textInputView.validate()
-        
-        return true
     }
 }

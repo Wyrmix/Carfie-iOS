@@ -120,6 +120,10 @@ extension SignUpInteractor: SignUpViewDelegate {
     }
     
     private func validateSignUpItem(_ item: SignUpViewState) -> Result<ValidatedSignUp> {
+        // Ask the sign up view to display any error messages that may not have been displayed
+        // via user interaction.
+        signUpViewPresenter?.validate()
+        
         do {
             let firstNameResult = try EmptyFieldValidator().validate(item.firstName).resolve()
             let lastNameResult = try EmptyFieldValidator().validate(item.lastName).resolve()

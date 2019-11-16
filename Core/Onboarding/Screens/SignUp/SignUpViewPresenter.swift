@@ -21,4 +21,8 @@ final class SignUpViewPresenter {
     func animateButton(_ shouldAnimate: Bool) {
         signUpView.animateButton(shouldAnimate)
     }
+    
+    func validate() {
+        signUpView.validateAllFields()
+    }
 }
