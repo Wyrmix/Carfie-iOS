@@ -31,32 +31,22 @@ class EarningsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+    
         self.loadAPI()
-         //self.setValueForTarget()
+        title = "Earnings"
         setBackFroundImageForTableView()
         self.backGoriundImageView.isHidden = true
-        SetNavigationcontroller()
         self.headerView = Bundle.main.loadNibNamed(XIB.Names.headerView, owner: self, options: nil)?.first as? headerView
         
         self.headerView?.frame = CGRect(x: 0, y: 0, width: 357, height: 380)
         tableViewEarnings.tableHeaderView = self.headerView
-        
-        //setupCircleLayers(view: customView!)
-   
-        //animatePulsatingLayer()
-        
-        
-      
-        
-        
-//        DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-//            setupAnimationGroup()
-//        }
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = ""
+    }
     
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -79,24 +69,6 @@ class EarningsViewController: UITableViewController {
         cell.labelTime.text = dateString
         cell.labelKm.text = "\((self.headerArray?[indexPath.row].distance ?? 0)) km"
         cell.labelTotal.text = " \(User.main.currency ??  "") \(self.headerArray?[indexPath.row].payment?.provider_pay ?? 0 )"
-//        if indexPath.row == 0{
-//
-//        }else{
-//
-//        }
-//        let preValue = self.headerArray?[indexPath.row].payment?.total
-//        //let nextValue = self.headerArray?[indexPath.row].payment?.total
-//        self.totaEarnings = preValue! + self.totaEarnings
-//        self.Grandtotal.updateValue(self.headerArray?[indexPath.row].payment?.total ?? 0.0, forKey: indexPath.row)
-//        var grantotalValue : Float  = 0.0
-//        for i  in 0 ... self.Grandtotal.count - 1 {
-//            grantotalValue += self.Grandtotal[i]!
-//        }
-//
-//        //let total = self.totaEarnings
-//        print("total earnings:\(self.totaEarnings), \(grantotalValue)")
-//        let total = String(format: "%.2f", grantotalValue)
-//        self.headerView?.labelMoney.text = " \(User.main.currency ??  "") \(total)"
         return cell
     }
     
@@ -140,21 +112,6 @@ extension EarningsViewController {
     func registerHeaderCell(){
             tableViewEarnings.register(UINib(nibName: XIB.Names.headerTableViewCell, bundle: nil), forCellReuseIdentifier: XIB.Names.headerTableViewCell)
     }
-    
-    func SetNavigationcontroller(){
-        if #available(iOS 11.0, *) {
-           // self.navigationController?.navigationBar.prefersLargeTitles = true
-            self.navigationController?.navigationBar.barTintColor = UIColor.white
-            self.navigationController?.isNavigationBarHidden = false
-        } else {
-            // Fallback on earlier versions
-        }
-        title = Constants.string.Earnings.localize()
-        
-         self.navigationController?.navigationBar.tintColor = UIColor.black
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon"), style: .plain, target: self, action: #selector(EarningsViewController.backBarbuttonAction(button:)))
-    }
-    
 }
 
 
@@ -163,10 +120,6 @@ extension EarningsViewController : PostViewProtocol{
         print(message)
     }
     
-    
-    @IBAction private func backBarbuttonAction(button: UIButton){
-        self.popOrDismiss(animation: true)
-    }
     func getEarningsAPI(api: Base, data: EarnigsModel?) {
         self.loader.isHidden = true
         self.headerView?.countLabel.text = "\(data?.rides_count ?? 0)/\(data?.target ?? "0")"

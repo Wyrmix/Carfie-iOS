@@ -1019,19 +1019,11 @@
                                     <constraint firstItem="CPf-KV-yUR" firstAttribute="centerY" secondItem="1p4-4f-dXh" secondAttribute="centerY" id="wCf-H3-eNM"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ktW-9S-ryj">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ktW-9S-ryj" customClass="CarfieButton" customModule="Driver" customModuleProvider="target">
                                 <rect key="frame" x="16" y="567" width="343" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Zrc-D1-mqd"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="backgroundColorId">
-                                        <integer key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="adw-ae-KTm" customClass="ShimmerButton" customModule="Driver" customModuleProvider="target">
                                 <rect key="frame" x="16" y="567" width="343" height="50"/>

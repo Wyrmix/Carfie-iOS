@@ -48,7 +48,7 @@ class YourTripsDetailViewController: UITableViewController {
         self.initialLoads()
         self.localize()
         self.setDesign()
-        
+        navigationController?.navigationBar.backItem?.title = ""
     }
     
     override func viewWillLayoutSubviews() {
@@ -90,8 +90,6 @@ extension YourTripsDetailViewController {
     
     // MARK:- Initial Loads
     private func initialLoads() {
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
         self.buttonCancelRide.isHidden = !isUpcomingTrips
         self.buttonCancelRide.addTarget(self, action: #selector(self.buttonCancelRideAction(sender:)), for: .touchUpInside)
         self.buttonViewReciptAndCall.addTarget(self, action: #selector(self.buttonCallAndReciptAction(sender:)), for: .touchUpInside)

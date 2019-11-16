@@ -40,9 +40,7 @@ class SettingTableViewController: UITableViewController {
         title = Constants.string.settings.localize().uppercased()
         
         // self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon"), style: .plain, target: self, action: #selector(SettingTableViewController.backBarButton(sender:)))
-       
-        
+        navigationController?.navigationBar.backItem?.title = ""
     }
     
     @IBAction private func backBarButton(sender: UIButton){
