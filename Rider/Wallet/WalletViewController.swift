@@ -11,16 +11,48 @@ import IHKeyboardAvoiding
 
 class WalletViewController: UIViewController {
     
-    @IBOutlet private weak var labelBalance : Label!
-    @IBOutlet private weak var textFieldAmount : UITextField!
+    @IBOutlet private weak var labelBalance : Label! {
+        didSet {
+            labelBalance.textColor = AppTheme.rider.tintColor
+        }
+    }
+    
+    @IBOutlet private weak var textFieldAmount : UITextField! {
+        didSet {
+            textFieldAmount.placeholder = "$0"
+        }
+    }
+    
     @IBOutlet private weak var viewWallet : UIView!
-    @IBOutlet private weak var buttonAddAmount : UIButton!
-    @IBOutlet var labelWallet: UILabel!
-    @IBOutlet var labelAddMoney: UILabel!
+    
+    @IBOutlet private weak var buttonAddAmount : UIButton! {
+        didSet {
+            buttonAddAmount.setTitle("ADD AMOUNT", for: .normal)
+        }
+    }
+    
+    @IBOutlet var labelWallet: UILabel! {
+        didSet {
+            labelWallet.text = "Your wallet amount is"
+            labelWallet.textAlignment = .center
+        }
+    }
+    
+    @IBOutlet var labelAddMoney: UILabel! {
+        didSet {
+            labelAddMoney.text = "Add dollar value"
+        }
+    }
+    
     @IBOutlet private var buttonsAmount : [UIButton]!
     @IBOutlet private weak var viewCard : UIView!
     @IBOutlet private weak var labelCard: UILabel!
-    @IBOutlet private weak var buttonChange : UIButton!
+    
+    @IBOutlet private weak var buttonChange : UIButton! {
+        didSet {
+            buttonChange.setTitle("Change", for: .normal)
+        }
+    }
     
     private var selectedCardEntity : CardEntity?
     
@@ -29,7 +61,7 @@ class WalletViewController: UIViewController {
     private var isWalletEnabled : Bool = false {
         didSet{
             self.buttonAddAmount.isEnabled = isWalletEnabled
-            self.buttonAddAmount.backgroundColor = isWalletEnabled ? .primary : .lightGray
+            self.buttonAddAmount.backgroundColor = isWalletEnabled ? AppTheme.rider.primaryButtonColor : .lightGray
             self.viewCard.isHidden = !isWalletEnabled
         }
     }
@@ -51,11 +83,15 @@ class WalletViewController: UIViewController {
         interactor = WalletInteractor()
         interactor?.viewController = self
         interactor?.start()
+        
+        title = "Wallet"
+        addButtonTargets()
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
+        
         self.isWalletAvailable = User.main.isCardAllowed
         self.initalLoads()
     }
@@ -63,42 +99,27 @@ class WalletViewController: UIViewController {
 
 extension WalletViewController {
     
+    private func addButtonTargets() {
+        buttonChange.addTarget(self, action: #selector(self.buttonChangeCardAction), for: .touchUpInside)
+    }
+    
+    private func setupViews() {
+        KeyboardAvoiding.avoidingView = self.view
+        view.dismissKeyBoardonTap()
+        textFieldAmount.delegate = self
+    }
+    
     private func initalLoads() {
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = ""
         self.setWalletBalance()
         self.presenter?.get(api: .getProfile, parameters: nil)
-        self.view.dismissKeyBoardonTap()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
-        self.navigationItem.title = Constants.string.wallet.localize()
-        self.setDesign()
-        self.textFieldAmount.placeholder = String.removeNil(User.main.currency)+" "+"\(0)"
-        self.textFieldAmount.delegate = self
-        for (index,button) in buttonsAmount.enumerated() {
-            button.tag = (index*100)+99
-            button.setTitle(String.removeNil(String.removeNil(User.main.currency)+" \(button.tag)"), for: .normal)
-        }
-        self.buttonChange.addTarget(self, action: #selector(self.buttonChangeCardAction), for: .touchUpInside)
         self.isWalletEnabled = false
-        KeyboardAvoiding.avoidingView = self.view
     }
     
-    // MARK:- Set Designs
-    
-    private func setDesign() {
-        
-        Common.setFont(to: labelBalance, isTitle: true)
-        Common.setFont(to: textFieldAmount)
-        Common.setFont(to: labelCard)
-        Common.setFont(to: buttonChange)
-        buttonChange.setTitle(Constants.string.change.localize(), for: .normal)
-        labelAddMoney.text = Constants.string.addAmount.localize()
-        labelWallet.text = Constants.string.yourWalletAmnt.localize()
-        buttonAddAmount.setTitle(Constants.string.ADDAMT, for: .normal)
-        
-    }
-    
-    @IBAction private func buttonAmountAction(sender : UIButton) {
-        
-        textFieldAmount.text = "\(sender.tag)"
+    @IBAction private func buttonAmountAction(sender: UIButton) {
+        guard let index = buttonsAmount.firstIndex(of: sender) else { return }
+        interactor?.getWalletDefaultForButton(index: index)
     }
     
     func setCard(_ card: CardEntity?) {
@@ -114,6 +135,21 @@ extension WalletViewController {
         if let lastFour = card.last_four {
            labelCard.text = "XXXX-XXXX-XXXX-\(lastFour)"
         }
+    }
+    
+    func presentWalletDefaults(_ values: [Int]) {
+        guard values.count == buttonsAmount.count else {
+            assertionFailure("Wallet default values cannot be reconciled with count of default buttons.")
+            return
+        }
+        
+        for (index, button) in buttonsAmount.enumerated() {
+            button.setTitle("$ \(values[index])", for: .normal)
+        }
+    }
+    
+    func presentAddToWalletValue(_ value: Int) {
+        textFieldAmount.text = "\(value)"
     }
     
     
@@ -142,22 +178,15 @@ extension WalletViewController {
     
     private func setWalletBalance() {
         DispatchQueue.main.async {
-            self.labelBalance.text = String.removeNil(User.main.currency)+" \(User.main.wallet_balance ?? 0)"
+            self.labelBalance.text = "$\(User.main.wallet_balance ?? 0)"
         }
     }
-    
-    
 }
 
 
 extension WalletViewController : UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-     //   print(IQKeyboardManager.sharedManager().keyboardDistanceFromTextField)
     }
 }
 
@@ -188,6 +217,4 @@ extension WalletViewController : RiderPostViewProtocol {
             UIApplication.shared.keyWindow?.makeToast(data?.message)
         }
     }
-    
 }
-
