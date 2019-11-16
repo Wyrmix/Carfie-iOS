@@ -54,6 +54,8 @@ extension AppDelegate {
     private func configureRootInteractor() {
         rootContainerInteractor = RootContainerInteractor(welcomeConfiguration: DriverWelcomeConfiguration(postLoginHandler: { profile in
             Common.storeUserData(from: profile)
+            // Tech-Debt: Only Carfie login exists currently. This login will need to be addressed eventually when social login is added.
+            User.main.loginType = LoginType.manual.rawValue
             storeInUserDefaults()
         }))
         rootContainerInteractor.delegate = self

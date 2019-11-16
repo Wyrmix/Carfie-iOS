@@ -43,12 +43,23 @@ class ProfileViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialLoads()
+        navigationItem.title = Constants.string.profile.localize()
         navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = ""
+        addButtonTargets()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.setLayout()
+    }
+    
+    private func addButtonTargets() {
+        viewPersonal.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setTripTypeAction(sender:))))
+        viewBusiness.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setTripTypeAction(sender:))))
+        viewImageChange.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(changeImage)))
+        buttonSave.addTarget(self, action: #selector(buttonSaveAction), for: .touchUpInside)
+        view.dismissKeyBoardonTap()
     }
 }
 
@@ -57,19 +68,10 @@ class ProfileViewController: UITableViewController {
 extension ProfileViewController {
     
     private func initialLoads() {
-        
-        self.viewPersonal.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.setTripTypeAction(sender:))))
-        self.viewBusiness.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.setTripTypeAction(sender:))))
-        self.viewImageChange.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.changeImage)))
-        self.buttonSave.addTarget(self, action: #selector(self.buttonSaveAction), for: .touchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
-        self.navigationItem.title = Constants.string.profile.localize()
         getProfile()
         self.localize()
         self.setDesign()
         self.setProfile()
-        self.view.dismissKeyBoardonTap()
-        
         setupChangePasswordButton()
     }
     
