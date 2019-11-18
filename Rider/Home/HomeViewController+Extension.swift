@@ -23,7 +23,10 @@ extension HomeViewController {
         if self.rideNowView == nil {
             
             self.rideNowView = Bundle.main.loadNibNamed(XIB.Names.RideNowView, owner: self, options: [:])?.first as? RideNowView
-            self.rideNowView?.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height-self.rideNowView!.frame.height), size: CGSize(width: self.view.frame.width, height: self.rideNowView!.frame.height))
+            
+            let viewYPosition = (view.frame.height - rideNowView!.frame.height) - view.safeAreaInsets.bottom
+            
+            self.rideNowView?.frame = CGRect(origin: CGPoint(x: 0, y: viewYPosition), size: CGSize(width: self.view.frame.width, height: self.rideNowView!.frame.height))
             self.rideNowView?.clipsToBounds = false
             self.rideNowView?.show(with: .bottom, completion: nil)
             self.view.addSubview(self.rideNowView!)
