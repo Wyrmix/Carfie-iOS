@@ -38,7 +38,6 @@ class LoginViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "SIGN IN TO RIDE"
         label.textAlignment = .center
         label.font = .carfieHeading
         label.textColor = .carfieDarkGray
@@ -80,6 +79,8 @@ class LoginViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         addGradientLayer()
+        
+        titleLabel.text = theme == .rider ? "SIGN IN TO RIDE" : "SIGN IN TO DRIVE"
         
         signInButton.addTarget(self, action: #selector(signInButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(cancelButtonTouchUpInside(_:)), for: .touchUpInside)
