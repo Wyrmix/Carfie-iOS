@@ -10,29 +10,38 @@ import UIKit
 
 class sectionView: UIView {
 
-    @IBOutlet var labelTime: UILabel!
-    
-    @IBOutlet var labelAmount: UILabel!
-    @IBOutlet var labelDistance: UILabel!
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-       self.setCommonFont()
-       self.localize()
+    @IBOutlet var labelTime: UILabel! {
+        didSet {
+            labelTime.font = .carfieHeading
+            labelTime.text = "Time"
+        }
     }
     
-    private func setCommonFont(){
-        
-        setFont(TextField: nil, label: labelTime, Button: nil, size: nil)
-        setFont(TextField: nil, label: labelAmount, Button: nil, size: nil)
-        setFont(TextField: nil, label: labelDistance, Button: nil, size: nil)
+    @IBOutlet var labelAmount: UILabel! {
+        didSet {
+            labelAmount.font = .carfieHeading
+            labelAmount.text = "Amount"
+        }
     }
- 
-    private func localize() {
-        self.labelAmount.text = Constants.string.amount.localize().uppercased()
-        self.labelTime.text = Constants.string.time.localize().uppercased()
-        self.labelDistance.text = Constants.string.distance.localize().uppercased()
+    
+    @IBOutlet var labelDistance: UILabel! {
+        didSet {
+            labelDistance.font = .carfieHeading
+            labelDistance.text = "Distance"
+        }
     }
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+    
+    private func setup() {
+        backgroundColor = AppTheme.driver.primaryColor
+    }
 }

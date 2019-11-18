@@ -10,8 +10,20 @@ import UIKit
 
 class WalletViewController: UIViewController {
     
-    @IBOutlet private weak var labelWalletString : UILabel!
-    @IBOutlet private weak var labelWalletAmount : UILabel!
+    @IBOutlet private weak var labelWalletString : UILabel! {
+        didSet {
+            labelWalletString.font = .carfieBodyBold
+            labelWalletString.text = "Your wallet amount is"
+        }
+    }
+    
+    @IBOutlet private weak var labelWalletAmount : UILabel! {
+        didSet {
+            labelWalletAmount.font = .carfieHeroHeading
+            labelWalletAmount.textColor = AppTheme.driver.primaryColor
+        }
+    }
+    
     @IBOutlet private weak var tableViewWallet : UITableView!
     @IBOutlet private weak var viewHeader : UIView!
     
@@ -21,9 +33,7 @@ class WalletViewController: UIViewController {
     private var balance : Float = 0 {
         didSet {
             DispatchQueue.main.async {
-                self.labelWalletAmount.text = "\(User.main.currency ?? .Empty) \(Formatter.shared.limit(string: "\(self.balance)", maximumDecimal: 2))"
-                //self.barbuttonTransfer.isEnabled = self.balance > 0
-               // self.barbuttonTransfer.tintColor = self.balance > 0 ? .secondary : .clear
+                self.labelWalletAmount.text = "\(User.main.currency ?? .Empty)\(Formatter.shared.limit(string: "\(self.balance)", maximumDecimal: 2))"
             }
         }
     }
@@ -31,19 +41,13 @@ class WalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialLoads()
-        self.localize()
-        self.setDesign()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewWillAppearCustom()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        viewWillAppearCustom()
+        navigationController?.navigationBar.backItem?.title = ""
+        navigationController?.isNavigationBarHidden = false
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,23 +67,12 @@ extension WalletViewController {
         self.tableViewWallet.dataSource = self
         self.tableViewWallet.register(UINib(nibName: XIB.Names.WalletListTableViewCell, bundle: nil), forCellReuseIdentifier: XIB.Names.WalletListTableViewCell)
         self.tableViewWallet.register(UINib(nibName: XIB.Names.WalletHeader, bundle: nil), forHeaderFooterViewReuseIdentifier: XIB.Names.WalletHeader)
-        self.labelWalletAmount.text = "\(User.main.currency ?? .Empty) \(2222)"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
+        self.labelWalletAmount.text = "\(User.main.currency ?? .Empty)\(2222)"
+        
         self.navigationItem.title = Constants.string.wallet.localize()
-        self.barbuttonTransfer = UIBarButtonItem(image: #imageLiteral(resourceName: "transfer").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.buttonTransferAction))
-        self.barbuttonTransfer.tintColor = .secondary
+        self.barbuttonTransfer = UIBarButtonItem(image: #imageLiteral(resourceName: "transfer").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(self.buttonTransferAction))
         self.navigationItem.rightBarButtonItem = self.barbuttonTransfer
         self.balance = User.main.walletBalance ?? 0
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    
-    private func localize() {
-        self.labelWalletString.text = Constants.string.walletAmount.localize()
-    }
-    
-    private func setDesign() {
-       Common.setFont(to: labelWalletString, isTitle: true, size: 18)
-       Common.setFont(to: labelWalletAmount, isTitle: true, size: 30)
     }
     
     private func viewWillAppearCustom() {
@@ -108,7 +101,7 @@ extension WalletViewController {
                 Common.setFont(to: label, isTitle: true)
                 label.center = UIApplication.shared.keyWindow?.center ?? .zero
                 label.backgroundColor = .clear
-                label.textColorId = 2
+                label.textColor = AppTheme.driver.primaryColor
                 label.textAlignment = .center
                 label.text = Constants.string.noTransactionsYet.localize()
                 return label
@@ -146,7 +139,7 @@ extension WalletViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let walletHeader = Bundle.main.loadNibNamed(XIB.Names.WalletHeader, owner: self, options: [:])?.first as? WalletHeader
-        walletHeader?.backgroundColor = .secondary
+        walletHeader?.backgroundColor = AppTheme.driver.primaryColor
         return walletHeader
     }
     

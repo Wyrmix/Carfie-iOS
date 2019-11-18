@@ -46,6 +46,10 @@ class YourTripsPassbookViewController: UIViewController {
         self.backGoriundImageView.isHidden = true
         self.initalLoads()
         self.viewNoData.isHidden = true
+        
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = ""
+        navigationItem.title = (isYourTripsSelected ? Constants.string.yourTrips : Constants.string.passbook).localize()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,13 +75,11 @@ class YourTripsPassbookViewController: UIViewController {
 extension YourTripsPassbookViewController {
     
     private func initalLoads() {
+        underLineView.backgroundColor = AppTheme.driver.primaryColor
        // setBackFroundImageForTableView()
         self.registerCell()
         setCommonFont()
         self.switchViewAction()
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
-        self.navigationItem.title = (isYourTripsSelected ? Constants.string.yourTrips : Constants.string.passbook).localize()
         self.localize()
         self.loader.isHidden = true
        // self.getData()

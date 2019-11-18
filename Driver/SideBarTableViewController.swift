@@ -111,7 +111,7 @@ extension SideBarTableViewController {
         }
         let cancelAction = UIAlertAction(title: Constants.string.Cancel.localize(), style: .cancel, handler: nil)
          alert.addAction(logoutAction)
-        alert.view.tintColor = .primary
+        alert.view.tintColor = AppTheme.driver.primaryColor
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
     }
@@ -155,7 +155,7 @@ extension SideBarTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let tableCell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        tableCell.textLabel?.textColor = .secondary
+        tableCell.textLabel?.textColor = AppTheme.driver.primaryColor
         //tableCell.textLabel?.font = UIFont(name: FontCustom.clanPro_Book.rawValue, size: 10)
         tableCell.textLabel?.text = sideBarList[indexPath.row].localize().capitalizingFirstLetter()
         tableCell.textLabel?.textAlignment = .left
