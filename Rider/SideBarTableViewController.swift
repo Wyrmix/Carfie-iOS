@@ -152,7 +152,7 @@ extension SideBarTableViewController {
         case (0,6):
             push(to: HelpViewController.viewController())
         case (0,7):
-            Common.open(url: baseUrl)
+            openDriverLink()
         case (0,8):
             self.logout()   
         default:
@@ -172,6 +172,14 @@ extension SideBarTableViewController {
         }
 
         navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    private func openDriverLink() {
+        guard let navigationController = drawerController?.getViewController(for: .none) as? UINavigationController else {
+            fatalError("KWDrawerController has no UINavigationController")
+        }
+        
+        SafariIntent(url: WebPage.carfieHomePage)?.execute(via: navigationController)
     }
     
     // MARK:- Logout
