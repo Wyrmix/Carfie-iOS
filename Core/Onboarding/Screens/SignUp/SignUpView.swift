@@ -26,7 +26,6 @@ class SignUpView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "SIGN UP TO RIDE"
         label.font = .carfieHeading
         label.textColor = .carfieDarkGray
         return label
@@ -70,6 +69,8 @@ class SignUpView: UIView {
     
     private func setup() {
         backgroundColor = .white
+        
+        titleLabel.text = theme == .rider ? "SIGN UP TO RIDE" : "SIGN UP TO DRIVE"
         
         signUpButton.addTarget(self, action: #selector(signUpButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(cancelButtonTouchUpInside(_:)), for: .touchUpInside)
