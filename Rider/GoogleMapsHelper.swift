@@ -45,7 +45,7 @@ class GoogleMapsHelper : NSObject {
     var locationManager : CLLocationManager?
     private var currentLocation : ((CLLocation)->Void)?
    
-    func getMapView(withDelegate delegate: GMSMapViewDelegate? = nil, in view : UIView, withPosition position :LocationCoordinate = defaultMapLocation, zoom : Float = 15) {
+    func getMapView(withDelegate delegate: GMSMapViewDelegate? = nil, in view : UIView, withPosition position: LocationCoordinate = MapDefaults.defaultLocation, zoom : Float = 15) {
         
        mapView = GMSMapView(frame: view.frame)
        self.setMapStyle(to : mapView)
@@ -66,7 +66,7 @@ class GoogleMapsHelper : NSObject {
         self.currentLocation = onReceivingLocation
     }
     
-    func moveTo(location : LocationCoordinate = defaultMapLocation, with center : CGPoint) {
+    func moveTo(location: LocationCoordinate = MapDefaults.defaultLocation, with center : CGPoint) {
         
         CATransaction.begin()
         CATransaction.setValue(2, forKey: kCATransactionAnimationDuration)

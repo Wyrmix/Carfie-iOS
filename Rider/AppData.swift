@@ -11,7 +11,6 @@ import UIKit
 let AppName = "Carfie"
 var deviceTokenString = Constants.string.noDevice
 
-let defaultMapLocation = LocationCoordinate(latitude: 13.009245, longitude: 80.212929)
 let baseUrl = "https://sapi.carfie.com/"
 let requestCheckInterval : TimeInterval = 5
 var offlineNumber = "57777"
