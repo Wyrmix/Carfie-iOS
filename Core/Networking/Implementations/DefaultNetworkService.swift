@@ -11,9 +11,14 @@ import Foundation
 class DefaultNetworkService: NetworkService {
     
     private var task: URLSessionTask?
-    private var authRepository: AuthRepository
     
-    init(authRepository: AuthRepository = DefaultAuthRepository()) {
+    private let serviceConfiguration: ServiceConfiguration
+    private let authRepository: AuthRepository
+    
+    init(serviceConfiguration: ServiceConfiguration = CarfieServiceConfiguration(),
+         authRepository: AuthRepository = DefaultAuthRepository())
+    {
+        self.serviceConfiguration = serviceConfiguration
         self.authRepository = authRepository
     }
     
@@ -61,7 +66,7 @@ class DefaultNetworkService: NetworkService {
     }
     
     private func buildRequest<T: NetworkRequest>(from request: T) throws -> URLRequest {
-        var urlRequest = URLRequest(url: request.baseURL.appendingPathComponent(request.path),
+        var urlRequest = URLRequest(url: serviceConfiguration.baseUrl.appendingPathComponent(request.path),
                                  cachePolicy: .useProtocolCachePolicy,
                                  timeoutInterval: 10.0)
         urlRequest.httpMethod = request.method.rawValue

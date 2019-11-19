@@ -18,6 +18,8 @@ class Webservice : RiderPostWebServiceProtocol {
     
     let authRepository = DefaultAuthRepository()
     
+    let serviceConfiguration = CarfieServiceConfiguration()
+    
     
     //MARK:- SEND WEBSERVICE REQUEST TO BACKEND
     
