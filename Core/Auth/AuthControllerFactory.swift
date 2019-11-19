@@ -16,6 +16,7 @@ struct AuthControllerFactory {
         let profileService = DefaultProfileService()
         let signUpService = DefaultSignUpService()
         let authRepository = DefaultAuthRepository()
+        let profileRepository = DefaultProfileRepository()
         
         return DefaultAuthController(
             theme: theme,
@@ -25,7 +26,8 @@ struct AuthControllerFactory {
             signUpProvider: signUpProvider,
             profileService: profileService,
             signUpService: signUpService,
-            authRepository: authRepository
+            authRepository: authRepository,
+            profileRepository: profileRepository
         )
     }
 }

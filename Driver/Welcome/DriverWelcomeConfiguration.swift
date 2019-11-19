@@ -13,6 +13,7 @@ struct DriverWelcomeConfiguration: WelcomeConfiguration {
         return [
             WelcomeCarouselViewController.viewController(theme: .driver),
             CarfieSignUpViewController.viewController(theme: .driver),
+            DriverIdentificationViewController.viewController(),
             LocationPermissionsViewController.viewController(theme: .driver),
             DocumentsViewController.viewController(),
         ]

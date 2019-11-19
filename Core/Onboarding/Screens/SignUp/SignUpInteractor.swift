@@ -29,18 +29,18 @@ class SignUpInteractor {
     private let authController: AuthController
     private let theme: AppTheme
     private let networkService: NetworkService
-    private let profileService: ProfileService
+    private let profileController: ProfileController
     
     var signUpViewPresenter: SignUpViewPresenter?
     
     init(theme: AppTheme,
          networkService: NetworkService = DefaultNetworkService(),
-         profileService: ProfileService = DefaultProfileService()
+         profileController: ProfileController = CarfieProfileController()
     ) {
         self.authController = DefaultAuthController.shared(theme)
         self.theme = theme
         self.networkService = networkService
-        self.profileService = profileService
+        self.profileController = profileController
         
         addObservers()
     }
@@ -151,7 +151,7 @@ extension SignUpInteractor: SignUpViewDelegate {
     }
     
     private func getNewUserProfile() {
-        profileService.getProfile(theme: theme) { [weak self] result in
+        profileController.fetchProfile(theme: theme) { [weak self] result in
             guard let self = self else { return }
             
             do {
