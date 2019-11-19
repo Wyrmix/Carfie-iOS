@@ -19,7 +19,6 @@ class RideStatusView: UIView {
     @IBOutlet private weak var labelServiceDescription : UILabel!
     @IBOutlet private weak var labelServiceNumber : UILabel!
     @IBOutlet private weak var labelSurgeDescription : UILabel!
-    @IBOutlet private weak var buttonCall : UIButton!
     @IBOutlet private weak var buttonCancel : UIButton!
     @IBOutlet private weak var labelOtp : UILabel!
     @IBOutlet private weak var constraintSurge : NSLayoutConstraint!
@@ -65,7 +64,6 @@ extension RideStatusView {
     private func initialLoads() {
         self.initRating()
         self.localize()
-        self.buttonCall.addTarget(self, action: #selector(self.callAction), for: .touchUpInside)
         self.buttonCancel.addTarget(self, action: #selector(self.cancelShareAction), for: .touchUpInside)
         self.setDesign()
         
@@ -83,15 +81,12 @@ extension RideStatusView {
         Common.setFont(to: labelSurgeDescription)
         Common.setFont(to: labelServiceDescription)
         Common.setFont(to: buttonCancel, isTitle: true)
-        Common.setFont(to: buttonCall, isTitle: true)
         
     }
     
     // MARK:- Localization
     private func localize() {
         self.labelSurgeDescription.text = Constants.string.peakInfo.localize()
-        self.buttonCall.setTitle(Constants.string.call.localize().uppercased()
-            , for: .normal)
         self.buttonCancel.setTitle(Constants.string.Cancel.localize().uppercased(), for: .normal)
     }
     
@@ -159,14 +154,6 @@ extension RideStatusView {
         self.labelServiceDescription.text = values.provider_service?.service_model
         self.labelOtp.text = " \(Constants.string.otp.localize()+": "+String.removeNil(values.otp)) "
         self.isOnSurge = values.surge == 1
-    }
-    
-    // MARK:- Call Provider
-    
-    @IBAction private func callAction() {
-        if let phoneNumber = request?.provider?.mobile {
-            PhoneCallIntent(phoneNumber: phoneNumber)?.execute()
-        }
     }
     
     // MARK:- Cancel Share Action
