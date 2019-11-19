@@ -44,8 +44,8 @@ class MakeJson {
         
         var loginData = LoginRequest()
         
-        loginData.client_id = appClientId
-        loginData.client_secret = appSecretKey
+        loginData.client_id = CarfieKey.appClientId
+        loginData.client_secret = CarfieKey.appSecretKey
         loginData.grant_type = WebConstants.string.password
         loginData.password = password
         loginData.username = userName
