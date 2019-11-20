@@ -629,8 +629,13 @@ extension HomepageViewController {
         
         self.viewCurrentLocation.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.getCurrentLocation)))
         print(BackGroundTask.backGroundInstance.userStoredDetail.lontitude ?? 91.00)
-        let coOrdinates = CLLocationCoordinate2D(latitude: BackGroundTask.backGroundInstance.userStoredDetail.latitude ?? 13.0827, longitude: BackGroundTask.backGroundInstance.userStoredDetail.lontitude ?? 80.2707)
-        gMSmapView.camera = GMSCameraPosition(target: coOrdinates, zoom: 15, bearing: 10.00, viewingAngle: 10.00)
+        
+        var coordinates: CLLocationCoordinate2D?
+        if let latitude = BackGroundTask.backGroundInstance.userStoredDetail.latitude, let longitude = BackGroundTask.backGroundInstance.userStoredDetail.lontitude {
+            coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        
+        gMSmapView.camera = GMSCameraPosition(target: coordinates ?? MapDefaults.defaultLocation, zoom: 15, bearing: 10.00, viewingAngle: 10.00)
         
         gMSmapView.delegate = self
         Simmer.tintColor = UIColor.white

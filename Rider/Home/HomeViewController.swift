@@ -103,7 +103,7 @@
         
         //  private var favouriteLocations : LocationService? //[(type : String,address: [LocationDetail])]() // Favourite Locations of User
         
-        var currentLocation = Bind<LocationCoordinate>(defaultMapLocation)
+        var currentLocation = Bind<LocationCoordinate>(MapDefaults.defaultLocation)
         var isRateViewShowed:Bool = false
         var isInvoiceShowed:Bool = false
         //var serviceSelectionView : ServiceSelectionView?

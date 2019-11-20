@@ -23,7 +23,10 @@ extension HomeViewController {
         if self.rideNowView == nil {
             
             self.rideNowView = Bundle.main.loadNibNamed(XIB.Names.RideNowView, owner: self, options: [:])?.first as? RideNowView
-            self.rideNowView?.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height-self.rideNowView!.frame.height), size: CGSize(width: self.view.frame.width, height: self.rideNowView!.frame.height))
+            
+            let viewYPosition = (view.frame.height - rideNowView!.frame.height) - view.safeAreaInsets.bottom
+            
+            self.rideNowView?.frame = CGRect(origin: CGPoint(x: 0, y: viewYPosition), size: CGSize(width: self.view.frame.width, height: self.rideNowView!.frame.height))
             self.rideNowView?.clipsToBounds = false
             self.rideNowView?.show(with: .bottom, completion: nil)
             self.view.addSubview(self.rideNowView!)
@@ -691,11 +694,6 @@ extension HomeViewController {
             floaty.buttonImage = #imageLiteral(resourceName: "phoneCall").withRenderingMode(.alwaysTemplate).resizeImage(newWidth: 25)
             floaty.paddingY = padding
             floaty.itemImageColor = .secondary
-            floaty.addItem(icon: #imageLiteral(resourceName: "call").resizeImage(newWidth: 25)) { (_) in
-                if let phoneNumber = provider?.mobile {
-                    PhoneCallIntent(phoneNumber: phoneNumber)?.execute()
-                }
-            }
             floaty.addItem(icon: #imageLiteral(resourceName: "chatIcon").resizeImage(newWidth: 25)) { (_) in
                 if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.SingleChatController) as? SingleChatController {
                     vc.set(user: provider!, requestId: self.currentRequestId)

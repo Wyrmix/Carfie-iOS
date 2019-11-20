@@ -12,8 +12,8 @@ struct Login: Codable {
     let username: String // used by rider app
     let password: String
     
-    let clientId = 2
-    let clientSecret = "HXX00MQv8IQncJqlk8MmJGLPcPRxtdPXNcSxznUy"
+    let clientId = CarfieKey.appClientId
+    let clientSecret = CarfieKey.appSecretKey
     
     // TECH-DEBT: These values are necessary for a successful sign up, but never seem to get used.
     // For now I'm hardcoding the values the app has been using.
