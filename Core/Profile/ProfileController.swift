@@ -72,15 +72,15 @@ class CarfieProfileController: ProfileController {
     }
     
     func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
-//        profileService.updateProfile(profile, theme: theme) { result in
-//            switch result {
-//            case .success(let profile):
-//                self.profileRepository.profile = profile
-//                completion(result)
-//            case .failure:
-//                completion(result)
-//            }
-//        }
+        profileService.updateProfile(profile, theme: theme) { result in
+            switch result {
+            case .success(let profile):
+                self.profileRepository.profile = profile
+                completion(result)
+            case .failure:
+                completion(result)
+            }
+        }
     }
     
     func updateSSN(_ ssn: String, completion: @escaping (Result<CarfieProfile>) -> Void) {

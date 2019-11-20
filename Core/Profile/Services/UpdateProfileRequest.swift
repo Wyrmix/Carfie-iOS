@@ -20,7 +20,7 @@ struct UpdateProfileRequest: NetworkRequest {
         }
     }
     
-    let method: HTTPMethod = .PUT
+    let method: HTTPMethod = .POST
     let task: HTTPTask = .request
     let isAuthorizedRequest = true
     let body: Data?
