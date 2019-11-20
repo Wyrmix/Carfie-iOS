@@ -25,8 +25,18 @@ class RideAcceptView: UIView {
     
     @IBOutlet var viewRatings: HCSStarRatingView!
     //MARK:- outlets for Uibutton:
-    @IBOutlet var RejectBtn: UIButton!
-    @IBOutlet var AcceptBtn: UIButton!
+    @IBOutlet var RejectBtn: CarfieButton! {
+        didSet {
+            RejectBtn.setTitle("Reject", for: .normal)
+        }
+    }
+    
+    @IBOutlet var AcceptBtn: CarfieButton! {
+        didSet {
+            AcceptBtn.setTitle("Accept", for: .normal)
+        }
+    }
+    
     @IBOutlet private var labelScheduleTime : Label!
     
     //MARK:- outlets for UIimage view
@@ -57,9 +67,7 @@ class RideAcceptView: UIView {
     }
     func setCommonFont(){
         setFont(TextField: nil, label: userName, Button: RejectBtn, size: nil)
-        setFont(TextField: nil, label: nil, Button: RejectBtn, size: nil)
         setFont(TextField: nil, label: pickUpLocation, Button: nil, size: nil)
-        setFont(TextField: nil, label: nil, Button: AcceptBtn, size: nil)
         setFont(TextField: nil, label: labelPickUp, Button: nil, size: nil)
         setFont(TextField: nil, label: labelDrop, Button: nil, size: nil)
         setFont(TextField: nil, label: labelDropLocationValue, Button: nil, size: nil)
@@ -68,8 +76,6 @@ class RideAcceptView: UIView {
     func localization(){
         self.labelDrop.text = Constants.string.dropLocation.localize()
         self.labelPickUp.text = Constants.string.pickUpLocation.localize()
-        self.AcceptBtn.setTitle(Constants.string.accept.localize().uppercased(), for: .normal)
-        self.RejectBtn.setTitle(Constants.string.reject.localize().uppercased(), for: .normal)
     }
     
     func setRoundCorner(){
