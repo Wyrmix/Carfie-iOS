@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="KtS-eh-4ew" customClass="rideArrivedView" customModule="Provider" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="KtS-eh-4ew" customClass="rideArrivedView" customModule="Driver" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -58,39 +56,11 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HGn-p6-3hn">
                                 <rect key="frame" x="330" y="50" width="35" height="80"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDf-Wc-KcJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call" translatesAutoresizingMaskIntoConstraints="NO" id="zva-kj-K8M">
-                                                <rect key="frame" x="10" y="10" width="15" height="15"/>
-                                                <color key="backgroundColor" red="0.56078431370000004" green="0.47058823529999999" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" red="0.56078431370000004" green="0.47058823529999999" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="15" id="6OV-SM-6v3"/>
-                                                    <constraint firstAttribute="width" constant="15" id="XUi-gu-G1H"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="25"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </imageView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="zva-kj-K8M" firstAttribute="centerX" secondItem="aDf-Wc-KcJ" secondAttribute="centerX" id="aqD-cE-vI5"/>
-                                            <constraint firstItem="zva-kj-K8M" firstAttribute="centerY" secondItem="aDf-Wc-KcJ" secondAttribute="centerY" id="h0S-es-hb8"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="backgroundColorId">
-                                                <integer key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qo5-ta-Dsp">
-                                        <rect key="frame" x="0.0" y="45" width="35" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="80"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message" translatesAutoresizingMaskIntoConstraints="NO" id="Ich-ah-n3C">
-                                                <rect key="frame" x="10" y="10" width="15" height="15"/>
+                                                <rect key="frame" x="10" y="32.5" width="15" height="15"/>
                                                 <color key="backgroundColor" red="0.56078431370000004" green="0.47058823529999999" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="tintColor" red="0.56078431370000004" green="0.47058823529999999" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -108,11 +78,6 @@
                                             <constraint firstItem="Ich-ah-n3C" firstAttribute="centerX" secondItem="qo5-ta-Dsp" secondAttribute="centerX" id="iy6-IV-7iC"/>
                                             <constraint firstItem="Ich-ah-n3C" firstAttribute="centerY" secondItem="qo5-ta-Dsp" secondAttribute="centerY" id="vd6-oz-73Q"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="backgroundColorId">
-                                                <integer key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -123,7 +88,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="11B-3v-RAe">
                                 <rect key="frame" x="16" y="140" width="351" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQD-ns-EUh">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQD-ns-EUh" customClass="CarfieButton" customModule="Driver" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="173" height="50"/>
                                         <state key="normal" title="CANCEL">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -137,7 +102,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O6l-Ao-6VF">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O6l-Ao-6VF" customClass="CarfieButton" customModule="Driver" customModuleProvider="target">
                                         <rect key="frame" x="178" y="0.0" width="173" height="50"/>
                                         <state key="normal" title="ARRIVED">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -328,7 +293,6 @@
             <viewLayoutGuide key="safeArea" id="pCd-zw-S2b"/>
             <connections>
                 <outlet property="arrivedBtn" destination="O6l-Ao-6VF" id="ZZE-Dy-xUG"/>
-                <outlet property="callImage" destination="zva-kj-K8M" id="MDp-8R-gZN"/>
                 <outlet property="cancelBtn" destination="aQD-ns-EUh" id="Otq-1E-Ci9"/>
                 <outlet property="imageArrived" destination="0iA-CD-fGo" id="W4v-gI-OyN"/>
                 <outlet property="imageFinished" destination="E04-jZ-uBh" id="hjV-eq-U8L"/>
@@ -343,7 +307,6 @@
                 <outlet property="ratingView" destination="CxQ-LS-WwV" id="Dp7-hc-EWE"/>
                 <outlet property="userName" destination="K3Y-va-Hva" id="24N-Oa-zvo"/>
                 <outlet property="userProfile" destination="x0c-8s-SjB" id="CGH-Tn-v7q"/>
-                <outlet property="viewCall" destination="aDf-Wc-KcJ" id="GpV-6i-pzO"/>
                 <outlet property="viewMessage" destination="qo5-ta-Dsp" id="J5e-et-m5v"/>
                 <outlet property="viewVisualEffect" destination="9tP-y0-x3A" id="lNt-3Q-NFA"/>
                 <outlet property="viewVisualEffectMain" destination="WSE-ib-YnH" id="Bsk-Sa-5HV"/>
@@ -353,10 +316,9 @@
     </objects>
     <resources>
         <image name="arrived-select" width="200" height="200"/>
-        <image name="call" width="409.60000610351562" height="409.60000610351562"/>
         <image name="finished" width="200" height="200"/>
-        <image name="message" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="message" width="64" height="64"/>
         <image name="pickup" width="200" height="200"/>
-        <image name="young-male-avatar-image" width="42.372413635253906" height="42.372413635253906"/>
+        <image name="young-male-avatar-image" width="128" height="128"/>
     </resources>
 </document>

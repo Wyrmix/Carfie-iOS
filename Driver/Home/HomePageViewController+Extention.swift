@@ -146,14 +146,11 @@ extension HomepageViewController {
             self.arrviedView = arrivedBundle
             
             self.arrviedView?.viewMessage.tag = 1
-            self.arrviedView?.callImage.tag = 2
             
             self.arrviedView?.frame = CGRect(x: 0, y:self.view.frame.height - arrivedBundle.viewVisualEffect.frame.height, width: self.view.frame.width, height: arrivedBundle.viewVisualEffect.frame.height)
             let gusture = UITapGestureRecognizer(target:self,action: #selector(callImageTapped(sender:)))
             let messageGesture = UITapGestureRecognizer(target: self, action: #selector(callImageTapped(sender:)))
             self.arrviedView?.viewMessage.addGestureRecognizer(messageGesture)
-            self.arrviedView?.callImage.isUserInteractionEnabled = true
-            self.arrviedView?.callImage.addGestureRecognizer(gusture)
            
             
             self.arrviedView?.showAnimateView(arrviedView!, isShow: true, direction: Direction.Top)

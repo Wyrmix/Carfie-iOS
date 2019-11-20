@@ -694,11 +694,6 @@ extension HomeViewController {
             floaty.buttonImage = #imageLiteral(resourceName: "phoneCall").withRenderingMode(.alwaysTemplate).resizeImage(newWidth: 25)
             floaty.paddingY = padding
             floaty.itemImageColor = .secondary
-            floaty.addItem(icon: #imageLiteral(resourceName: "call").resizeImage(newWidth: 25)) { (_) in
-                if let phoneNumber = provider?.mobile {
-                    PhoneCallIntent(phoneNumber: phoneNumber)?.execute()
-                }
-            }
             floaty.addItem(icon: #imageLiteral(resourceName: "chatIcon").resizeImage(newWidth: 25)) { (_) in
                 if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.SingleChatController) as? SingleChatController {
                     vc.set(user: provider!, requestId: self.currentRequestId)
