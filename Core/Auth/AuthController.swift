@@ -166,6 +166,7 @@ final class DefaultAuthController {
     // MARK: Persistence
     
     private var authRepository: AuthRepository
+    private var profileRepository: ProfileRepository
 
     // MARK: Init
 
@@ -176,7 +177,8 @@ final class DefaultAuthController {
          signUpProvider: SignUpProvider,
          profileService: ProfileService,
          signUpService: SignUpService,
-         authRepository: AuthRepository
+         authRepository: AuthRepository,
+         profileRepository: ProfileRepository
     ) {
         self.theme = theme
         self.carfieAuthProvider = carfieAuthProvider
@@ -186,6 +188,7 @@ final class DefaultAuthController {
         self.profileService = profileService
         self.signUpService = signUpService
         self.authRepository = authRepository
+        self.profileRepository = profileRepository
 
         self.carfieAuthProvider.delegate = self
         self.facebookAuthProvider.delegate = self
@@ -285,6 +288,7 @@ extension DefaultAuthController: AuthProviderDelegate {
     func completeLogout(with result: AuthResult) {
         _currentAuthProvider = nil
         authRepository.auth = CarfieAuth(accessToken: nil)
+        profileRepository.profile = nil
         logoutDelegate?.authController(self, userDidSignOutWith: result)
         NotificationCenter.default.post(name: .UserDidLogout, object: self)
     }

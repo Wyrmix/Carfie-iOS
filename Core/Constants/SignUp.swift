@@ -28,5 +28,9 @@ struct SignUp {
         // Generic
         static let requiredField = "This field is required"
         static let fieldsMustMatch = "Fields must match"
+        
+        // Social Security Number
+        static let enterASSN = "You must enter a social security number"
+        static let notAValidSSN = "You must enter a valid SSN"
     }
 }

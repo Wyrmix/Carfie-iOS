@@ -12,4 +12,8 @@ class MockProfileService: ProfileService {
     func getProfile(theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
         
     }
+    
+    func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        
+    }
 }

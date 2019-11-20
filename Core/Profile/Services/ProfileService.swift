@@ -10,6 +10,7 @@ import Foundation
 
 protocol ProfileService {
     func getProfile(theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
+    func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
 }
 
 class DefaultProfileService: ProfileService {
@@ -21,6 +22,13 @@ class DefaultProfileService: ProfileService {
     
     func getProfile(theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
         let request = ProfileRequest(theme: theme)
+        service.request(request) { result in
+            completion(result)
+        }
+    }
+    
+    func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        let request = UpdateProfileRequest(theme: theme, profile: profile)
         service.request(request) { result in
             completion(result)
         }

@@ -21,6 +21,7 @@ class AuthControllerSpec: QuickSpec {
             var googleAuthProvider: MockAuthProvider!
             var signUpProvider: MockSignUpProvider!
             var authRepository: MockAuthRepository!
+            var profileRepository: MockProfileRepository!
 
             beforeEach {
                 carfieAuthProvider = MockAuthProvider(type: .carfie)
@@ -28,6 +29,7 @@ class AuthControllerSpec: QuickSpec {
                 googleAuthProvider = MockAuthProvider(type: .google)
                 signUpProvider = MockSignUpProvider()
                 authRepository = MockAuthRepository()
+                profileRepository = MockProfileRepository()
                 
                 subject = DefaultAuthController(
                     theme: .rider,
@@ -37,7 +39,8 @@ class AuthControllerSpec: QuickSpec {
                     signUpProvider: signUpProvider,
                     profileService: MockProfileService(),
                     signUpService: MockSignUpService(),
-                    authRepository: authRepository
+                    authRepository: authRepository,
+                    profileRepository: profileRepository
                 )
             }
 
