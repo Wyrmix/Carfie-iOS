@@ -33,21 +33,6 @@ class RateView: UIView {
         }
     }
     
-    @IBOutlet private weak var labelFare : UILabel! {
-        didSet {
-            labelFare.font = .carfieBody
-            labelFare.textAlignment = .right
-        }
-    }
-    
-    @IBOutlet private weak var labelFareString : UILabel! {
-        didSet {
-            labelFareString.text = "Fare/Mile"
-            labelFareString.font = .carfieBodyBold
-            labelFareString.textColor = .carfieMidGray
-        }
-    }
-    
     @IBOutlet private weak var labelCapacity : UILabel! {
         didSet {
             labelCapacity.font = .carfieBody
@@ -80,7 +65,7 @@ extension RateView {
     
     // MARK:- Set Values
     
-    func set(values : Service?) {
+    func set(values: Service?) {
         
         Cache.image(forUrl: values?.image) { (image) in
             if image != nil {
@@ -89,10 +74,10 @@ extension RateView {
                 }
             }
         }
-        self.labelBaseFare.text = String.removeNil(User.main.currency)+"\(Formatter.shared.limit(string: "\(values?.pricing?.base_price ?? 0)", maximumDecimal: 2))"
-        self.labelFare.text = String.removeNil(User.main.currency)+"\(Formatter.shared.limit(string: "\(values?.pricing?.estimated_fare ?? 0)", maximumDecimal: 2))" //"\(values?.pricing?.estimated_fare ?? 0)"
-        self.labelCapacity.text = "1 - \(values?.capacity ?? 0)"
-        self.labelServiceName.text = values?.name?.uppercased()
+        
+        labelBaseFare.text = "$\(Formatter.shared.limit(string: "\(values?.pricing?.estimated_fare ?? 0)", maximumDecimal: 2))"
+        labelCapacity.text = "1 - \(values?.capacity ?? 0)"
+        labelServiceName.text = values?.name?.uppercased()
     }
     
     @IBAction private func buttonDoneAction() {
