@@ -9,15 +9,13 @@
 import Foundation
 
 struct APNSData: Codable {
-    let firstName: String
-    let lastName: String
     let deviceToken: String
-    let mobile: String
+    let deviceType = "ios"
+    let deviceId = UUID().uuidString
     
     enum CodingKeys: String, CodingKey {
-        case firstName = "first_name"
-        case lastName = "last_name"
         case deviceToken = "device_token"
-        case mobile
+        case deviceType = "device_type"
+        case deviceId = "device_id"
     }
 }

@@ -104,17 +104,7 @@ class CarfieProfileController: ProfileController {
     }
     
     func updateAPNSToken(_ token: String, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
-        guard let profile = profileRepository.profile else {
-            completion(.failure(ProfileControllerError.noCachedProfile))
-            return
-        }
-        
-        let apnsData = APNSData(
-            firstName: profile.firstName,
-            lastName: profile.lastName,
-            deviceToken: token,
-            mobile: profile.mobile
-        )
+        let apnsData = APNSData(deviceToken: token)
         
         profileService.updateAPNSData(apnsData, theme: theme) { result in
             completion(result)
