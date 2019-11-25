@@ -28,10 +28,6 @@ class RiderHomeInteractor {
         paymentController.getCards(theme: .rider) { [weak self] result in
             do {
                 let cards = try result.resolve()
-//                guard let firstCard = cards.first else {
-//                    self?.viewState.rideSelection = RideSelectionViewState(firstCard: nil)
-//                    return
-//                }
                 self?.viewState.rideSelection = RideSelectionViewState(firstCard: cards.first)
             } catch {
                 // TODO: log error and/or retry

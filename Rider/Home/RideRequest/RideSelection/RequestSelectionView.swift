@@ -122,10 +122,6 @@ class RequestSelectionView: UIView {
         labelPaymentMode.attributeColor = AppTheme.rider.tintColor
         buttonCoupon.backgroundColor = AppTheme.rider.primaryButtonColor
     }
-    
-    func present(with viewState: RideSelectionViewState) {
-        
-    }
 }
 
 // MARK:- Methods
