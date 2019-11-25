@@ -35,6 +35,13 @@ protocol ProfileController {
     /// - Parameter ssn: SSN to add
     /// - Parameter completion: called on completion with success or failure
     func updateSSN(_ ssn: String, completion: @escaping (Result<CarfieProfile>) -> Void)
+    
+    /// Update the user's device's APNS token.
+    /// - Parameters:
+    ///   - token: the APNS token
+    ///   - Parameter theme: current app target
+    ///   - completion: called on completion with success or failure
+    func updateAPNSToken(_ token: String, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
 }
 
 class CarfieProfileController: ProfileController {
@@ -92,6 +99,24 @@ class CarfieProfileController: ProfileController {
         profile.ssn = ssn
         
         updateProfile(profile, theme: .driver) { result in
+            completion(result)
+        }
+    }
+    
+    func updateAPNSToken(_ token: String, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        guard let profile = profileRepository.profile else {
+            completion(.failure(ProfileControllerError.noCachedProfile))
+            return
+        }
+        
+        let apnsData = APNSData(
+            firstName: profile.firstName,
+            lastName: profile.lastName,
+            deviceToken: token,
+            mobile: profile.mobile
+        )
+        
+        profileService.updateAPNSData(apnsData, theme: theme) { result in
             completion(result)
         }
     }

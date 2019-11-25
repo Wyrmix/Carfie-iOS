@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ProfileRequest: NetworkRequest {
+struct GetProfileRequest: NetworkRequest {
     typealias Response = CarfieProfile
     
     var path: String {
