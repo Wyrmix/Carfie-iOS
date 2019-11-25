@@ -14,6 +14,8 @@ class DriverIdentificationInteractor: NSObject {
     /// Text field that is currently being edited by the use
     private var activeTextInputView: CarfieTextInputView?
     
+    private var selectedVehicleType: Int?
+    
     let profileController: ProfileController
     
     init(profileController: ProfileController = CarfieProfileController()) {
@@ -27,19 +29,30 @@ class DriverIdentificationInteractor: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func saveSocialSecurityNumber(_ ssn: String?) {
+    func saveDriverInformation(ssn: String?, model: String?, number: String?) {
         do {
             let ssn = try SSNValidator().validate(ssn).resolve()
-            updateProfileWithSSN(ssn)
+            let model = try EmptyFieldValidator().validate(model).resolve()
+            let number = try EmptyFieldValidator().validate(number).resolve()
+            updateProfile(withSSN: ssn, model: model, number: number)
         } catch {
             return
         }
     }
     
-    private func updateProfileWithSSN(_ ssn: String) {
+    func updateProfile(withSSN ssn: String, model: String, number: String) {
         viewController?.animateNetworkActivity(true)
         
-        profileController.updateSSN(ssn) { result in
+        guard let typeIndex = selectedVehicleType, let vehicleType = VehicleType(rawValue: typeIndex) else { return }
+        
+        let info = DriverIdentification(
+            ssn: ssn,
+            vehicleModel: model,
+            vehicleNumber: number,
+            vehicleType: vehicleType
+        )
+        
+        profileController.updateDriverInformation(info) { result in
             self.viewController?.animateNetworkActivity(false)
             
             switch result {
@@ -98,6 +111,7 @@ extension DriverIdentificationInteractor: UIPickerViewDataSource, UIPickerViewDe
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedVehicleType = VehicleType.allCases[row].rawValue
         viewController?.presentVehicleType(VehicleType.allCases[row].description)
     }
 }

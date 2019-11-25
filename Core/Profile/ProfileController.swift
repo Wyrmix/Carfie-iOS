@@ -31,10 +31,10 @@ protocol ProfileController {
     /// - Parameter completion: called on completion with success or failure
     func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
     
-    /// Update the User's social security number. This is only valid for the Driver app.
-    /// - Parameter ssn: SSN to add
+    /// Update the User's vehicle and identification info. This is only valid for the Driver app.
+    /// - Parameter info: info to update
     /// - Parameter completion: called on completion with success or failure
-    func updateSSN(_ ssn: String, completion: @escaping (Result<CarfieProfile>) -> Void)
+    func updateDriverInformation(_ info: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void)
 }
 
 class CarfieProfileController: ProfileController {
@@ -83,13 +83,21 @@ class CarfieProfileController: ProfileController {
         }
     }
     
-    func updateSSN(_ ssn: String, completion: @escaping (Result<CarfieProfile>) -> Void) {
+    func updateDriverInformation(_ info: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void) {
         guard var profile = profileRepository.profile else {
             completion(.failure(ProfileControllerError.noCachedProfile))
             return
         }
         
-        profile.ssn = ssn
+        profile.ssn = info.ssn
+        profile.service = CarfieService(
+            service: nil,
+            providerId: nil,
+            vehicleModel: info.vehicleModel,
+            vehicleNumber: info.vehicleNumber,
+            serviceTypeId: info.vehicleType,
+            serviceType: nil
+        )
         
         updateProfile(profile, theme: .driver) { result in
             completion(result)

@@ -53,15 +53,18 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
     }()
     
     private let licensePlateTextInputView = CarfieTextInputView(
-        title: "License Plate Number"
+        title: "License Plate Number",
+        validator: EmptyFieldValidator()
     )
     
     private let vehicleModelTextInputView = CarfieTextInputView(
-        title: "Vehicle Model"
+        title: "Vehicle Model",
+        validator: EmptyFieldValidator()
     )
     
     private let vehicleTypeTextInputView = CarfieTextInputView(
-        title: "Ride Type"
+        title: "Ride Type",
+        validator: EmptyFieldValidator()
     )
     
     private let vehicleTypePickerView = UIPickerView()
@@ -192,11 +195,19 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
     
     @objc private func continueButtonTouchUpInside(_ sender: Any?) {
         _ = socialSecurityNumberTextInputView.validate()
-        interactor.saveSocialSecurityNumber(socialSecurityNumberTextInputView.text)
+        _ = licensePlateTextInputView.validate()
+        _ = vehicleModelTextInputView.validate()
+        _ = vehicleTypeTextInputView.validate()
+        
+        interactor.saveDriverInformation(
+            ssn: socialSecurityNumberTextInputView.text,
+            model: vehicleModelTextInputView.text,
+            number: licensePlateTextInputView.text
+        )
     }
     
     @objc private func pickerDoneButtonPressed(_ sender: Any?) {
-        vehicleTypeTextInputView.resignFirstResponder()
+        view.endEditing(true)
     }
 }
 

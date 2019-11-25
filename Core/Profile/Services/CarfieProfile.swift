@@ -19,7 +19,7 @@ struct CarfieProfile: Codable {
     let deviceToken: String?
     let accessToken: String?
     let currency: String?
-    let service: CarfieService?
+    var service: CarfieService?
     let walletBalance: Float?
     let sos: String?
     let appContact: String?
@@ -57,11 +57,17 @@ struct CarfieProfile: Codable {
 struct CarfieService: Codable {
     let service: Int?
     let providerId: Int?
+    let vehicleModel: String?
+    let vehicleNumber: String?
+    let serviceTypeId: VehicleType?
     let serviceType: CarfieServiceType?
     
     enum CodingKeys: String, CodingKey {
         case service
         case providerId = "provider_id"
+        case vehicleModel = "service_model"
+        case vehicleNumber = "service_number"
+        case serviceTypeId = "service_type_id"
         case serviceType = "service_type"
     }
 }

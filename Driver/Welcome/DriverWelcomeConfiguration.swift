@@ -12,7 +12,7 @@ struct DriverWelcomeConfiguration: WelcomeConfiguration {
     var viewControllers: [UIViewController & OnboardingScreen] {
         return [
             WelcomeCarouselViewController.viewController(theme: .driver),
-//            CarfieSignUpViewController.viewController(theme: .driver),
+            CarfieSignUpViewController.viewController(theme: .driver),
             DriverIdentificationViewController.viewController(),
             LocationPermissionsViewController.viewController(theme: .driver),
             DocumentsViewController.viewController(),
