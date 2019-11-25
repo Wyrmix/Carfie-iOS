@@ -29,12 +29,9 @@ class HelpInteractor {
         SafariIntent.openCarfieWebsite()?.execute(via: viewController)
     }
 
-    @objc func viewPrivacyPolicyButtonPressed() {
-        guard let viewController = viewController,
-              let url = Bundle.main.url(forResource: "privacy_policy", withExtension: "pdf") else { return }
-
-        let webView = WebViewViewController.viewController(url: url)
-        viewController.present(webView, animated: true)
+    @objc func viewPrivacyPolicyButtonPressed() {        
+        guard let viewController = viewController else { return }
+        SafariIntent.openCarfiePrivacyPolicy()?.execute(via: viewController)
     }
 }
 

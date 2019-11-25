@@ -32,4 +32,8 @@ extension SafariIntent {
     static func openCarfieWebsite() -> SafariIntent? {
         return SafariIntent(url: WebPage.carfieHomePage)
     }
+    
+    static func openCarfiePrivacyPolicy() -> SafariIntent? {
+        return SafariIntent(url: WebPage.carfiePrivacyPage)
+    }
 }
