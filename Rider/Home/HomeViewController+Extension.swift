@@ -99,6 +99,12 @@ extension HomeViewController {
             let heightPadding : CGFloat = (isWalletAvailable ? 0 : 40)
             self.estimationFareView = Bundle.main.loadNibNamed(XIB.Names.RequestSelectionView, owner: self, options: [:])?.first as? RequestSelectionView
             self.estimationFareView?.frame = CGRect(x: 0, y: self.view.frame.height-(self.estimationFareView!.bounds.height-heightPadding), width: self.view.frame.width, height: self.estimationFareView!.frame.height-heightPadding)
+            
+            if let rideSelectionView = self.estimationFareView {
+                rideSelectionPresenter = RideSelectionViewPresenter(rideSelectionView: rideSelectionView)
+                homeInteractor?.getCards()
+            }
+            
             self.estimationFareView?.show(with: .bottom, completion: nil)
             self.view.addSubview(self.estimationFareView!)
 
@@ -131,6 +137,7 @@ extension HomeViewController {
     func removeEstimationFareView(){
         
         self.estimationFareView?.dismissView(onCompletion: {
+            self.rideSelectionPresenter = nil
             self.isOnBooking = false
             self.loader.isHidden = true
             self.isOnBooking = false

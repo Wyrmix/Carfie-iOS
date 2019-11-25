@@ -62,7 +62,7 @@ class RequestSelectionView: UIView {
         }
     }
     
-    private var selectedCard: CardEntity?
+    var selectedCard: CardEntity?
     var paymentType: PaymentType = .NONE {
         didSet {
             var paymentText: String
@@ -121,6 +121,10 @@ class RequestSelectionView: UIView {
     private func setup() {
         labelPaymentMode.attributeColor = AppTheme.rider.tintColor
         buttonCoupon.backgroundColor = AppTheme.rider.primaryButtonColor
+    }
+    
+    func present(with viewState: RideSelectionViewState) {
+        
     }
 }
 
