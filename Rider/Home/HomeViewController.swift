@@ -40,6 +40,7 @@
         @IBOutlet var constraint : NSLayoutConstraint!
 
         var homeInteractor: RiderHomeInteractor?
+        var rideSelectionPresenter: RideSelectionViewPresenter?
         
         var providerLastLocation = LocationCoordinate()
         lazy var markerProviderLocation : GMSMarker = {  // Provider Location Marker

@@ -86,6 +86,8 @@ extension WalletInteractor: ListPaymentDelegate {
         viewController?.dismiss(animated: true)
     }
     
+    func paymentAdded() {}
+    
     func paymentDeleted(_ payment: CarfieCard) {
         getCards()
     }
