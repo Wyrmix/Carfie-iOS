@@ -65,7 +65,6 @@ extension SocialLoginViewController {
         let user = UserData()
         user.accessToken = accessToken
         user.device_id = UUID().uuidString
-        user.device_token = deviceTokenString
         user.device_type = .ios
         user.login_by = provider == .facebook ? .facebook : .google
         user.mobile = phoneNumber

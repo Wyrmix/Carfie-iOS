@@ -16,7 +16,6 @@ class MakeJson {
         
         let userDataObject = UserData()
         userDataObject.device_id = UUID().uuidString
-        userDataObject.device_token = deviceTokenString
         userDataObject.device_type = .ios
         userDataObject.email = email
         userDataObject.first_name = firstName
@@ -51,7 +50,6 @@ class MakeJson {
         loginData.username = userName
         loginData.device_id = UUID().uuidString
         loginData.device_type = .ios
-        loginData.device_token = deviceTokenString
         return loginData.toData()
     }
    

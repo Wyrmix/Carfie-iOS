@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private let authController = DefaultAuthController.shared(.driver)
+    private let profileController = CarfieProfileController()
     
     /// The root interactor for the app. Coordinates presenting and navgigating through the onboarding,
     /// login, and main view controllers of the app.
@@ -177,7 +178,18 @@ extension AppDelegate {
 
 extension AppDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        deviceTokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        let token = deviceToken.map({ String(format: "%02.2hhx", $0) }).joined()
+        profileController.updateAPNSToken(token, theme: .driver) { result in
+            switch result {
+            case .success:
+                // We don't really care about success. There's nothing to show to the user.
+                // Maybe at some point this will be used to kick off listeners for pushes or something.
+                break
+            case .failure:
+                // TODO: maybe some sort of retry?
+                break
+            }
+        }
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}

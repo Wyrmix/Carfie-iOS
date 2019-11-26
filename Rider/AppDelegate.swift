@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var reachability : Reachability?
 
     private let authController = DefaultAuthController.shared(.rider)
+    private let profileController = CarfieProfileController()
     
     /// The root interactor for the app. Coordinates presenting and navgigating through the onboarding,
     /// login, and main view controllers of the app.
@@ -43,21 +44,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.google()
         self.IQKeyboard()
         Router.configure()
-        
+
         // This needs to be called to load User data which is used to determine Auth state. This is very bad.
         // It also returns a boolean that is used to determine if we should show login/onboarding. This is some
         // serious tech debt that needs to be addressed soon.
         //
         // If user data does not exist we will show login.
         shouldShowLogin = !retrieveUserData()
-        
+
         configureRootInteractor()
-         DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async {
             self.startReachabilityChecking()
-         }
-         self.checkUpdates()
+        }
+        self.checkUpdates()
         
-         return true
+        return true
     }
     
     // MARK:- Core Data
@@ -156,32 +157,24 @@ extension AppDelegate {
 
 
 extension AppDelegate {
-    
-    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // Pass device token to auth
-       // Auth.auth().setAPNSToken(deviceToken, type: AuthAPNSTokenType.sandbox)
-       // Messaging.messaging().apnsToken = deviceToken
-        deviceTokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        print("Apn Token ", deviceToken.map { String(format: "%02.2hhx", $0) }.joined())
+        let token = deviceToken.map({ String(format: "%02.2hhx", $0) }).joined()
+        profileController.updateAPNSToken(token, theme: .rider) { result in
+            switch result {
+            case .success:
+                // We don't really care about success. There's nothing to show to the user.
+                // Maybe at some point this will be used to kick off listeners for pushes or something.
+                break
+            case .failure:
+                // TODO: maybe some sort of retry?
+                break
+            }
+        }
     }
-
-//    func application(_ application: UIApplication,
-//                     didReceiveRemoteNotification notification: [AnyHashable : Any],
-//                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//        
-//        print("Notification  :  ", notification)
-//        completionHandler(.newData)
-//        
-//    }
-    
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        
          print("Error in Notification  \(error.localizedDescription)")
     }
-    
-    
 }
     
     // MARK:- Google

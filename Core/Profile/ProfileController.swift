@@ -35,6 +35,13 @@ protocol ProfileController {
     /// - Parameter identification: info to update
     /// - Parameter completion: called on completion with success or failure
     func updateDriverIdentification(_ identification: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void)
+    
+    /// Update the user's device's APNS token.
+    /// - Parameters:
+    ///   - token: the APNS token
+    ///   - Parameter theme: current app target
+    ///   - completion: called on completion with success or failure
+    func updateAPNSToken(_ token: String, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
 }
 
 class CarfieProfileController: ProfileController {
@@ -94,6 +101,14 @@ class CarfieProfileController: ProfileController {
                 break
             }
             
+            completion(result)
+        }
+    }
+    
+    func updateAPNSToken(_ token: String, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        let apnsData = APNSData(deviceToken: token)
+        
+        profileService.updateAPNSData(apnsData, theme: theme) { result in
             completion(result)
         }
     }

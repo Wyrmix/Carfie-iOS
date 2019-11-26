@@ -20,4 +20,8 @@ class MockProfileService: ProfileService {
     func updateDriverIdentification(_ identification: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void) {
         
     }
+    
+    func updateAPNSData(_ data: APNSData, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        
+    }
 }
