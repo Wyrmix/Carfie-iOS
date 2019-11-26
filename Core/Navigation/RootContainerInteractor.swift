@@ -125,6 +125,12 @@ final class RootContainerInteractor {
     @objc private func userDidLogin() {
         NotificationCenter.default.removeObserver(self, name: .UserDidLogin, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name: .UserDidLogout, object: nil)
+        
+        // Fetch an updated APNS token on login. This also ensures that we occasionally get tokens for users who
+        // may whoose token may have failed to POST to the server.
+        if UIApplication.shared.isRegisteredForRemoteNotifications {
+            UIApplication.shared.registerForRemoteNotifications()
+        }
     }
     
     @objc private func userDidLogout() {

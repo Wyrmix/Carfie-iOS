@@ -13,4 +13,10 @@ var deviceTokenString = Constants.string.noDevice
 var deviceId = Constants.string.noDevice
 
 /// Base API url for the app. This should eventually get refactored into the networking layer.
-let baseUrl = "https://sapi.carfie.com/"
+var baseUrl: String {
+    #if DEBUG
+        return "https://stage.carfie.com/"
+    #else
+        return "https://sapi.carfie.com/"
+    #endif
+}

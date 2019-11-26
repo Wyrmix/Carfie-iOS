@@ -44,21 +44,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.google()
         self.IQKeyboard()
         Router.configure()
-        
+
         // This needs to be called to load User data which is used to determine Auth state. This is very bad.
         // It also returns a boolean that is used to determine if we should show login/onboarding. This is some
         // serious tech debt that needs to be addressed soon.
         //
         // If user data does not exist we will show login.
         shouldShowLogin = !retrieveUserData()
-        
+
         configureRootInteractor()
-         DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async {
             self.startReachabilityChecking()
-         }
-         self.checkUpdates()
+        }
+        self.checkUpdates()
         
-         return true
+        return true
     }
     
     // MARK:- Core Data

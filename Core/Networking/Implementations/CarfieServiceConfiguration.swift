@@ -9,7 +9,13 @@
 import Foundation
 
 struct CarfieServiceConfiguration: ServiceConfiguration {
-    let baseUrlString = "https://sapi.carfie.com"
+    var baseUrlString: String {
+        #if DEBUG
+            return "https://stage.carfie.com"
+        #else
+            return "https://sapi.carfie.com"
+        #endif
+    }
     
     var baseUrl: URL {
         return URL(string: baseUrlString)!

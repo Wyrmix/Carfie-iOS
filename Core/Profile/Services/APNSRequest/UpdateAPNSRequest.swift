@@ -20,7 +20,7 @@ struct UpdateAPNSRequest: NetworkRequest {
         }
     }
     
-    let method: HTTPMethod = .POST
+    let method: HTTPMethod = .PUT
     let task: HTTPTask = .request
     let isAuthorizedRequest = true
     let body: Data?

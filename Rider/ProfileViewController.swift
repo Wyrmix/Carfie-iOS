@@ -177,7 +177,6 @@ extension ProfileViewController {
         self.loader.isHidden = false
         
         let profile = Profile()
-        profile.device_token = deviceTokenString
         profile.email = User.main.email
         profile.first_name = firstName
         profile.last_name = lastName
