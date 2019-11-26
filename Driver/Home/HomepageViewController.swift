@@ -711,6 +711,9 @@ extension HomepageViewController {
         
         let alert = UIAlertController(title: nil, message: Constants.string.logoutMessage.localize(), preferredStyle: .actionSheet)
         let logoutAction = UIAlertAction(title: Constants.string.logout.localize(), style: .destructive) { (_) in
+            // dismiss any presented view controllers so we can present the login experience
+            self.dismiss(animated: true)
+            
             //self.loader.isHidden = false
             self.presenter?.post(api: .logout, data: nil)
             BackGroundTask.backGroundInstance.stopBackGroundTimer()
@@ -726,7 +729,14 @@ extension HomepageViewController {
         alert.view.tintColor = .primary
         
         alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
+        
+        // This view controller can present many different VCs as modals which will prevent showing the logout dialog.
+        // If something is being presented ask it to show the login modal instead.
+        if let presenter = presentedViewController {
+            presenter.present(alert, animated: true)
+        } else {
+            present(alert, animated: true)
+        }
     }
     
     
