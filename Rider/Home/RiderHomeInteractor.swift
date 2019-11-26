@@ -11,6 +11,33 @@ import UIKit
 class RiderHomeInteractor {
     weak var viewController: HomeViewController?
     
+    var viewState: RiderHomeViewState {
+        didSet {
+            viewController?.rideSelectionPresenter?.present(viewState: viewState.rideSelection)
+        }
+    }
+    
+    private let paymentController: PaymentController
+    
+    init(paymentController: PaymentController = StripePaymentController()) {
+        self.viewState = RiderHomeViewState()
+        self.paymentController = paymentController
+    }
+    
+    func getCards() {
+        paymentController.getCards(theme: .rider) { [weak self] result in
+            do {
+                let cards = try result.resolve()
+                self?.viewState.rideSelection = RideSelectionViewState(firstCard: cards.first)
+            } catch {
+                // TODO: log error and/or retry
+                // this isn't a huge deal as the rider can still go to the payment screen and select
+                // from there (assuming this error didn't happen because the service is down).
+                return
+            }
+        }
+    }
+    
     func changeCard() {
         let listPaymentViewController = ListPaymentViewController.viewController(for: .rider, and: self)
         let navigationController = UINavigationController(rootViewController: listPaymentViewController)
@@ -32,8 +59,12 @@ extension RiderHomeInteractor: ListPaymentDelegate {
         viewController?.dismiss(animated: true)
     }
     
+    func paymentAdded() {
+        getCards()
+    }
+    
     func paymentDeleted(_ payment: CarfieCard) {
-        
+        getCards()
     }
 }
 

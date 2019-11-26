@@ -10,6 +10,7 @@ import UIKit
 
 protocol ListPaymentDelegate: class {
     func paymentSelected(_ payment: CarfieCard)
+    func paymentAdded()
     func paymentDeleted(_ payment: CarfieCard)
 }
 
@@ -103,6 +104,7 @@ class ListPaymentInteractor {
 
 extension ListPaymentInteractor: AddCardDelegate {
     func cardAdded() {
+        delegate?.paymentAdded()
         getPaymentMethods()
         viewController?.dismiss(animated: true)
     }

@@ -62,7 +62,7 @@ class RequestSelectionView: UIView {
         }
     }
     
-    private var selectedCard: CardEntity?
+    var selectedCard: CardEntity?
     var paymentType: PaymentType = .NONE {
         didSet {
             var paymentText: String
