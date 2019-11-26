@@ -32,9 +32,9 @@ protocol ProfileController {
     func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
     
     /// Update the User's vehicle and identification info. This is only valid for the Driver app.
-    /// - Parameter info: info to update
+    /// - Parameter identification: info to update
     /// - Parameter completion: called on completion with success or failure
-    func updateDriverInformation(_ info: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void)
+    func updateDriverIdentification(_ identification: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void)
 }
 
 class CarfieProfileController: ProfileController {
@@ -83,23 +83,17 @@ class CarfieProfileController: ProfileController {
         }
     }
     
-    func updateDriverInformation(_ info: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void) {
-        guard var profile = profileRepository.profile else {
-            completion(.failure(ProfileControllerError.noCachedProfile))
-            return
-        }
-        
-        profile.ssn = info.ssn
-        profile.service = CarfieService(
-            service: nil,
-            providerId: nil,
-            vehicleModel: info.vehicleModel,
-            vehicleNumber: info.vehicleNumber,
-            serviceTypeId: info.vehicleType,
-            serviceType: nil
-        )
-        
-        updateProfile(profile, theme: .driver) { result in
+    func updateDriverIdentification(_ identification: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        profileService.updateDriverIdentification(identification) { result in
+            switch result {
+            case .success:
+                // POSTs to profile return a stripped down profile object that does not contain everything. To keep
+                // profile in sync with the server we'll perform a background fetch on success.
+                self.fetchProfile(theme: .driver) { result in }
+            case .failure:
+                break
+            }
+            
             completion(result)
         }
     }

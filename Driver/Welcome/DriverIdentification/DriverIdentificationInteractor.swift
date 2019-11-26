@@ -45,14 +45,10 @@ class DriverIdentificationInteractor: NSObject {
         
         guard let typeIndex = selectedVehicleType, let vehicleType = VehicleType(rawValue: typeIndex) else { return }
         
-        let info = DriverIdentification(
-            ssn: ssn,
-            vehicleModel: model,
-            vehicleNumber: number,
-            vehicleType: vehicleType
-        )
+        let vehicleIdentification = VehicleIdentification(model: model, number: number, type: vehicleType)
+        let info = DriverIdentification(ssn: ssn, vehicleIdentification: vehicleIdentification)
         
-        profileController.updateDriverInformation(info) { result in
+        profileController.updateDriverIdentification(info) { result in
             self.viewController?.animateNetworkActivity(false)
             
             switch result {
