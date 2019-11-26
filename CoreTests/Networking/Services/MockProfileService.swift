@@ -16,4 +16,8 @@ class MockProfileService: ProfileService {
     func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
         
     }
+    
+    func updateDriverIdentification(_ identification: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        
+    }
 }
