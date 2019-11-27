@@ -20,7 +20,7 @@ class RateView: UIView {
     
     @IBOutlet private weak var labelBaseFareString : UILabel! {
         didSet {
-            labelBaseFareString.text = "Base Fare"
+            labelBaseFareString.text = "Carfie Fare"
             labelBaseFareString.font = .carfieBodyBold
             labelBaseFareString.textColor = .carfieMidGray
         }

@@ -14,7 +14,7 @@ struct UpdateAPNSRequest: NetworkRequest {
     var path: String {
         switch theme {
         case .driver:
-            return "/api/provider/profile"
+            return "/api/provider/profile/device/token"
         case .rider:
             return "/api/user/details"
         }
