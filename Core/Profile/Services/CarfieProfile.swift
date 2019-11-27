@@ -28,7 +28,6 @@ struct CarfieProfile: Codable {
     let cash: Int?
     let stripeSecretKey: String?
     let stripePublishableKey: String?
-    let profile: ProfileInfo?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -50,7 +49,6 @@ struct CarfieProfile: Codable {
         case cash
         case stripeSecretKey = "stripe_secret_key"
         case stripePublishableKey = "stripe_publishable_key"
-        case profile
     }
 }
 
@@ -75,8 +73,4 @@ struct CarfieService: Codable {
 struct CarfieServiceType: Codable {
     let name: String?
     let id: Int?
-}
-
-struct ProfileInfo: Codable {
-    let ssn: String
 }
