@@ -67,7 +67,7 @@ class EarningsViewController: UITableViewController {
         let dateString = Formatter.shared.getString(from: date, format: DateFormat.list.hhMMTTA)
        
         cell.labelTime.text = dateString
-        cell.labelKm.text = "\((self.headerArray?[indexPath.row].distance ?? 0)) km"
+        cell.labelKm.text = "\((self.headerArray?[indexPath.row].distance ?? 0)) miles"
         cell.labelTotal.text = " \(User.main.currency ??  "") \(self.headerArray?[indexPath.row].payment?.provider_pay ?? 0 )"
         return cell
     }
