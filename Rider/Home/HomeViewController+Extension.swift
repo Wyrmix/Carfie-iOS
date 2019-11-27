@@ -609,7 +609,7 @@ extension HomeViewController {
             
             let format = "http://maps.google.com/maps?q=loc:\(currentLocation.latitude),\(currentLocation.longitude)"
             let  message = "\(AppName) :- \(String.removeNil(User.main.firstName)) \(String.removeNil(User.main.lastName)) \(Constants.string.wouldLikeToShare) \(format)"
-            self.share(items: [#imageLiteral(resourceName: "Splash_icon"), message])
+            self.share(items: [message])
         }
     }
     
