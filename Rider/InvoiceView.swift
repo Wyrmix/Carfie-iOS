@@ -16,12 +16,6 @@ class InvoiceView: UIView {
     @IBOutlet private weak var labelDistanceTravelled : UILabel!
     @IBOutlet private weak var labelTimeTakenString : UILabel!
     @IBOutlet private weak var labelTimeTaken : UILabel!
-    @IBOutlet private weak var labelBaseFareString : UILabel!
-    @IBOutlet private weak var labelBaseFare : UILabel!
-    @IBOutlet private weak var labelDistanceFareString : UILabel!
-    @IBOutlet private weak var labelDistanceFare : UILabel!
-    @IBOutlet private weak var labelTimeFareString : UILabel!
-    @IBOutlet private weak var labelTimeFare : UILabel!
     @IBOutlet private weak var labelTax : UILabel!
     @IBOutlet private weak var labelTaxString : UILabel!
     @IBOutlet private weak var labelTipsString : UILabel!
@@ -39,8 +33,6 @@ class InvoiceView: UIView {
     @IBOutlet private weak var buttonPayNow : UIButton!
     @IBOutlet private weak var labelTitle : UILabel!
     
-    @IBOutlet private weak var viewDistanceFare : UIView!
-    @IBOutlet private weak var viewTimeFare : UIView!
     @IBOutlet private weak var viewTax : UIView!
     @IBOutlet private weak var viewWallet : UIView!
     @IBOutlet private weak var viewDiscount : UIView!
@@ -74,12 +66,7 @@ class InvoiceView: UIView {
         }
     }
     
-    private var serviceCalculator : ServiceCalculator = .NONE {  // Hide Distance Fare and Time fare based on Service Calculator
-        didSet {
-            self.viewDistanceFare.isHidden = ![ServiceCalculator.DISTANCE, .DISTANCEHOUR, .DISTANCEMIN].contains(serviceCalculator)
-            self.viewTimeFare.isHidden = ![ServiceCalculator.MIN, .HOUR,.DISTANCEHOUR, .DISTANCEMIN].contains(serviceCalculator)
-        }
-    }
+    private var serviceCalculator : ServiceCalculator = .NONE
     
     private var isUsingWallet = false {
         didSet {
@@ -150,12 +137,6 @@ extension InvoiceView {
         Common.setFont(to: labelDiscountString)
         Common.setFont(to: labelBooking)
         Common.setFont(to: labelBookingString)
-        Common.setFont(to: labelBaseFare)
-        Common.setFont(to: labelBaseFareString)
-        Common.setFont(to: labelDistanceFare)
-        Common.setFont(to: labelDistanceFareString)
-        Common.setFont(to: labelTimeFare)
-        Common.setFont(to: labelTimeFareString)
         Common.setFont(to: labelTimeTaken)
         Common.setFont(to: labelTimeTakenString)
         Common.setFont(to: labelDistanceTravelled)
@@ -178,9 +159,6 @@ extension InvoiceView {
         self.labelBookingString.text = Constants.string.bookingId.localize()
         self.labelDistanceTravelledString.text = Constants.string.distanceTravelled.localize()
         self.labelTimeTakenString.text = Constants.string.timeTaken.localize()
-        self.labelBaseFareString.text = Constants.string.baseFare.localize()
-        self.labelDistanceFareString.text = Constants.string.distanceFare.localize()
-        self.labelTimeFareString.text = Constants.string.timeFare.localize()
         self.labelTaxString.text = Constants.string.tax.localize()
         self.labelTipsString.text = Constants.string.tips.localize()
         self.buttonTips.setTitle(Constants.string.addTips.localize(), for: .normal)
@@ -214,27 +192,7 @@ extension InvoiceView {
         func setAmount(to label : UILabel, with amount : Float?) {
             label.text = "\(String.removeNil(User.main.currency)) \(Formatter.shared.limit(string: "\(Float.removeNil(amount))", maximumDecimal: 2))"
         }
-        setAmount(to: self.labelBaseFare, with: request.payment?.fixed)
-        //self.labelBaseFare.text = "\(String.removeNil(User.main.currency)) \(Formatter.shared.limit(string: "\(Float.removeNil(request.payment?.fixed))", maximumDecimal: 2) ?? "0")"
         
-        let distanceFare : Float = {
-            if[ServiceCalculator.DISTANCE, .DISTANCEMIN, .DISTANCEHOUR].contains(self.serviceCalculator) {
-                return request.payment?.distance ?? 0
-            }
-            return 0
-        }()
-        
-        let timeFare : Float = {
-            if [ServiceCalculator.MIN, .DISTANCEMIN].contains(self.serviceCalculator) {
-                return request.payment?.minute ?? 0
-            } else if [ServiceCalculator.HOUR, .DISTANCEHOUR].contains(self.serviceCalculator) {
-                return request.payment?.minute ?? 0
-            }
-            return 0
-        }()
-        
-        setAmount(to: self.labelDistanceFare, with: distanceFare)
-        setAmount(to: self.labelTimeFare, with: timeFare)
         setAmount(to: self.labelTax, with: request.payment?.tax)
         setAmount(to: self.labelWallet, with: request.payment?.wallet)
         setAmount(to: self.labelDiscount, with: request.payment?.discount)
