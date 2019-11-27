@@ -14,8 +14,8 @@ enum VehicleType: Int, Codable, CaseIterable {
     case carfie = 1
     case carfieS = 2
     case carfieXL = 3
-    case lux = 4
-    case luxXL = 7
+    case luxXL = 4
+    case lux = 7
     
     var description: String {
         switch self {
