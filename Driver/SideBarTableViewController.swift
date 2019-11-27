@@ -15,7 +15,7 @@ class SideBarTableViewController: UITableViewController {
     @IBOutlet private var labelName : UILabel!
     @IBOutlet private var viewShadow : UIView!
     @IBOutlet var labelEmail: UILabel!
-    private let sideBarList = [Constants.string.yourTrips,Constants.string.Earnings,Constants.string.Summary,Constants.string.wallet,Constants.string.card, Constants.string.help,Constants.string.settings,Constants.string.logout]
+    private let sideBarList = [Constants.string.yourTrips,Constants.string.Earnings,Constants.string.Summary,Constants.string.card, Constants.string.help,Constants.string.settings,Constants.string.logout]
     
     private let cellId = "cellId"
     
@@ -146,7 +146,7 @@ extension SideBarTableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if !User.main.isCardAllowed && indexPath.row == 4 { // If not is allowed hide it
+        if !User.main.isCardAllowed && indexPath.row == 3 { // If not is allowed hide it
             return 0
         }
         return 44.0
@@ -188,16 +188,12 @@ extension SideBarTableViewController {
             
             baseVC?.pushViewController(summaryVC, animated: true)
             
-        }else if indexPath.row == 3{ //Wallet
-            let walletVC = Router.main.instantiateViewController(withIdentifier: Storyboard.Ids.WalletViewController)
-            baseVC?.pushViewController(walletVC, animated: true)
-            
-        }else if indexPath.row == 4 {//Card
+        }else if indexPath.row == 3 {//Card
             baseVC?.pushViewController(ListPaymentViewController.viewController(for: .driver), animated: true)
             
-        } else if indexPath.row == 5 {
+        } else if indexPath.row == 4 {
             baseVC?.pushViewController(HelpViewController.viewController(), animated: true)
-        }else if indexPath.row == 6 {
+        }else if indexPath.row == 5 {
             let helpVC = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.SettingTableViewController)
             baseVC?.pushViewController(helpVC, animated: true)
         }else {
