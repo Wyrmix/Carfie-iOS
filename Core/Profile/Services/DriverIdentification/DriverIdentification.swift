@@ -10,10 +10,12 @@ import Foundation
 
 struct DriverIdentification: Codable {
     let ssn: String
+    let dateOfBirth: String
     let vehicleIdentification: VehicleIdentification
     
     enum CodingKeys: String, CodingKey {
         case ssn
+        case dateOfBirth
         case vehicleIdentification = "service"
     }
 }
