@@ -38,7 +38,6 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
     private let socialSecurityNumberTextInputView = CarfieTextInputView(
         title: "Social Security Number",
         placeholder: "XXX-XX-XXXX",
-        keyboardType: .numberPad,
         validator: SSNValidator()
     )
     
@@ -106,6 +105,11 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
         view.backgroundColor = .white
         addGradientLayer()
         setupPickerView()
+        
+        [socialSecurityNumberTextInputView, licensePlateTextInputView, vehicleModelTextInputView, vehicleTypeTextInputView].forEach {
+            $0.delegate = interactor
+            $0.errorMessageLabel.textColor = AppTheme.driver.primaryColor
+        }
         
         continueButton.addTarget(self, action: #selector(continueButtonTouchUpInside(_:)), for: .touchUpInside)
         
