@@ -32,7 +32,7 @@ class DriverIdentificationInteractor: NSObject {
     func saveDriverInformation(ssn: String?, dateOfBirth: String?, model: String?, number: String?) {
         do {
             let ssn = try SSNValidator().validate(ssn).resolve()
-            let dateOfBirth = try EmptyFieldValidator().validate(dateOfBirth).resolve()
+            let dateOfBirth = try DateOfBirthValidator().validate(dateOfBirth).resolve()
             let model = try EmptyFieldValidator().validate(model).resolve()
             let number = try EmptyFieldValidator().validate(number).resolve()
             updateProfile(withSSN: ssn, dateOfBirth: dateOfBirth, model: model, number: number)

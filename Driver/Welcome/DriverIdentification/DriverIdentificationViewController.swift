@@ -44,7 +44,8 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
     
     private let dateOfBirthTextInputView = CarfieTextInputView(
         title: "Date of Birth",
-        placeholder: "XX-XX-XXXX"
+        placeholder: "MM-DD-YYYY",
+        validator: DateOfBirthValidator()
     )
     
     let carInfoTitle: UILabel = {
@@ -204,6 +205,7 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
     
     @objc private func continueButtonTouchUpInside(_ sender: Any?) {
         _ = socialSecurityNumberTextInputView.validate()
+        _ = dateOfBirthTextInputView.validate()
         _ = licensePlateTextInputView.validate()
         _ = vehicleModelTextInputView.validate()
         _ = vehicleTypeTextInputView.validate()
