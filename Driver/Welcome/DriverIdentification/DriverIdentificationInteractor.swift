@@ -73,6 +73,7 @@ extension DriverIdentificationInteractor: CarfieTextInputViewDelegate {
     
     func textInputViewShouldReturn(_ textInputView: CarfieTextInputView) -> Bool {
         _ = textInputView.validate()
+        textInputView.resignTextFieldFirstResponder()
         return true
     }
 }
