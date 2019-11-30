@@ -15,7 +15,7 @@ struct DriverIdentification: Codable {
     
     enum CodingKeys: String, CodingKey {
         case ssn
-        case dateOfBirth
+        case dateOfBirth = "dob"
         case vehicleIdentification = "service"
     }
 }
