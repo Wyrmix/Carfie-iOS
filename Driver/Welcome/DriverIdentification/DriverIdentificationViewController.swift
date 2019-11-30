@@ -41,6 +41,12 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
         validator: SSNValidator()
     )
     
+    private let dateOfBirthTextInputView = CarfieTextInputView(
+        title: "Date of Birth",
+        placeholder: "MM-DD-YYYY",
+        validator: DateOfBirthValidator()
+    )
+    
     let carInfoTitle: UILabel = {
         let label = UILabel()
         label.text = "TELL US ABOUT YOUR VEHICLE"
@@ -123,9 +129,13 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
         vehicleInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         vehicleInfoStackView.axis = .vertical
         vehicleInfoStackView.spacing = 8
-        containerView.addSubview(vehicleInfoStackView)
         
-        let containerStackView = UIStackView(arrangedSubviews: [socialSecurityNumberTextInputView, vehicleInfoStackView])
+        let personalInfoStackView = UIStackView(arrangedSubviews: [socialSecurityNumberTextInputView, dateOfBirthTextInputView])
+        personalInfoStackView.translatesAutoresizingMaskIntoConstraints = false
+        personalInfoStackView.axis = .vertical
+        personalInfoStackView.spacing = 8
+        
+        let containerStackView = UIStackView(arrangedSubviews: [personalInfoStackView, vehicleInfoStackView])
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         containerStackView.axis = .vertical
         containerStackView.spacing = 32
@@ -199,12 +209,14 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
     
     @objc private func continueButtonTouchUpInside(_ sender: Any?) {
         _ = socialSecurityNumberTextInputView.validate()
+        _ = dateOfBirthTextInputView.validate()
         _ = licensePlateTextInputView.validate()
         _ = vehicleModelTextInputView.validate()
         _ = vehicleTypeTextInputView.validate()
         
         interactor.saveDriverInformation(
             ssn: socialSecurityNumberTextInputView.text,
+            dateOfBirth: dateOfBirthTextInputView.text,
             model: vehicleModelTextInputView.text,
             number: licensePlateTextInputView.text
         )

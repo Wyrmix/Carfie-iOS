@@ -32,5 +32,10 @@ struct SignUp {
         // Social Security Number
         static let enterASSN = "You must enter a social security number"
         static let notAValidSSN = "You must enter a valid SSN"
+        
+        // Date of Birth
+        static let enterADOB = "You must enter a date of birth"
+        static let invalidDOB = "You must enter a valid date of birth in format XX-XX-XXXX"
+        static let notTwentyOne = "You must be 21 years old to drive with Carfie"
     }
 }

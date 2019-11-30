@@ -29,24 +29,25 @@ class DriverIdentificationInteractor: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func saveDriverInformation(ssn: String?, model: String?, number: String?) {
+    func saveDriverInformation(ssn: String?, dateOfBirth: String?, model: String?, number: String?) {
         do {
             let ssn = try SSNValidator().validate(ssn).resolve()
+            let dateOfBirth = try DateOfBirthValidator().validate(dateOfBirth).resolve()
             let model = try EmptyFieldValidator().validate(model).resolve()
             let number = try EmptyFieldValidator().validate(number).resolve()
-            updateProfile(withSSN: ssn, model: model, number: number)
+            updateProfile(withSSN: ssn, dateOfBirth: dateOfBirth, model: model, number: number)
         } catch {
             return
         }
     }
     
-    func updateProfile(withSSN ssn: String, model: String, number: String) {
+    func updateProfile(withSSN ssn: String, dateOfBirth: String, model: String, number: String) {
         viewController?.animateNetworkActivity(true)
         
         guard let typeIndex = selectedVehicleType, let vehicleType = VehicleType(rawValue: typeIndex) else { return }
         
         let vehicleIdentification = VehicleIdentification(model: model, number: number, type: vehicleType)
-        let info = DriverIdentification(ssn: ssn, vehicleIdentification: vehicleIdentification)
+        let info = DriverIdentification(ssn: ssn, dateOfBirth: dateOfBirth, vehicleIdentification: vehicleIdentification)
         
         profileController.updateDriverIdentification(info) { result in
             self.viewController?.animateNetworkActivity(false)
