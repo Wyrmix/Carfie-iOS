@@ -7,12 +7,9 @@
 //
 
 import UIKit
-import AccountKit
 
 class ProfileViewController: UITableViewController {
     
-    @IBOutlet private weak var viewImageChange : UIView!
-    @IBOutlet private weak var imageViewProfile : UIImageView!
     @IBOutlet private weak var textFieldFirst : HoshiTextField!
     @IBOutlet private weak var textFieldLast : HoshiTextField!
     @IBOutlet private weak var textFieldPhone : HoshiTextField!
@@ -29,12 +26,12 @@ class ProfileViewController: UITableViewController {
     
     @IBOutlet var textFieldServiceType: HoshiTextField!
     
+    private let profileController = CarfieProfileController()
+    
     private var changedImage : UIImage?
     let profile = profilePostModel()
     var servicemodel = ServiceModel()
     var phoneNumber = String()
-    var data : Data?
-    let accountKit = AKFAccountKit(responseType: .accessToken)
     
     private lazy var loader : UIView = {
         return createActivityIndicator(UIScreen.main.focusedView ?? self.view)
@@ -49,15 +46,9 @@ class ProfileViewController: UITableViewController {
         addButtonTargets()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        self.setLayout()
-    }
-    
     private func addButtonTargets() {
         viewPersonal.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setTripTypeAction(sender:))))
         viewBusiness.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setTripTypeAction(sender:))))
-        viewImageChange.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(changeImage)))
         buttonSave.addTarget(self, action: #selector(buttonSaveAction), for: .touchUpInside)
         view.dismissKeyBoardonTap()
     }
@@ -101,12 +92,6 @@ extension ProfileViewController {
     // MARK:- Set Profile Details
     
     private func setProfile(){
-        Cache.image(forUrl: "\(baseUrl)/\(Constants.string.storage)/\(String(describing: User.main.picture ?? "0"))") { (image) in
-            DispatchQueue.main.async {
-                self.imageViewProfile.image = image == nil ? #imageLiteral(resourceName: "young-male-avatar-image") : image
-            }
-        }
-        
         self.textFieldFirst.text = User.main.firstName
         self.textFieldLast.text = User.main.lastName
         self.textFieldEmail.text = User.main.email
@@ -127,18 +112,6 @@ extension ProfileViewController {
             Common.setFont(to: $0!)
         })
     }
-    
-    // MARK:- Show Image
-    
-    @IBAction private func changeImage(){
-        self.showImage { (image) in
-            if image != nil {
-                self.imageViewProfile.image = image
-                self.changedImage = image
-            }
-        }
-    }
-    
     
     // MARK:- Trip Type Action
     
@@ -166,30 +139,29 @@ extension ProfileViewController {
         
         guard let email = validateField(textFieldEmail.text, with: EmailValidator()),
               let phoneNumber = validateField(textFieldPhone.text, with: PhoneValidator()) else { return }
-                
-        if self.changedImage != nil, let dataImg = self.changedImage?.pngData() {
-            data = dataImg
-        }
-        servicemodel.service = User.main.serviceId
         
-        profile.device_token = deviceTokenString
-        profile.email = email
-        profile.first_name = firstName
-        profile.last_name = lastName
-        profile.mobile = phoneNumber
-        profile.service = servicemodel.service
+        
+        
+        let basicProfileInfo = BasicProfileInfo(firstName: firstName, lastName: lastName, email: email, mobile: phoneNumber)
+        
         self.loader.isHidden = false
+        
+        profileController.updateBasicProfileInfo(basicProfileInfo, theme: .driver) { [weak self] result in
+            self?.loader.isHidden = true
+            
+            do {
+                let profile = try result.resolve()
 
-        if data == nil {
-            self.presenter?.post(api: .updateProfile, data: profile.toData())
-        } else {
-            var json = profile.JSONRepresentation
-            json.removeValue(forKey: "id")
-            json.removeValue(forKey: "picture")
-            json.removeValue(forKey: "access_token")
-            json.removeValue(forKey: "avatar")
-            json.removeValue(forKey : "service")
-            self.presenter?.post(api: .updateProfile, imageData: [WebConstants.string.picture : data!], parameters: json)
+                // Patch since service details not provided from backend
+                User.main.serviceType = User.main.serviceType
+                User.main.serviceId = User.main.serviceId
+                
+                Common.storeUserData(from: profile)
+                storeInUserDefaults()
+                self?.setProfile()
+            } catch {
+                
+            }
         }
     }
     
@@ -207,19 +179,6 @@ extension ProfileViewController {
             textFieldPhone.shake()
             return nil
         }
-    }
-
-    
-    private func setLayout(){
-        
-        self.imageViewProfile.makeRoundedCorner()
-        
-    }
-    
-    private func prepareLogin(viewcontroller : UIViewController&AKFViewController) {
-        viewcontroller.delegate = self
-        viewcontroller.uiManager = AKFSkinManager(skinType: .contemporary, primaryColor: .primary)
-        viewcontroller.uiManager.theme?()?.buttonTextColor = .white
     }
     
     // MARK:- Localize
@@ -280,53 +239,6 @@ extension ProfileViewController : UITextFieldDelegate {
         (textField as! HoshiTextField).borderActiveColor = UIColor.primary
     }
 }
-
-
-// MARK:- ScrollView Delegate
-
-extension ProfileViewController {
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard scrollView.contentOffset.y<0 else { return }
-        let inset = abs(scrollView.contentOffset.y/imageViewProfile.frame.height)
-        self.imageViewProfile.transform = CGAffineTransform(scaleX: 1+inset, y: 1+inset)
-    }
-}
-
-extension ProfileViewController : AKFViewControllerDelegate {
-    
-    func viewControllerDidCancel(_ viewController: (UIViewController & AKFViewController)!) {
-        self.loader.isHidden = true
-        viewController.dismiss(animated: true, completion: nil)
-    }
-    
-    func viewController(_ viewController: (UIViewController & AKFViewController)!, didFailWithError error: Error!) {
-        viewController.dismiss(animated: true, completion: nil)
-    }
-    
-    func viewController(_ viewController: (UIViewController & AKFViewController)!, didCompleteLoginWith accessToken: AKFAccessToken!, state: String!) {
-        accountKit.requestAccount { (account, error) in
-            self.phoneNumber = account?.phoneNumber?.stringRepresentation() ?? ""
-            self.profile.mobile = self.phoneNumber
-            
-        }
-        
-        viewController.dismiss(animated: true) {
-            self.loader.isHidden = false
-            if self.data == nil {
-                self.presenter?.post(api: .updateProfile, data: self.profile.toData())
-            } else {
-                var json = self.profile.JSONRepresentation
-                json.removeValue(forKey: "id")
-                json.removeValue(forKey: "picture")
-                json.removeValue(forKey: "access_token")
-                json.removeValue(forKey: "avatar")
-                json.removeValue(forKey : "service")
-                self.presenter?.post(api: .updateProfile, imageData: [WebConstants.string.picture : self.data!], parameters: json)
-            }
-        }
-    }
-}
-
 
 // MARK:- PostviewProtocol
 

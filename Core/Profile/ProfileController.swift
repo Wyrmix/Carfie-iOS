@@ -42,6 +42,8 @@ protocol ProfileController {
     ///   - Parameter theme: current app target
     ///   - completion: called on completion with success or failure
     func updateAPNSToken(_ token: String, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
+    
+    func updateBasicProfileInfo(_ info: BasicProfileInfo, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
 }
 
 class CarfieProfileController: ProfileController {
@@ -109,6 +111,19 @@ class CarfieProfileController: ProfileController {
         let apnsData = APNSData(deviceToken: token)
         
         profileService.updateAPNSData(apnsData, theme: theme) { result in
+            completion(result)
+        }
+    }
+    
+    func updateBasicProfileInfo(_ info: BasicProfileInfo, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        guard var profile = profileRepository.profile else { return }
+        
+        profile.firstName = info.firstName
+        profile.lastName = info.lastName
+        profile.email = info.email
+        profile.mobile = info.mobile
+        
+        updateProfile(profile, theme: theme) { result in
             completion(result)
         }
     }

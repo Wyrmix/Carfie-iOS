@@ -46,7 +46,7 @@ struct DateOfBirthValidator: Validator {
         
         // Must be 21 years old
         let timeInterval = Date().timeIntervalSince(date)
-        let age = timeInterval / 31557600
+        let age = timeInterval / 31557600 // number of seconds in a year
         guard age >= 21 else {
             return .failure(DateOfBirthValidationError.notTwentyOne)
         }
