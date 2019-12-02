@@ -10,10 +10,10 @@ import Foundation
 
 struct CarfieProfile: Codable {
     let id: Int
-    let firstName: String
-    let lastName: String
-    let email: String
-    let mobile: String
+    var firstName: String
+    var lastName: String
+    var email: String
+    var mobile: String
     let avatar: String? // driver photo
     let picture: String? // rider photo
     let deviceToken: String?
