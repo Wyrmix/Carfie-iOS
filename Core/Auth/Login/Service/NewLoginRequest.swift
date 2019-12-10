@@ -19,10 +19,6 @@ struct NewLoginRequest: NetworkRequest {
         }
     }
     
-    var task: HTTPTask {
-        return .request
-    }
-    
     let method: HTTPMethod = .POST
     let body: Data?
     

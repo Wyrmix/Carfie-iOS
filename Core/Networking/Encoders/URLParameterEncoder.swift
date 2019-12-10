@@ -8,11 +8,13 @@
 
 import Foundation
 
-/// Adds query parameters to a URL.
 class URLParameterEncoder: ParameterEncoder {
     
-    static func encode(request: inout URLRequest, with parameters: Parameters) throws {
-        guard let url = request.url else { throw NetworkServiceError.missingURL }
+    func encode(request: inout URLRequest, with parameters: Parameters) {
+        guard let url = request.url else {
+            assertionFailure("A URLRequest should always have a URL")
+            return
+        }
         
         if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
             urlComponents.queryItems = [URLQueryItem]()

@@ -21,10 +21,6 @@ struct DeleteCardRequest: NetworkRequest {
         }
     }
     
-    var task: HTTPTask {
-        return .request
-    }
-    
     let method: HTTPMethod = .DELETE
     let isAuthorizedRequest: Bool = true
     let body: Data?

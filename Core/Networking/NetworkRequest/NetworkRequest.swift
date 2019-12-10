@@ -9,14 +9,15 @@
 import Foundation
 
 typealias HTTPHeaders = [String: String]
+typealias Parameters = [String: Any]
 
 protocol NetworkRequest {
     associatedtype Response: Codable
     
     var path: String { get }
     var method: HTTPMethod { get }
-    var task: HTTPTask { get }
     var headers: HTTPHeaders? { get }
+    var parameters: Parameters? { get }
     var body: Data? { get }
     var isAuthorizedRequest: Bool { get }
 }
@@ -24,6 +25,10 @@ protocol NetworkRequest {
 // Default implementations for lesser used properties
 extension NetworkRequest {
     var headers: HTTPHeaders? {
+        return nil
+    }
+    
+    var parameters: Parameters? {
         return nil
     }
     

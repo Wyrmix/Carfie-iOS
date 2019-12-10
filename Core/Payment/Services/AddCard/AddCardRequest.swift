@@ -20,12 +20,7 @@ struct AddCardRequest: NetworkRequest {
         }
     }
     
-    var task: HTTPTask {
-        return .request
-    }
-    
     let method: HTTPMethod = .POST
-    let parameters: Parameters = [:]
     let isAuthorizedRequest: Bool = true
     let body: Data?
     
