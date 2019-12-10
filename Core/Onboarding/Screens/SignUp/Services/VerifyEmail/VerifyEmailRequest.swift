@@ -22,10 +22,6 @@ struct VerifyEmailRequest: NetworkRequest {
     
     let method: HTTPMethod = .POST
     
-    var task: HTTPTask {
-        return .requestParameters(bodyParameters: parameters, urlParameters: nil)
-    }
-    
     var parameters: Parameters {
         return [
             "email": email,

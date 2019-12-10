@@ -9,7 +9,7 @@
 import Foundation
 
 struct CarfieServiceConfiguration: ServiceConfiguration {
-    var baseUrlString: String {
+    private var baseUrlString: String {
         #if DEBUG
             return "https://stage.carfie.com"
         #else
@@ -19,5 +19,14 @@ struct CarfieServiceConfiguration: ServiceConfiguration {
     
     var baseUrl: URL {
         return URL(string: baseUrlString)!
+    }
+    
+    var defaultHeaders: HTTPHeaders? {
+        return [
+            // This XML header needs to be added because most of the service endpoints perform a redirect if the request
+            // does not appear to be an AJAX call. ¯\_(ツ)_/¯
+            "x-requested-with": "XMLHttpRequest",
+            "Content-Type": "application/json"
+        ]
     }
 }

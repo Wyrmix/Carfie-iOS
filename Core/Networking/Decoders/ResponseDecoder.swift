@@ -1,5 +1,5 @@
 //
-//  NetworkParser.swift
+//  ResponseDecoder.swift
 //  Carfie
 //
 //  Created by Christopher Olsen on 10/20/19.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol NetworkParser {
-    static func parse<T: Decodable>(data: Data) throws -> T
+protocol ResponseDecoder {
+    func decode<T: Decodable>(from data: Data) throws -> T
 }

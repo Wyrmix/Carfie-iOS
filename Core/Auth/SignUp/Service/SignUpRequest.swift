@@ -20,12 +20,7 @@ struct SignUpRequest: NetworkRequest {
         }
     }
     
-    var task: HTTPTask {
-        return .request
-    }
-    
     let method: HTTPMethod = .POST
-    let parameters: Parameters = [:]
     let body: Data?
     
     private let theme: AppTheme

@@ -20,12 +20,7 @@ struct GetCardsRequest: NetworkRequest {
         }
     }
     
-    var task: HTTPTask {
-        return .request
-    }
-    
     let method: HTTPMethod = .GET
-    let parameters: Parameters = [:]
     let isAuthorizedRequest: Bool = true
     
     private let theme: AppTheme

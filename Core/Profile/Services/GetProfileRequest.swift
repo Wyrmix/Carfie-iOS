@@ -21,7 +21,6 @@ struct GetProfileRequest: NetworkRequest {
     }
     
     let method: HTTPMethod = .GET
-    let task: HTTPTask = .request
     let isAuthorizedRequest = true
     
     let theme: AppTheme
