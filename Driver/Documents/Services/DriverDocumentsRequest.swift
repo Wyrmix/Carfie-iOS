@@ -13,6 +13,5 @@ struct DriverDocumentsRequest: NetworkRequest {
 
     let path = "/api/provider/profile/documents"
     let method: HTTPMethod = .GET
-    let task: HTTPTask = .request
     let headers: HTTPHeaders? = nil
 }
