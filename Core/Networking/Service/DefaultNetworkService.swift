@@ -67,9 +67,11 @@ public class DefaultNetworkService: NetworkService {
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
+        addHeaders(configuration.defaultHeaders, request: &urlRequest)
+        configureParameters(configuration.defaultParameters, request: &urlRequest)
+        
         addHeaders(request.headers, request: &urlRequest)
         configureBody(request.body, request: &urlRequest)
-        configureParameters(configuration.defaultParameters, request: &urlRequest)
         configureParameters(request.parameters, request: &urlRequest)
         
         return urlRequest
