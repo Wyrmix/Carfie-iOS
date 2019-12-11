@@ -20,7 +20,6 @@ class RideStatusView: UIView {
     @IBOutlet private weak var labelServiceNumber : UILabel!
     @IBOutlet private weak var labelSurgeDescription : UILabel!
     @IBOutlet private weak var buttonCancel : UIButton!
-    @IBOutlet private weak var labelOtp : UILabel!
     @IBOutlet private weak var constraintSurge : NSLayoutConstraint!
     @IBOutlet private weak var labelETA : UILabel!
     
@@ -73,7 +72,6 @@ extension RideStatusView {
     
     private func setDesign() {
         Common.setFont(to: labelETA, isTitle: true)
-        Common.setFont(to: labelOtp, isTitle: true)
         Common.setFont(to: labelTopTitle)
         Common.setFont(to: labelServiceName)
         Common.setFont(to: labelProviderName)
@@ -124,7 +122,6 @@ extension RideStatusView {
                     self.labelETA.isHidden = true
                    return Constants.string.driverArrived.localize()
                 case .pickedup:
-                   self.labelOtp.isHidden = true
                    return Constants.string.youAreOnRide.localize()
                 default:
                   return .Empty
@@ -152,7 +149,6 @@ extension RideStatusView {
         self.labelServiceName.text = values.service?.name
         self.labelServiceNumber.text = values.provider_service?.service_number
         self.labelServiceDescription.text = values.provider_service?.service_model
-        self.labelOtp.text = " \(Constants.string.otp.localize()+": "+String.removeNil(values.otp)) "
         self.isOnSurge = values.surge == 1
     }
     

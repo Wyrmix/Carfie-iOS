@@ -39,31 +39,6 @@ extension HomepageViewController {
         })
     }
     
-    //MARK:- load OTPScreen
-    func loadOtpScreen(){
-       
-        guard self.OTPScreen == nil else {
-            return
-        }
-        
-        self.view.addBlurview { blurView in
-            self.hideSimmerButton()
-            self.OTPScreen = Bundle.main.loadNibNamed(XIB.Names.OTPScreenView, owner: self, options: nil)?.first as? OTPScreenView
-            self.OTPScreen?.frame = CGRect(x: 0, y: self.view.frame.height / 3, width: self.view.frame.width, height: 200)
-            blurView?.contentView.addSubview(self.OTPScreen!)
-            blurView?.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.otpScreenPanGesture(sender:))))
-            self.OTPScreen?.set(number: self.userOtp ?? "0", with: { (status) in
-                
-                if status{
-                    self.LoadUpdateStatusAPI(status: Constants.string.pickedUp)
-                    self.statusChanged(status: requestType.pickedUp.rawValue)
-                }else {
-                    
-                }
-            })
-        }
-    }
-    
     func loadRatingView (){ //Laod Rating View XIB file
         self.loader.isHidden = true
         if self.inVoiceView != nil {
@@ -148,7 +123,6 @@ extension HomepageViewController {
             self.arrviedView?.viewMessage.tag = 1
             
             self.arrviedView?.frame = CGRect(x: 0, y:self.view.frame.height - arrivedBundle.viewVisualEffect.frame.height, width: self.view.frame.width, height: arrivedBundle.viewVisualEffect.frame.height)
-            let gusture = UITapGestureRecognizer(target:self,action: #selector(callImageTapped(sender:)))
             let messageGesture = UITapGestureRecognizer(target: self, action: #selector(callImageTapped(sender:)))
             self.arrviedView?.viewMessage.addGestureRecognizer(messageGesture)
            
@@ -180,95 +154,6 @@ extension HomepageViewController {
             self.inVoiceView?.buttonConfirm.addTarget(self, action: #selector(invoiceConfirmButtontapped(sender:)), for: .touchUpInside)
             self.view.addSubview(self.inVoiceView!)
         }
-    }
-    
-    
-    @IBAction func otpScreenPanGesture(sender: UIPanGestureRecognizer){
-        
-        let threshold : CGFloat = (UIScreen.main.bounds.height/3)
-        guard let senderView = sender.view else {return}
-        var translation = sender.translation(in: self.view).y
-        //guard translation.y < 0 else { return }
-        UIView.animate(withDuration: 0.5) {
-            self.OTPScreen?.center = CGPoint(x: (self.OTPScreen?.center.x)!, y: (self.OTPScreen?.center.y)! + translation)
-        }
-        translation = abs(translation)
-        
-        func removeView(){
-            if translation >= threshold {
-                UIView.animate(withDuration: 0.5, animations: {
-                    senderView.alpha = 0
-                }) { (_) in
-                    senderView.removeFromSuperview()
-                    self.OTPScreen = nil
-                }
-            }
-        }
-        
-        if sender.state == .changed {
-            removeView()
-        } else if sender.state == .ended  {
-            if (translation < threshold ) {
-                UIView.animate(withDuration: 0.5) {
-                    self.OTPScreen?.center = CGPoint(x: senderView.frame.width/2, y: senderView.frame.height/2)
-                }
-            } else {
-                removeView()
-            }
-        }
-        
-        print("Translation  - ",translation, " -    ",threshold)
-        
-
-    /*    self.view.bringSubview(toFront: self.OTPScreen!)
-        let translation = sender.translation(in: self.OTPScreen)
-        print("translation: \(translation.y)")
-        UIView.animate(withDuration: 0.5) {
-             self.OTPScreen?.center = CGPoint(x: (self.OTPScreen?.center.x)!, y: (self.OTPScreen?.center.y)! + translation.y)
-        }
-        guard translation.y > 0 else { return }
-        
-        //self.OTPScreen?.center = CGPoint(x: (self.OTPScreen?.center.x)!, y: (self.OTPScreen?.center.y)! + translation.y)
-        switch sender.state {
-        case .began:
-            print("began")
-            break
-        case .cancelled:
-            print("cancelled")
-            break
-        case .changed:
-            print("changed")
-            break
-        case .ended:
-            print("end")
-            if translation.y >= 100.0 {
-                print("dismiss")
-                self.view.removeBlurView()
-                self.OTPScreen?.dismissView(onCompletion: {
-                    self.OTPScreen = nil
-                })
-                //self.inVoiceView?.showAnimateView(self.inVoiceView!, isShow: false, direction: .Bottom)
-            }else {
-                print("up")
-            }
-//            self.view.removeBlurView()
-//            self.OTPScreen?.dismissView(onCompletion: {
-//                self.OTPScreen = nil
-//            })
-           // self.inVoiceView?.showAnimateView(self.inVoiceView!, isShow: false, direction: .Bottom)
-            break
-        case .failed:
-            print("faild")
-            break
-        case .possible:
-            print("possible")
-            break
-        default:
-            print("default")
-            break
-        }
-      
-        //sender.setTranslation(CGPoint.zero, in: self.view) */
     }
     
     func hideSimmerButton(){
