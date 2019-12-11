@@ -43,7 +43,6 @@ class HomepageViewController: UIViewController, UITextFieldDelegate {
      var arrviedView : rideArrivedView?
      var userOfflineView : offlineView?
      var inVoiceView : invoiceView?
-     var OTPScreen : OTPScreenView?
      var ratingViewNib : RatingView?
      var requestDetail: GetRequestModelResponse?
     private var sourceMarker = GMSMarker()
@@ -446,9 +445,6 @@ extension HomepageViewController {
                         self.arrviedView?.dismissView(onCompletion: {
                             self.arrviedView = nil
                         })
-                        self.OTPScreen?.dismissView(onCompletion: {
-                            self.OTPScreen = nil
-                        })
                         self.ratingViewNib?.dismissView(onCompletion: {
                             self.ratingViewNib = nil
                         })
@@ -482,9 +478,6 @@ extension HomepageViewController {
                     })
                     self.arrviedView?.dismissView(onCompletion: {
                         self.arrviedView = nil
-                    })
-                    self.OTPScreen?.dismissView(onCompletion: {
-                        self.OTPScreen = nil
                     })
                     self.ratingViewNib?.dismissView(onCompletion: {
                         self.ratingViewNib = nil
@@ -910,7 +903,8 @@ extension HomepageViewController {
         
         if requestStatus == requestType.arrived.rawValue {
             self.loader.isHidden = true
-            self.loadOtpScreen()
+            self.LoadUpdateStatusAPI(status: Constants.string.pickedUp)
+            self.statusChanged(status: requestType.pickedUp.rawValue)
         }else if requestStatus == requestType.pickedUp.rawValue {
             self.loader.isHidden = false
             self.statusChanged(status: requestType.dropped.rawValue)
@@ -953,7 +947,6 @@ extension HomepageViewController {
             self.arrviedView?.arrivedBtn.setTitle( Constants.string.pickedUp.localize().uppercased(), for: .normal)
             
         case requestType.pickedUp.rawValue:
-            self.OTPScreen?.removeFromSuperview()
             self.view.removeBlurView()
             self.LoadUpdateStatusAPI(status: Constants.string.pickedUp)
             self.arrviedView?.arrivedBtn.setTitle(Constants.string.tapWhenDropped.localize(), for: .normal)

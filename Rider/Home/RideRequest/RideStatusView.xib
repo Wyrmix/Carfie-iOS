@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -218,24 +218,6 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fNm-Rj-eYl">
-                    <rect key="frame" x="16" y="24" width="0.0" height="0.0"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="size" keyPath="offsetShadow">
-                            <size key="value" width="0.5" height="0.5"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="opacityShadow">
-                            <real key="value" value="0.5"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="colorShadow">
-                            <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vG4-NT-ruc">
                     <rect key="frame" x="344" y="24" width="0.0" height="0.0"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -257,29 +239,20 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="iN0-l3-epB" firstAttribute="top" secondItem="fNm-Rj-eYl" secondAttribute="bottom" constant="4" id="2Go-9U-g0M"/>
                 <constraint firstItem="vG4-NT-ruc" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" constant="-16" id="4gH-5p-tZl"/>
                 <constraint firstItem="iN0-l3-epB" firstAttribute="leading" secondItem="Vz3-PI-Bcs" secondAttribute="leading" id="7QW-n6-TwP"/>
                 <constraint firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="IMt-t4-wPb"/>
                 <constraint firstItem="q1j-YP-CUQ" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="LAm-TD-AtK"/>
-                <constraint firstItem="fNm-Rj-eYl" firstAttribute="leading" secondItem="q1j-YP-CUQ" secondAttribute="leading" constant="16" id="XIs-ed-cVI"/>
-                <constraint firstItem="q1j-YP-CUQ" firstAttribute="trailing" secondItem="fNm-Rj-eYl" secondAttribute="trailing" placeholder="YES" id="jIy-J2-3bs"/>
                 <constraint firstItem="vG4-NT-ruc" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="top" constant="-4" id="nSg-aj-E72"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="q1j-YP-CUQ"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="jIy-J2-3bs"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="buttonCancel" destination="Gee-J5-q4F" id="VLO-C3-Edt"/>
                 <outlet property="constraintSurge" destination="PWP-VF-u39" id="fYU-ib-m3w"/>
                 <outlet property="imageViewProvider" destination="vyy-GX-Rsa" id="TpY-8O-pJe"/>
                 <outlet property="imageViewService" destination="Oa0-6j-TA5" id="gKs-KS-lZK"/>
                 <outlet property="labelETA" destination="vG4-NT-ruc" id="CUT-Og-5pc"/>
-                <outlet property="labelOtp" destination="fNm-Rj-eYl" id="MRI-gW-q9m"/>
                 <outlet property="labelProviderName" destination="Ayw-68-fQL" id="Yaw-25-2Bf"/>
                 <outlet property="labelServiceDescription" destination="yVO-c7-9LI" id="ddc-jT-IrB"/>
                 <outlet property="labelServiceName" destination="OCt-8u-iJ1" id="d0r-71-1bU"/>
