@@ -37,5 +37,9 @@ struct SignUp {
         static let enterADOB = "You must enter a date of birth"
         static let invalidDOB = "You must enter a valid date of birth in format XX-XX-XXXX"
         static let notTwentyOne = "You must be 21 years old to drive with Carfie"
+        
+        // Vehicle Year
+        static let enterAVehicleYear = "You must enter a vehicle year"
+        static let notAValidYear = "You must enter a valid model year"
     }
 }

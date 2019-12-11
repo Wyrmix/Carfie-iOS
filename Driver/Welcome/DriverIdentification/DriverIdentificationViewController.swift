@@ -13,6 +13,7 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
         let interactor = DriverIdentificationInteractor()
         let viewController = DriverIdentificationViewController(interactor: interactor)
         interactor.viewController = viewController
+        interactor.start()
         return viewController
     }
     
@@ -59,16 +60,34 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
     
     private let licensePlateTextInputView = CarfieTextInputView(
         title: "License Plate Number",
+        autocorrectionType: .no,
+        validator: EmptyFieldValidator()
+    )
+    
+    private let vehicleMakeTextInputView = CarfieTextInputView(
+        title: "Vehicle Make",
+        placeholder: "e.g. Toyota",
+        autocorrectionType: .no,
         validator: EmptyFieldValidator()
     )
     
     private let vehicleModelTextInputView = CarfieTextInputView(
         title: "Vehicle Model",
+        placeholder: "e.g. Corolla",
+        autocorrectionType: .no,
         validator: EmptyFieldValidator()
+    )
+    
+    private let vehicleYearTextInputView = CarfieTextInputView(
+        title: "Vehicle Year",
+        placeholder: "e.g. 2019",
+        autocorrectionType: .no,
+        validator: VehicleYearValidator()
     )
     
     private let vehicleTypeTextInputView = CarfieTextInputView(
         title: "Ride Type",
+        autocorrectionType: .no,
         validator: EmptyFieldValidator()
     )
     
@@ -112,7 +131,21 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
         addGradientLayer()
         setupPickerView()
         
-        [socialSecurityNumberTextInputView, licensePlateTextInputView, vehicleModelTextInputView, vehicleTypeTextInputView].forEach {
+        let personalInfoInputViews = [
+            socialSecurityNumberTextInputView,
+            dateOfBirthTextInputView,
+        ]
+        
+        let vehicleInputViews = [
+            licensePlateTextInputView,
+            vehicleMakeTextInputView,
+            vehicleModelTextInputView,
+            vehicleYearTextInputView,
+            vehicleTypeTextInputView,
+        ]
+        
+        (personalInfoInputViews + vehicleInputViews).forEach {
+            $0.textField.returnKeyType = .done
             $0.delegate = interactor
             $0.errorMessageLabel.textColor = AppTheme.driver.primaryColor
         }
@@ -125,12 +158,12 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(containerView)
         
-        let vehicleInfoStackView = UIStackView(arrangedSubviews: [carInfoTitle, licensePlateTextInputView, vehicleModelTextInputView, vehicleTypeTextInputView])
+        let vehicleInfoStackView = UIStackView(arrangedSubviews: [carInfoTitle] + vehicleInputViews)
         vehicleInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         vehicleInfoStackView.axis = .vertical
         vehicleInfoStackView.spacing = 8
         
-        let personalInfoStackView = UIStackView(arrangedSubviews: [socialSecurityNumberTextInputView, dateOfBirthTextInputView])
+        let personalInfoStackView = UIStackView(arrangedSubviews: personalInfoInputViews)
         personalInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         personalInfoStackView.axis = .vertical
         personalInfoStackView.spacing = 8
@@ -211,13 +244,17 @@ class DriverIdentificationViewController: UIViewController, OnboardingScreen {
         _ = socialSecurityNumberTextInputView.validate()
         _ = dateOfBirthTextInputView.validate()
         _ = licensePlateTextInputView.validate()
+        _ = vehicleMakeTextInputView.validate()
         _ = vehicleModelTextInputView.validate()
+        _ = vehicleYearTextInputView.validate()
         _ = vehicleTypeTextInputView.validate()
         
         interactor.saveDriverInformation(
             ssn: socialSecurityNumberTextInputView.text,
             dateOfBirth: dateOfBirthTextInputView.text,
+            make: vehicleMakeTextInputView.text,
             model: vehicleModelTextInputView.text,
+            year: vehicleYearTextInputView.text,
             number: licensePlateTextInputView.text
         )
     }

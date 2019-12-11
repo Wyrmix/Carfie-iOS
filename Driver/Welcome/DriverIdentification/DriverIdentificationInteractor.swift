@@ -14,7 +14,7 @@ class DriverIdentificationInteractor: NSObject {
     /// Text field that is currently being edited by the use
     private var activeTextInputView: CarfieTextInputView?
     
-    private var selectedVehicleType: Int?
+    private var selectedVehicleType: Int = 0
     
     let profileController: ProfileController
     
@@ -24,27 +24,34 @@ class DriverIdentificationInteractor: NSObject {
         addObservers()
     }
     
+    func start() {
+        // set default value for picker view
+        viewController?.presentVehicleType(VehicleType.allCases[selectedVehicleType].description)
+    }
+    
     private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func saveDriverInformation(ssn: String?, dateOfBirth: String?, model: String?, number: String?) {
+    func saveDriverInformation(ssn: String?, dateOfBirth: String?, make: String?, model: String?, year: String?, number: String?) {
         do {
             let ssn = try SSNValidator().validate(ssn).resolve()
             let dateOfBirth = try DateOfBirthValidator().validate(dateOfBirth).resolve()
+            let make = try EmptyFieldValidator().validate(make).resolve()
             let model = try EmptyFieldValidator().validate(model).resolve()
+            let year = try VehicleYearValidator().validate(year).resolve()
             let number = try EmptyFieldValidator().validate(number).resolve()
-            updateProfile(withSSN: ssn, dateOfBirth: dateOfBirth, model: model, number: number)
+            updateProfile(withSSN: ssn, dateOfBirth: dateOfBirth, model: "\(make) \(model) \(year)", number: number)
         } catch {
             return
         }
     }
     
-    func updateProfile(withSSN ssn: String, dateOfBirth: String, model: String, number: String) {
+    private func updateProfile(withSSN ssn: String, dateOfBirth: String, model: String, number: String) {
         viewController?.animateNetworkActivity(true)
         
-        guard let typeIndex = selectedVehicleType, let vehicleType = VehicleType(rawValue: typeIndex) else { return }
+        guard let vehicleType = VehicleType(rawValue: selectedVehicleType) else { return }
         
         let vehicleIdentification = VehicleIdentification(model: model, number: number, type: vehicleType)
         let info = DriverIdentification(ssn: ssn, dateOfBirth: dateOfBirth, vehicleIdentification: vehicleIdentification)
