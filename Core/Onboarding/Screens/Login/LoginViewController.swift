@@ -61,6 +61,13 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    private let forgotPasswordButton: CarfieSecondaryButton = {
+        let button = CarfieSecondaryButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Forgot password", for: .normal)
+        return button
+    }()
+    
     // MARK: Inits
     
     init(theme: AppTheme, interactor: LoginInteractor) {
@@ -84,6 +91,7 @@ class LoginViewController: UIViewController {
         
         signInButton.addTarget(self, action: #selector(signInButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(cancelButtonTouchUpInside(_:)), for: .touchUpInside)
+        forgotPasswordButton.addTarget(self, action: #selector(forgotPasswordButtonTouchUpInside(_:)), for: .touchUpInside)
         
         [emailTextInputView, passwordTextInputView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +105,7 @@ class LoginViewController: UIViewController {
         backgroundView.addSubview(passwordTextInputView)
         backgroundView.addSubview(signInButton)
         backgroundView.addSubview(cancelButton)
+        backgroundView.addSubview(forgotPasswordButton)
         
         NSLayoutConstraint.activate([
             backgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -123,8 +132,11 @@ class LoginViewController: UIViewController {
             cancelButton.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 8),
             cancelButton.heightAnchor.constraint(equalToConstant: 44),
             cancelButton.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            cancelButton.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -8),
             
+            forgotPasswordButton.topAnchor.constraint(equalTo: cancelButton.bottomAnchor),
+            forgotPasswordButton.heightAnchor.constraint(equalToConstant: 44),
+            forgotPasswordButton.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            forgotPasswordButton.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -8),
         ])
     }
     
@@ -151,5 +163,9 @@ class LoginViewController: UIViewController {
     
     @objc private func cancelButtonTouchUpInside(_ sender: Any?) {
         interactor.cancelLogin()
+    }
+    
+    @objc private func forgotPasswordButtonTouchUpInside(_ sender: CarfieSecondaryButton?) {
+        interactor.showForgotPassword()
     }
 }

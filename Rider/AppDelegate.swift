@@ -51,6 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //
         // If user data does not exist we will show login.
         shouldShowLogin = !retrieveUserData()
+        
+        syncProfile()
 
         configureRootInteractor()
         DispatchQueue.global(qos: .background).async {
@@ -106,6 +108,14 @@ extension AppDelegate: RootContainerInteractorDelegate {
     
     func onboardingDidComplete() {
         rootContainerInteractor.dismissOnboardingExperience()
+    }
+}
+
+// MARK: - Profile
+extension AppDelegate {
+    private func syncProfile() {
+        guard !shouldShowLogin else { return }
+        profileController.fetchProfile(theme: .rider) { _ in }
     }
 }
 
