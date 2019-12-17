@@ -119,9 +119,9 @@ extension SideBarTableViewController {
     // MARK:- ImageView Action
     
     @IBAction private func imageViewAction() {
-        let homeVC = Router.user.instantiateViewController(withIdentifier: Storyboard.Ids.ProfileViewController)
-        (self.drawerController?.getViewController(for: .none) as? UINavigationController)?.pushViewController(homeVC, animated: true)
-        self.drawerController?.closeSide()
+        let profileViewController = NewProfileViewController.viewController()
+        (drawerController?.getViewController(for: .none) as? UINavigationController)?.pushViewController(profileViewController, animated: true)
+        drawerController?.closeSide()
     }
     
     

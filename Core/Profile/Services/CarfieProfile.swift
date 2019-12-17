@@ -14,8 +14,8 @@ struct CarfieProfile: Codable {
     var lastName: String
     var email: String
     var mobile: String
-    let avatar: String? // driver photo
-    let picture: String? // rider photo
+    var avatar: String? // driver photo
+    var picture: String? // rider photo
     let deviceToken: String?
     let accessToken: String?
     let currency: String?
