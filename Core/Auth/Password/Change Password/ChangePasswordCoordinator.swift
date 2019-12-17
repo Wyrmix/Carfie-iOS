@@ -85,23 +85,40 @@ class ChangePasswordCoordinator {
             
             viewState.updatePasswordRequestInProgress = true
             
-            passwordService.resetPassword(
-                forUserId: viewState.profile.id,
-                oldPassword: oldPassword,
-                toNewPassword: newPassword,
-                withConfirmation: confirmPassword
-            ) { [weak self] result in
-                self?.viewState.updatePasswordRequestInProgress = false
-                
-                switch result {
-                case .success:
-                    self?.showSuccessAlert()
-                case .failure:
-                    return
-                }
+            switch viewState.changeType {
+            case .forgot:
+                resetPassword(otp: oldPassword, newPassword: newPassword, confirmPassword: confirmPassword)
+            case .update:
+                changePassword(oldPassword: oldPassword, newPassword: newPassword, confirmPassword: confirmPassword)
             }
         } catch {
             return
+        }
+    }
+    
+    private func resetPassword(otp: String, newPassword: String, confirmPassword: String) {
+        passwordService.resetPassword(forUserId: viewState.profile.id, otp: otp, toNewPassword: newPassword, withConfirmation: confirmPassword) { [weak self] result in
+            self?.viewState.updatePasswordRequestInProgress = false
+            
+            switch result {
+            case .success:
+                self?.showSuccessAlert()
+            case .failure:
+                return
+            }
+        }
+    }
+    
+    private func changePassword(oldPassword: String, newPassword: String, confirmPassword: String) {
+        passwordService.changePassword(oldPassword, toNewPassword: newPassword, withConfirmation: confirmPassword) { [weak self] result in
+            self?.viewState.updatePasswordRequestInProgress = false
+            
+            switch result {
+            case .success:
+                self?.showSuccessAlert()
+            case .failure:
+                return
+            }
         }
     }
     

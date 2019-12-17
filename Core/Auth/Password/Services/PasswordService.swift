@@ -10,7 +10,8 @@ import Foundation
 
 protocol PasswordService {
     func requestPasswordResetOTP(forEmail email: String, completion: @escaping (Result<ForgotPasswordResponse>) -> Void)
-    func resetPassword(forUserId id: Int, oldPassword: String, toNewPassword newPassword: String, withConfirmation confirmPassword: String, completion: @escaping (Result<ResetPasswordResponse>) -> Void)
+    func resetPassword(forUserId id: Int, otp: String, toNewPassword newPassword: String, withConfirmation confirmPassword: String, completion: @escaping (Result<ResetPasswordResponse>) -> Void)
+    func changePassword(_ oldPassword: String, toNewPassword newPassword: String, withConfirmation confirmPassword: String, completion: @escaping (Result<ChangePasswordResponse>) -> Void)
 }
 
 class DefaultPasswordService: PasswordService {
@@ -27,9 +28,17 @@ class DefaultPasswordService: PasswordService {
         }
     }
     
-    func resetPassword(forUserId id: Int, oldPassword: String, toNewPassword newPassword: String, withConfirmation confirmPassword: String, completion: @escaping (Result<ResetPasswordResponse>) -> Void) {
-        let passwordData = ChangePasswordData(id: id, oldPassword: oldPassword, newPassword: newPassword, confirmPassword: confirmPassword)
-        let request = ResetPasswordRequest(changePasswordData: passwordData)
+    func resetPassword(forUserId id: Int, otp: String, toNewPassword newPassword: String, withConfirmation confirmPassword: String, completion: @escaping (Result<ResetPasswordResponse>) -> Void) {
+        let passwordData = ResetPasswordData(id: id, otp: otp, newPassword: newPassword, confirmPassword: confirmPassword)
+        let request = ResetPasswordRequest(resetPasswordData: passwordData)
+        service.request(request) { result in
+            completion(result)
+        }
+    }
+    
+    func changePassword(_ oldPassword: String, toNewPassword newPassword: String, withConfirmation confirmPassword: String, completion: @escaping (Result<ChangePasswordResponse>) -> Void) {
+        let passwordData = ChangePasswordData(oldPassword: oldPassword, newPassword: newPassword, confirmPassword: confirmPassword)
+        let request = ChangePasswordRequest(changePasswordData: passwordData)
         service.request(request) { result in
             completion(result)
         }

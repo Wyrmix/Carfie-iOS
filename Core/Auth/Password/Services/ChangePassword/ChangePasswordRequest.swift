@@ -1,5 +1,5 @@
 //
-//  ResetPasswordRequest.swift
+//  ChangePasswordRequest.swift
 //  Carfie
 //
 //  Created by Christopher Olsen on 12/16/19.
@@ -8,27 +8,28 @@
 
 import Foundation
 
-struct ResetPasswordResponse: Codable {
+struct ChangePasswordResponse: Codable {
     let message: String
 }
 
-struct ResetPasswordRequest: NetworkRequest {
-    typealias Response = ResetPasswordResponse
+struct ChangePasswordRequest: NetworkRequest {
+    typealias Response = ChangePasswordResponse
     
     var path: String {
         #if RIDER
-            return "/api/user/reset/password"
+            return "/api/user/forgot/password"
         #else
-            return "/api/provider/reset/password"
+            return "/api/provider/forgot/password"
         #endif
     }
     
     let method: HTTPMethod = .POST
     let body: Data?
+    let isAuthorizedRequest = true
     
-    init(resetPasswordData: ResetPasswordData) {
+    init(changePasswordData: ChangePasswordData) {
         do {
-            body = try JSONEncoder().encode(resetPasswordData)
+            body = try JSONEncoder().encode(changePasswordData)
         } catch {
             assertionFailure("Email object failed to encode")
             body = nil

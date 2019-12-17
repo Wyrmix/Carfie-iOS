@@ -42,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If user data does not exist we will show login.
         shouldShowLogin = !retrieveUserData()
         
+        syncProfile()
+        
         configureRootInteractor()
 
         registerForLocationUpdates()
@@ -82,6 +84,14 @@ extension AppDelegate: RootContainerInteractorDelegate {
     
     func onboardingDidComplete() {
         rootContainerInteractor.dismissOnboardingExperience()
+    }
+}
+
+// MARK: - Profile
+extension AppDelegate {
+    private func syncProfile() {
+        guard !shouldShowLogin else { return }
+        profileController.fetchProfile(theme: .driver) { _ in }
     }
 }
 
