@@ -233,10 +233,9 @@ extension ProfileViewController {
     //MARK:- Button Change Password Action
     
     @IBAction private func changePasswordAction() {
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.ChangeResetPasswordController) as? ChangeResetPasswordController {
-            vc.isChangePassword = true
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        guard let profile = DefaultProfileRepository().profile else { return }
+        let viewController = ChangePasswordViewController.viewController(for: .update, and: profile)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func showRevokePermissionsDialog() {

@@ -22,14 +22,16 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Rider/Rider.entitlements
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: MVJFXK77H6
-        CURRENT_PROJECT_VERSION: 1
+        CURRENT_PROJECT_VERSION: 2
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"
           PROVISIONING_PROFILE_SPECIFIER: "Carfie Rider Dev"
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: RIDER DEBUG
         Release:
           CODE_SIGN_IDENTITY: "iPhone Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Carfie Rider Distribution"
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: RIDER
     postBuildScripts:
       - path: fabric-run.sh
         name: Fabric Run
@@ -51,7 +53,7 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Driver/Driver.entitlements
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: MVJFXK77H6
-        CURRENT_PROJECT_VERSION: 1
+        CURRENT_PROJECT_VERSION: 2
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "iPhone Developer"

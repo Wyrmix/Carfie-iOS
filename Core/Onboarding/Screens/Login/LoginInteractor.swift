@@ -6,7 +6,7 @@
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class LoginInteractor {
     weak var viewController: LoginViewController?
@@ -32,6 +32,12 @@ class LoginInteractor {
     
     func cancelLogin() {
         delegate?.loginCancelled()
+    }
+    
+    func showForgotPassword() {
+        let forgotPasswordViewController = NewForgotPasswordViewController.viewController()
+        let navigationController = UINavigationController(rootViewController: forgotPasswordViewController)
+        viewController?.present(navigationController, animated: true)
     }
     
     private func getUserProfile() {
