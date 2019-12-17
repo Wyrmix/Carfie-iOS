@@ -67,19 +67,6 @@ class ChangePasswordCoordinator {
     func updatePassword(old: String?, new: String?, confirm: String?) {
         do {
             let oldPassword = try EmptyFieldValidator().validate(old).resolve()
-            
-            // If this is a forgot password request we need to validate the OTP. The server will handle
-            // the password update validation.
-            if viewState.changeType == .forgot {
-                guard let otp = viewState.profile.otp, oldPassword == "\(otp)" else {
-                    UserFacingErrorIntent(
-                        title: "Incorrect OTP",
-                        message: "Please enter the correct OTP from your email and try again. If you did not receive and OTP please return to the previous screen and request a new one."
-                    ).execute(via: viewController)
-                    return
-                }
-            }
-            
             let newPassword = try PasswordValidator().validate(new).resolve()
             let confirmPassword = try MatchingFieldValidator(fieldToMatch: newPassword).validate(confirm).resolve()
             
