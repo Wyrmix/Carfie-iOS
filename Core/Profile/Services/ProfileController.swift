@@ -29,7 +29,7 @@ protocol ProfileController {
     /// - Parameter profile: object with updated information
     /// - Parameter theme: current app target
     /// - Parameter completion: called on completion with success or failure
-    func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
+    func updateProfile(_ profile: CarfieProfile, completion: @escaping (Result<CarfieProfile>) -> Void)
     
     /// Update the User's vehicle and identification info. This is only valid for the Driver app.
     /// - Parameter identification: info to update
@@ -80,8 +80,8 @@ class CarfieProfileController: ProfileController {
         }
     }
     
-    func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
-        profileService.updateProfile(profile, theme: theme) { result in
+    func updateProfile(_ profile: CarfieProfile, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        profileService.updateProfile(profile) { result in
             switch result {
             case .success(let profile):
                 self.profileRepository.profile = profile
@@ -123,7 +123,7 @@ class CarfieProfileController: ProfileController {
         profile.email = info.email
         profile.mobile = info.mobile
         
-        updateProfile(profile, theme: theme) { result in
+        updateProfile(profile) { result in
             completion(result)
         }
     }

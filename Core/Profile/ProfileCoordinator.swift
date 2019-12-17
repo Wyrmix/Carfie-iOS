@@ -23,9 +23,15 @@ class ProfileCoordinator {
     private var activeTextInputView: CarfieTextInputView?
     
     private let profileRepository: ProfileRepository
+    private let profileController: ProfileController
     
-    init(profileRepository: ProfileRepository = DefaultProfileRepository()) {
+    init(
+        profileRepository: ProfileRepository = DefaultProfileRepository(),
+        profileController: ProfileController = CarfieProfileController()
+    ) {
         self.profileRepository = profileRepository
+        self.profileController = profileController
+        
         self.viewState = ProfileCoordinatorViewState(profile: profileRepository.profile)
     }
     
@@ -37,6 +43,51 @@ class ProfileCoordinator {
     private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func selectProfilePhoto() {
+        guard let presenter = viewController else { return }
+        
+        ImagePickerLauncherIntent(libraryCompletion: { _ in
+            ImagePickerIntent(for: .photoLibrary)?.execute(via: presenter)
+        }, cameraCompletion: { _ in
+            ImagePickerIntent(for: .camera)?.execute(via: presenter)
+        }).execute(via: presenter)
+    }
+    
+    func setPhoto(_ image: UIImage?) {
+        guard let image = image else { return }
+        viewState.profilePhoto = image
+    }
+    
+    func updateProfile(firstName: String?, lastName: String?) {
+        do {
+            viewState.profile?.firstName = try EmptyFieldValidator().validate(firstName).resolve()
+            viewState.profile?.lastName = try EmptyFieldValidator().validate(lastName).resolve()
+            
+            viewState.updateProfileRequestInProgress = true
+            
+            guard let profile = viewState.profile else { return }
+            
+            profileController.updateProfile(profile) { [weak self] result in
+                self?.viewState.updateProfileRequestInProgress = false
+                
+                do {
+                    self?.viewState.profile = try result.resolve()
+                    UserFacingErrorIntent(title: "Success", message: "Your profile has been updated.").execute(via: self?.viewController)
+                } catch {
+                    UserFacingErrorIntent(title: "Something went wrong.", message: "Please try again.").execute(via: self?.viewController)
+                }
+            }
+        } catch {
+            return
+        }
+    }
+    
+    func showChangePassword() {
+        guard let profile = viewState.profile else { return }
+        let changePasswordViewController = ChangePasswordViewController.viewController(for: .update, and: profile)
+        viewController?.present(changePasswordViewController, animated: true)
     }
 }
 

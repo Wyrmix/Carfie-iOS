@@ -6,8 +6,10 @@
 //  Copyright © 2019 Carfie. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct ProfileCoordinatorViewState {
+    var profilePhoto: UIImage? = UIImage(named: "EmptyUserImage")
     var profile: CarfieProfile?
+    var updateProfileRequestInProgress: Bool = false
 }

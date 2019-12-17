@@ -138,15 +138,7 @@ extension ProfileViewController {
     
     // MARK:- Show Image
     
-    @IBAction private func changeImage(){
-        
-        self.showImage { (image) in
-            if image != nil {
-                self.imageViewProfile.image = image?.resizeImage(newWidth: 200)
-                self.changedImage = self.imageViewProfile.image
-            }
-        }
-    }
+    @IBAction private func changeImage(){}
     
     
     // MARK:- Trip Type Action

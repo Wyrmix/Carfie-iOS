@@ -36,17 +36,19 @@ class NewProfileViewController: UIViewController {
     
     private let firstNameTextInputView = CarfieTextInputView(title: "First Name", placeholder: "ex John", autocorrectionType: .no, validator: EmptyFieldValidator())
     private let lastNameTextInputView = CarfieTextInputView(title: "Last Name", placeholder: "ex Smith", autocorrectionType: .no, validator: EmptyFieldValidator())
-    private let phoneNumberTextInputView = CarfieTextInputView(title: "Phone Number", placeholder: "ex 6518754689", keyboardType: .phonePad, validator: PhoneValidator())
-    private let emailTextInputView = CarfieTextInputView(title: "Email", placeholder: "ex youremail@mail.com", keyboardType: .emailAddress, autocorrectionType: .no, validator: EmailValidator())
+    private let phoneNumberTextInputView = CarfieTextInputView(title: "Phone Number", placeholder: "ex 6518754689")
+    private let emailTextInputView = CarfieTextInputView(title: "Email", placeholder: "ex youremail@mail.com")
     
     private let saveButton: AnimatedCarfieButton = {
         let button = AnimatedCarfieButton()
+        button.addTarget(self, action: #selector(saveButtonTouchUpInside(_:)), for: .touchUpInside)
         button.setTitle("Save", for: .normal)
         return button
     }()
     
     private let updatePasswordButton: CarfieSecondaryButton = {
         let button = CarfieSecondaryButton()
+        button.addTarget(self, action: #selector(updatePasswordButtonTouchUpInside(_:)), for: .touchUpInside)
         button.setTitle("Change your password", for: .normal)
         return button
     }()
@@ -73,10 +75,17 @@ class NewProfileViewController: UIViewController {
         navigationController?.navigationBar.backItem?.title = ""
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profileImageView.cornerRadius = profileImageView.bounds.height / 2
+        profileImageView.maskToBounds = true
+    }
+    
     // MARK: Setup
     
     private func setupPresenter() {
         coordinator.presenter = ProfilePresenter(
+            profileImageView: profileImageView,
             firstNameTextInputView: firstNameTextInputView,
             lastNameTextInputView: lastNameTextInputView,
             phoneNumberTextInputView: phoneNumberTextInputView,
@@ -89,9 +98,17 @@ class NewProfileViewController: UIViewController {
         title = "Profile"
         view.backgroundColor = .white
         
-        [firstNameTextInputView, lastNameTextInputView, phoneNumberTextInputView, emailTextInputView].forEach {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageViewDidTapInside(_:)))
+        profileImageView.addGestureRecognizer(tapGesture)
+        profileImageView.isUserInteractionEnabled = true
+        
+        [firstNameTextInputView, lastNameTextInputView].forEach {
             $0.delegate = coordinator
         }
+        
+        // User cannot change these values in app.
+        phoneNumberTextInputView.textField.isUserInteractionEnabled = false
+        emailTextInputView.textField.isUserInteractionEnabled = false
         
         view.addSubview(scrollView)
         
@@ -133,8 +150,8 @@ class NewProfileViewController: UIViewController {
             phoneNumberTextInputView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor),
             emailTextInputView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor),
             
-            profileImageView.widthAnchor.constraint(equalToConstant: 100),
-            profileImageView.heightAnchor.constraint(equalToConstant: 100),
+            profileImageView.widthAnchor.constraint(equalToConstant: 120),
+            profileImageView.heightAnchor.constraint(equalToConstant: 120),
             
             saveButton.widthAnchor.constraint(equalToConstant: 170),
             saveButton.heightAnchor.constraint(equalToConstant: 44),
@@ -144,11 +161,49 @@ class NewProfileViewController: UIViewController {
     }
     
     // MARK: Selectors
+    
+    @objc private func profileImageViewDidTapInside(_ sender: UIImageView?) {
+        coordinator.selectProfilePhoto()
+    }
+    
+    @objc private func saveButtonTouchUpInside(_ sender: AnimatedCarfieButton?) {
+        _ = firstNameTextInputView.validate()
+        _ = lastNameTextInputView.validate()
+        
+        coordinator.updateProfile(
+            firstName: firstNameTextInputView.text,
+            lastName: lastNameTextInputView.text
+        )
+    }
+    
+    @objc private func updatePasswordButtonTouchUpInside(_ sender: CarfieSecondaryButton?) {
+        coordinator.showChangePassword()
+    }
 }
 
 // MARK: - ScrollableView
 extension NewProfileViewController: ScrollableView {
     var containingView: UIView {
         return view
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+extension NewProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true) { [ weak self] in
+            guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+                self?.coordinator.setPhoto(nil)
+                return
+            }
+            
+            self?.coordinator.setPhoto(image)
+        }
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true) { [weak self] in
+            self?.coordinator.setPhoto(nil)
+        }
     }
 }

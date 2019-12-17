@@ -10,7 +10,7 @@ import Foundation
 
 protocol ProfileService {
     func getProfile(theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
-    func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
+    func updateProfile(_ profile: CarfieProfile, completion: @escaping (Result<CarfieProfile>) -> Void)
     func updateAPNSData(_ data: APNSData, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void)
     func updateDriverIdentification(_ identification: DriverIdentification, completion: @escaping (Result<CarfieProfile>) -> Void)
 }
@@ -29,8 +29,8 @@ class DefaultProfileService: ProfileService {
         }
     }
     
-    func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
-        let request = UpdateProfileRequest(theme: theme, profile: profile)
+    func updateProfile(_ profile: CarfieProfile, completion: @escaping (Result<CarfieProfile>) -> Void) {
+        let request = UpdateProfileRequest(profile: profile)
         service.request(request) { result in
             completion(result)
         }
