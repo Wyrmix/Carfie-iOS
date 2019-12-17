@@ -11,4 +11,14 @@ import Foundation
 struct ForgotPasswordResponse: Codable {
     let message: String
     let user: CarfieProfile
+    
+    enum CodingKeys: String, CodingKey {
+        case message
+        
+        #if RIDER
+        case user
+        #else
+        case user = "provider"
+        #endif
+    }
 }
