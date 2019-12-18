@@ -37,7 +37,7 @@ class SettingTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationController?.pushViewController(DocumentsViewController.viewController(), animated: true)
+        navigationController?.pushViewController(DocumentsViewController.viewController(allDocumentsAreRequired: false), animated: true)
     }
 }
 

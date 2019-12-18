@@ -15,7 +15,7 @@ struct DriverWelcomeConfiguration: WelcomeConfiguration {
             CarfieSignUpViewController.viewController(theme: .driver),
             DriverIdentificationViewController.viewController(),
             LocationPermissionsViewController.viewController(theme: .driver),
-            DocumentsViewController.viewController(),
+            DocumentsViewController.viewController(allDocumentsAreRequired: true),
         ]
     }
     
