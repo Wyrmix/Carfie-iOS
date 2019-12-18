@@ -33,7 +33,7 @@ class AppVersionView: UIView {
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = "App Version: \(appVersion)"
         } else {
-            versionLabel.text = .Empty
+            versionLabel.text = ""
         }
         
         NSLayoutConstraint.activate([
