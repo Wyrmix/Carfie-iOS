@@ -202,6 +202,14 @@ extension SideBarTableViewController {
         
         self.drawerController?.closeSide()
     }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return AppVersionView()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 44
+    }
 }
 
 
