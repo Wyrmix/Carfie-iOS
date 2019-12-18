@@ -31,18 +31,16 @@ class WalletTransferViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Transfer"
+        navigationController?.isNavigationBarHidden = false
         self.initialLoads()
         self.localize()
         self.setDesign()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.backItem?.title = ""
         self.viewWillAppearCustom()
     }
     
@@ -63,8 +61,6 @@ extension WalletTransferViewController {
         self.tableViewWallet.dataSource = self
         self.tableViewWallet.register(UINib(nibName: XIB.Names.WalletListTableViewCell, bundle: nil), forCellReuseIdentifier: XIB.Names.WalletListTableViewCell)
         self.tableViewWallet.register(UINib(nibName: XIB.Names.WalletHeader, bundle: nil), forHeaderFooterViewReuseIdentifier: XIB.Names.WalletHeader)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backButtonClick))
-        self.navigationItem.title = Constants.string.transaction.localize()
         self.buttonSubmit.addTarget(self, action: #selector(self.buttonSubmitAction), for: .touchUpInside)
         self.textFieldAmount.delegate = self
         self.presenter?.get(api: .pendingTransferList, parameters: nil)
@@ -161,7 +157,7 @@ extension WalletTransferViewController : UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let walletHeader = Bundle.main.loadNibNamed(XIB.Names.WalletHeader, owner: self, options: [:])?.first as? WalletHeader
-        walletHeader?.backgroundColor = .secondary
+        walletHeader?.backgroundColor = AppTheme.driver.primaryColor
         return walletHeader
     }
     
