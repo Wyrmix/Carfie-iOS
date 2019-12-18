@@ -9,7 +9,13 @@
 import UIKit
 
 struct ProfileCoordinatorViewState {
-    var profilePhoto: UIImage? = UIImage(named: "EmptyUserImage")
+    var profilePhoto: UIImage? = UIImage(named: "EmptyUserImage") {
+        didSet {
+            profilePhotoWasUpdated = true
+        }
+    }
+    
     var profile: CarfieProfile?
     var updateProfileRequestInProgress: Bool = false
+    var profilePhotoWasUpdated: Bool = false
 }

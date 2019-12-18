@@ -64,23 +64,54 @@ class ProfileCoordinator {
         do {
             viewState.profile?.firstName = try EmptyFieldValidator().validate(firstName).resolve()
             viewState.profile?.lastName = try EmptyFieldValidator().validate(lastName).resolve()
+
+            guard let profile = viewState.profile else { return }
             
             viewState.updateProfileRequestInProgress = true
             
-            guard let profile = viewState.profile else { return }
-            
-            profileController.updateProfile(profile) { [weak self] result in
-                self?.viewState.updateProfileRequestInProgress = false
-                
-                do {
-                    self?.viewState.profile = try result.resolve()
-                    UserFacingErrorIntent(title: "Success", message: "Your profile has been updated.").execute(via: self?.viewController)
-                } catch {
-                    UserFacingErrorIntent(title: "Something went wrong.", message: "Please try again.").execute(via: self?.viewController)
-                }
+            if viewState.profilePhotoWasUpdated {
+                uploadProfileWithPhoto(profile)
+            } else {
+                uploadProfileWithoutPhoto(profile)
             }
         } catch {
             return
+        }
+    }
+    
+    private func uploadProfileWithoutPhoto(_ profile: CarfieProfile) {
+        profileController.updateProfile(profile) { [weak self] result in
+            self?.viewState.updateProfileRequestInProgress = false
+
+            do {
+                self?.viewState.profile = try result.resolve()
+                UserFacingErrorIntent(title: "Success", message: "Your profile has been updated.").execute(via: self?.viewController)
+            } catch {
+                UserFacingErrorIntent(title: "Something went wrong.", message: "Please try again.").execute(via: self?.viewController)
+            }
+        }
+    }
+    
+    private func uploadProfileWithPhoto(_ profile: CarfieProfile) {
+        guard let image = viewState.profilePhoto, viewState.profilePhotoWasUpdated else { return }
+        guard let imageData = ImageResizer().resize(forUpload: image, withCompressionQualtiy: 0.5) else { return }
+        
+        let images = ["picture": imageData]
+        let parameters = [
+            "first_name": profile.firstName,
+            "last_name": profile.lastName,
+            "mobile": profile.mobile, // this is required in the request even though it can't be updated
+        ]
+        
+        UploadProfilePictureService().uploadImages(images, parameters: parameters) { [weak self] result in
+            self?.viewState.updateProfileRequestInProgress = false
+            
+            do {
+                self?.viewState.profile = try result.resolve()
+                UserFacingErrorIntent(title: "Success", message: "Your profile has been updated.").execute(via: self?.viewController)
+            } catch {
+                UserFacingErrorIntent(title: "Something went wrong.", message: "Please try again.").execute(via: self?.viewController)
+            }
         }
     }
     
