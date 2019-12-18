@@ -9,8 +9,8 @@
 import UIKit
 
 class DocumentsViewController: UIViewController, OnboardingScreen {
-    static func viewController() -> DocumentsViewController {
-        let interactor = DocumentsInteractor()
+    static func viewController(allDocumentsAreRequired: Bool) -> DocumentsViewController {
+        let interactor = DocumentsInteractor(allDocumentsAreRequired: allDocumentsAreRequired)
         let viewController = DocumentsViewController(interactor: interactor)
         interactor.viewController = viewController
         interactor.start()
