@@ -14,7 +14,7 @@ class DriverHomeInteractor {
     
     func showAddDocuments() {
         guard viewController?.presentedViewController == nil else { return }
-        viewController?.present(DocumentsViewController.viewController(), animated: true)
+        viewController?.present(DocumentsViewController.viewController(allDocumentsAreRequired: true), animated: true)
     }
     
     func showAddPayment() {

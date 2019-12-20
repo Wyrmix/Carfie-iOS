@@ -37,6 +37,12 @@ class SideBarTableViewController: UITableViewController {
     @IBOutlet private var viewShadow : UIView!
     @IBOutlet private weak var profileImageCenterContraint : NSLayoutConstraint!
     
+    @IBOutlet weak var appVersionLabel: UILabel! {
+        didSet {
+            appVersionLabel.text = "App Version: 1.3"
+        }
+    }
+    
     private let sideBarList = [Constants.string.payment,
                                Constants.string.yourTrips,
                                Constants.string.offer,
@@ -227,6 +233,13 @@ extension SideBarTableViewController {
         self.drawerController?.closeSide()
     }
     
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return AppVersionView()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 44
+    }
 }
 
 

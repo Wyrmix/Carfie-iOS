@@ -40,14 +40,14 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = false
         self.initialLoads()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewWillAppearCustom()
         navigationController?.navigationBar.backItem?.title = ""
-        navigationController?.isNavigationBarHidden = false
+        viewWillAppearCustom()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,7 +69,6 @@ extension WalletViewController {
         self.tableViewWallet.register(UINib(nibName: XIB.Names.WalletHeader, bundle: nil), forHeaderFooterViewReuseIdentifier: XIB.Names.WalletHeader)
         self.labelWalletAmount.text = "\(User.main.currency ?? .Empty)\(2222)"
         
-        self.navigationItem.title = Constants.string.wallet.localize()
         self.barbuttonTransfer = UIBarButtonItem(image: #imageLiteral(resourceName: "transfer").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(self.buttonTransferAction))
         self.navigationItem.rightBarButtonItem = self.barbuttonTransfer
         self.balance = User.main.walletBalance ?? 0

@@ -18,12 +18,17 @@ class DocumentsInteractor {
     private var indexBeingModified: Int?
     
     private let documentUploadService: UploadImageDataService
+    private let allDocumentsAreRequired: Bool
     
     // MARK: Init
 
-    init(documentUploadService: UploadImageDataService = UploadDocumentsService()) {
+    init(
+        documentUploadService: UploadImageDataService = UploadDocumentsService(),
+        allDocumentsAreRequired: Bool
+    ) {
         self.viewModel = DocumentsViewModel()
         self.documentUploadService = documentUploadService
+        self.allDocumentsAreRequired = allDocumentsAreRequired
     }
     
     func start() {
@@ -55,9 +60,11 @@ class DocumentsInteractor {
     }
     
     func uploadDocuments() {
-        guard viewModel.documentItems.allSatisfy({ $0.image != nil }) else {
-            UserFacingErrorIntent(title: "All documents are required", message: "Please add an image for each document type").execute(via: viewController)
-            return
+        if allDocumentsAreRequired {
+            guard viewModel.documentItems.allSatisfy({ $0.image != nil }) else {
+                UserFacingErrorIntent(title: "All documents are required", message: "Please add an image for each document type").execute(via: viewController)
+                return
+            }
         }
         
         var parameters: [String: Int] = [:]
@@ -72,6 +79,9 @@ class DocumentsInteractor {
         viewController?.showUploadActivity(true)
         documentUploadService.uploadImages(images, parameters: parameters) { [weak self] result in
             guard let self = self else { return }
+            
+            self.viewController?.showUploadActivity(false)
+            
             switch result {
             case .success:
                 // if we're not in onboarding just dismiss.
@@ -81,7 +91,6 @@ class DocumentsInteractor {
                 }
                 self.viewController?.onboardingDelegate?.onboardingScreenComplete()
             case .failure:
-                self.viewController?.showUploadActivity(false)
                 UserFacingErrorIntent(title: "Something went wrong", message: "Please try again.").execute(via: self.viewController)
             }
         }
