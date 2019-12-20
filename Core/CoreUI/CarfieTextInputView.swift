@@ -121,6 +121,7 @@ class CarfieTextInputView: UIView {
         textField.placeholder = placeholder
         textField.isSecureTextEntry = isSecureTextEntry
         textField.keyboardType = keyboardType
+        textField.autocorrectionType = autocorrectionType
         addSubview(textField)
         
         errorMessageLabel.translatesAutoresizingMaskIntoConstraints = false
