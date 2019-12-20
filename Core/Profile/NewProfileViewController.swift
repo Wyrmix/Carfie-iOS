@@ -77,8 +77,8 @@ class NewProfileViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        profileImageView.cornerRadius = profileImageView.bounds.height / 2
-        profileImageView.maskToBounds = true
+        profileImageView.layer.cornerRadius = profileImageView.bounds.height / 2
+        profileImageView.layer.masksToBounds = true
     }
     
     // MARK: Setup

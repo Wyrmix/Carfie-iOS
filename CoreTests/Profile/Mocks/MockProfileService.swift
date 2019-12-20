@@ -13,7 +13,7 @@ class MockProfileService: ProfileService {
         
     }
     
-    func updateProfile(_ profile: CarfieProfile, theme: AppTheme, completion: @escaping (Result<CarfieProfile>) -> Void) {
+    func updateProfile(_ profile: CarfieProfile, completion: @escaping (Result<CarfieProfile>) -> Void) {
         
     }
     

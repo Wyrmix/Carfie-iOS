@@ -23,6 +23,14 @@ class UploadProfilePictureService {
         // Pretty much everything in this functions was lifted from the legacy webservice and thus I'm not really sure how much of it is necessary
         // but it does work.
         
+        var baseUrl: String {
+            #if DEBUG
+                return "https://stage.carfie.com/"
+            #else
+                return "https://sapi.carfie.com/"
+            #endif
+        }
+        
         guard let url = URL(string: baseUrl + "/api/user/update/profile") else {
             fatalError("Invalid URL. Something is wrong with the baseUrl if you got here.")
         }
@@ -33,8 +41,8 @@ class UploadProfilePictureService {
         }
         
         var headers = HTTPHeaders()
-        headers.updateValue(WebConstants.string.XMLHttpRequest, forKey: WebConstants.string.X_Requested_With)
-        headers.updateValue("Bearer \(accessToken)", forKey: WebConstants.string.Authorization)
+        headers.updateValue("XMLHttpRequest", forKey: "X-Requested-With")
+        headers.updateValue("Bearer \(accessToken)", forKey: "Authorization")
         
         Alamofire.upload(multipartFormData: { (multipartFormData) in
             for (key, value) in parameters {
