@@ -9,6 +9,6 @@
 import Foundation
 
 struct WebPage {
-    static let carfieHomePage = "http://carfie.com"
+    static let carfieHomePage = "https://www.carfie.com"
     static let carfiePrivacyPage = "http://privacy.carfie.com"
 }
