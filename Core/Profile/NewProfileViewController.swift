@@ -118,7 +118,7 @@ class NewProfileViewController: UIViewController {
         nameFieldStackView.spacing = 14
         
         let containerStackView = UIStackView(arrangedSubviews: [
-            profileImageView,
+//            profileImageView,
             nameFieldStackView,
             phoneNumberTextInputView,
             emailTextInputView,
@@ -150,8 +150,8 @@ class NewProfileViewController: UIViewController {
             phoneNumberTextInputView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor),
             emailTextInputView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor),
             
-            profileImageView.widthAnchor.constraint(equalToConstant: 120),
-            profileImageView.heightAnchor.constraint(equalToConstant: 120),
+//            profileImageView.widthAnchor.constraint(equalToConstant: 120),
+//            profileImageView.heightAnchor.constraint(equalToConstant: 120),
             
             saveButton.widthAnchor.constraint(equalToConstant: 170),
             saveButton.heightAnchor.constraint(equalToConstant: 44),

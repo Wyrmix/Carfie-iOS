@@ -64,7 +64,7 @@ class DocumentsInteractor {
         var images: [String: Data] = [:]
         for item in viewModel.documentItems {
             guard let image = item.image,
-                  let imageData = ImageResizer().resize(forUpload: image) else { continue }
+                  let imageData = ImageResizer().resize(forUpload: image, withCompressionQualtiy: 0.7) else { continue }
             parameters.updateValue(item.type.rawValue, forKey: "id[\(item.type.rawValue)]")
             images.updateValue(imageData, forKey: "document[\(item.type.rawValue)]")
         }
