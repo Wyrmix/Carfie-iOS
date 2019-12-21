@@ -148,10 +148,10 @@ extension PasswordViewController {
     
     @IBAction private func forgotPasswordAction() {
         
-        if let forgotVC = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.ForgotPasswordViewController) as? ForgotPasswordViewController {
-            forgotVC.emailString = email
-            self.navigationController?.pushViewController(forgotVC, animated: true)
-        }
+//        if let forgotVC = self.storyboard?.instantiateViewController(withIdentifier: Storyboard.Ids.ForgotPasswordViewController) as? ForgotPasswordViewController {
+//            forgotVC.emailString = email
+//            self.navigationController?.pushViewController(forgotVC, animated: true)
+//        }
         
     }
 
