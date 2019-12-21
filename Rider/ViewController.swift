@@ -115,42 +115,6 @@ extension UIViewController {
         
     }
     
-    
-    
-    //MARK:- Show Image Selection Action Sheet
-    
-    func showImage(with completion : @escaping ((UIImage?)->())){
-        
-        let alert = UIAlertController(title: Constants.string.selectSource.localize(), message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: Constants.string.camera.localize(), style: .default, handler: { (_) in
-            self.chooseImage(with: .camera)
-        }))
-        alert.addAction(UIAlertAction(title: Constants.string.photoLibrary.localize(), style: .default, handler: { (_) in
-            self.chooseImage(with: .photoLibrary)
-        }))
-        alert.addAction(UIAlertAction(title: Constants.string.Cancel.localize(), style: .cancel, handler:nil))
-        alert.view.tintColor = .primary
-        imageCompletion = completion
-        self.present(alert, animated: true, completion: nil)
-        
-    }
-
-    // MARK:- Show Image Picker
-    
-    private func chooseImage(with source : UIImagePickerController.SourceType){
-        
-        if UIImagePickerController.isSourceTypeAvailable(source) {
-            
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = source
-            imagePicker.allowsEditing = true
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        
-    }
-    
-    
   /*  //MARK:- Right Bar Button Action
     
     @IBAction private func rightBarButtonAction(){
@@ -202,33 +166,6 @@ extension UIViewController {
     
     
 }
-
-//MARK:- UIImagePickerControllerDelegate, UINavigationControllerDelegate
-
-extension UIViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-
-        
-        picker.dismiss(animated: true) {
-            if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as? UIImage {
-                imageCompletion?(image)
-            }
-        }
-    }
-    
-    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-}
-
-
-
-
-
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {

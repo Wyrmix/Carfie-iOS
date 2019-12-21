@@ -11,7 +11,7 @@ import UIKit
 import func AVFoundation.AVMakeRect
 
 struct ImageResizer {
-    func resize(forUpload image: UIImage) -> Data? {
+    func resize(forUpload image: UIImage, withCompressionQualtiy compressionQuality: CGFloat) -> Data? {
         guard let imageBytes = image.pngData()?.count else {
             // Something is wrong with the image data.
             // TODO: some error handling
@@ -24,8 +24,12 @@ struct ImageResizer {
         // if the image is smaller than 2 MB we don't need to resize.
         guard imageKiloBytes > 2000 else { return image.pngData() }
         
-        // 80% jpeg compression should be more than enough to reduce any iPhone image
-        // to less than 2 MB, but this should be re-investigated at some point.
-        return image.jpegData(compressionQuality: 0.8)
+        // Compression quality should be less than 100%
+        guard compressionQuality <= 1.0 else {
+            assertionFailure("Compression requires reduce the image size below 100%")
+            return nil
+        }
+        
+        return image.jpegData(compressionQuality: compressionQuality)
     }
 }
